@@ -1,41 +1,56 @@
-Four Week Plan
-==============
+# Four Week Plan
+This plan will be updated regularly. It is our current plan for how we will progress and a list of goals.
 
-Week 1
-------
-  Setting up project
-    * Codeclimate, Coveralls, Travis, David
+This project is a sharing web application by [Tian Song](https://github.com/songty), [Ariel Spear](https://github.com/arielspear), and [Grant Stampfli](https://github.com/grantstampfli). Students at [Portland Code School](http://www.portlandcodeschool.com/).
+
+## Week 1
+
+### Tuesday
+We will get the project's framework setup, and set up some basics we plan on needing.
+
+* #### Project set up
+We will need...
+
+    * Caribou
+    * Admit-one
+    * Admit-one-ember
+    * Migrations
+    * Database
     * HEROKU
-  Tests for two major following features:
-    Back-end
-      Log-in Users, authentication, creating account
-    Post
-      POST, GET, DELETE, PUT methods
 
-    Tuesday
-      Project set up
-        Caribou, admit-one, admit-one-ember, migrations, database
-        HEROKU
-    Wednesday
-      Account creation
-      Authentication
-      Log-in 
-    Thursday
-      Continue Wednesday play ketchup
-    Friday  
-      Reflections finalize Week 2's plan
-Week 2
-------
-  * Reevaluate 
-Week 3
-------
-  * TBD
-Week 4
-------
+### Wednesday
+Work on User Accounts. Making sure they can be created, logged into and authenticated. 
+
+  * Account creation
+  * User Log-in 
+  * User Authentication
+
+### Thursday
+Work on anything not completed on time by this point, if we're all caught up reevaluate and keep going.
+
+  * Play Catch-Up
+  * Reevaluate this week's plan.
+
+### Friday
+Continue Catch-Up and create plan for Week 2. Discuss TODO features.
+
+  * Play Catch-Up
+  * Finalize Week 2's plan
+
+## Week 2
+
   * TBD
 
-TODO features:
---------------
+## Week 3
+
+  * TBD
+
+## Week 4
+
+  * TBD
+
+## TODO features:
+
   + Email account confirmation
   + Deleting account 
   + Edit profile 
@@ -44,4 +59,5 @@ TODO features:
   + User ratings
   + Geolocation - mapping
   + User messaging
+  + Editable Front End
   
