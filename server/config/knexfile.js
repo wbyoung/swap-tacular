@@ -19,7 +19,7 @@ module.exports = {
   test: {
     client: 'postgresql',
     connection: {
-      database : 'test-tacular'
+      database : 'swap-tacular-test'
     }
   },
 
