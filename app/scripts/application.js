@@ -3,34 +3,11 @@
 var App = window.App = Ember.Application.create();
 App.AdmitOneContainers = {}; //overridable by tests
 Ember.AdmitOne.setup( { containers: App.AdmitOneContainers });
-
-App.Router.map(function() {
-  this.route('signup');
-  this.route('login');
-  this.route('logout');
-  this.route('profile');
-});
+require('./models.js')(App);
+require('./router.js')(App);
 
 App.ApplicationAdapter = DS.RESTAdapter.extend({
   namespace: 'api'
-});
-
-// authenticate any route
-App.ProfileRoute = Ember.Route.extend(Ember.AdmitOne.AuthenticatedRouteMixin, {
-});
-
-App.User = DS.Model.extend({
-  username: DS.attr('string'),
-  password: DS.attr('string')
-});
-
-App.LoginRoute = Ember.Route.extend({
-  beforeModel: function() {
-    this._super();
-    if (this.get('session').get('isAuthenticated')) {
-      this.transitionTo('profile');
-    }
-  }
 });
 
 App.LoginController = Ember.Controller.extend({
@@ -54,23 +31,6 @@ App.LoginController = Ember.Controller.extend({
         self.set('error', error);
       });
     }
-  }
-});
-
-App.LogoutRoute = Ember.Route.extend({
-  beforeModel: function() {
-    this._super();
-    var self = this;
-    var session = this.get('session');
-    return session.invalidate().finally(function() {
-      self.transitionTo('index');
-    });
-  }
-});
-
-App.SignupRoute = Ember.Route.extend({
-  model: function() {
-    return this.store.createRecord('user');
   }
 });
 
