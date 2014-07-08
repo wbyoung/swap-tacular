@@ -1,3 +1,5 @@
+[![NPM version][npm-image]][npm-url][![Build status][travis-image]][travis-url] [![Code Climate][codeclimate-image]][codeclimate-url] [![Coverage Status][coverage-image]][coverage-url] [![Dependencies][david-image]][david-url]
+
 swap-tacular
 ============
 [travis-url]: http://travis-ci.org/arielspear/swap-tacular
