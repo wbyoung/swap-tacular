@@ -38,6 +38,7 @@ Continue Catch-Up and create plan for Week 2. Discuss TODO features.
   * Finalize Week 2's plan
 
 ## Week 2
+By the end of this week we plan on having users and posts work on a very basic level. This is our minimal viable product. 
 
   * TBD
 
