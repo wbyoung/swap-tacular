@@ -13,3 +13,12 @@ Do: git co -b release master
 		git branch -D release 
 	if rollback:
 		git push heroku tagname:master (i.e. 0.0.1:master)
+
+To run migrations in heroku
+	heroku run bash
+	migration cmd
+	- type exit to quit
+
+To migrate and make migrations
+	./node_modules/.bin/knex make:blah
+	$ NODE_ENV='test' ./node_modules/.bin/knex migrate:latest
