@@ -1,7 +1,8 @@
 'use strict';
 
 var App = window.App = Ember.Application.create();
-Ember.AdmitOne.setup();
+App.AdmitOneContainers = {}; //overridable by tests
+Ember.AdmitOne.setup( { containers: App.AdmitOneContainers });
 
 App.Router.map(function() {
   this.route('signup');
