@@ -17,6 +17,10 @@ We will need...
     * Migrations
     * Database
     * HEROKU
+    * Travis
+    * Coveralls
+    * Code climate
+    * David DM
 
 ### Wednesday
 Work on User Accounts. Making sure they can be created, logged into and authenticated. 
