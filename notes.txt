@@ -1,0 +1,15 @@
+NEVER COMMIT DIST ON MASTER!
+Do: git co -b release master
+	(instead of distribution)
+	gulp build
+	git add dist
+	git commit -m "the version" ex. 0.0.4
+	git push heroku head:master -f
+	(check to see if release worked! if not rollback)
+	if worked:
+		git tag -a -m 'version number' number (i.e. "0.0.1" 0.0.1)
+		git push --tags
+		git co master
+		git branch -D release 
+	if rollback:
+		git push heroku tagname:master (i.e. 0.0.1:master)
