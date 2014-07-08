@@ -13,3 +13,8 @@ Do: git co -b release master
 		git branch -D release 
 	if rollback:
 		git push heroku tagname:master (i.e. 0.0.1:master)
+
+To run migrations in heroku
+	heroku run bash
+	migration cmd
+	- type exit to quit
