@@ -1,0 +1,18 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/api/posts",
+    "headers": {
+      "Authorization": "Token 9208fbba48fd4fbe9e16f4d5fa7ca4aa"
+    },
+    "json": {
+      "TODO": "FILL ME"
+    }
+  },
+  "response": {
+    "status": 200,
+    "json": {
+      "TODO": "FILL ME"
+    }
+  }
+}

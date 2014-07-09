@@ -70,6 +70,12 @@ api.delete('/sessions/current', admit.invalidate, function(req, res) {
   res.json({ status: 'ok' });
 });
 
+api.post('/posts', function(req, res){
+  var user = req.auth.db.user;
+  console.log(user.get('id'));
+  //TODO: write about some stuff
+});
+
 // application routes
 app.use('/api', api);
 

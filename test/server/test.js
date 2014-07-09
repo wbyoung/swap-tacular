@@ -67,4 +67,18 @@ describe('server', function() {
   		expect(json).to.eql(fixture.response.json);
   	}).done(function(){ done(); },done);
   });
+
+	it('posts posts', function() {
+		// insert this stuff into db before sending fixture request
+
+		// # user
+		// id: 1/anything
+		// username: fakie/anything
+		// passwordDigest: anything
+
+		// # token
+		// id: 1/anything
+		// user_id: 1/must-match user.id
+		// value: ff13689653e86dc1ad0f9b4a34978192a918c6d4
+	})
 });
