@@ -1,0 +1,23 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/posts",
+    "headers": {
+      "Authorization": "Token 427a47618ec94187aad56e9648fce009"
+    },
+    "json": null
+  },
+  "response": {
+    "status": 200,
+    "json": {
+      "posts": [{
+        "id": 12,
+        "content": "I'm really excited about using this new Barker service!",
+        "user": 1
+      }],
+      "users": [
+				{ "id":1, "username": "Ariel", "date": "2014-07-01"}
+      ]
+    }
+  }
+}
