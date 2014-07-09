@@ -26,7 +26,9 @@ describe('server', function() {
 	before(function(done) { this.server = app.listen(port, function() { done(); }); });
 	after(function(done) { this.server.close(done); });
 	afterEach(function(done) {
-		models._bookshelf.knex('posts').del().then(function() { done(); }, done);
+		models._bookshelf.knex('posts').del().then(function() { 
+			models._bookshelf.knex('users').del().then(function() { done(); }, done); 
+		});
 	});
   it('will get posts', function(done){
 		var fixture = __fixture('postGET');
@@ -80,5 +82,5 @@ describe('server', function() {
 		// id: 1/anything
 		// user_id: 1/must-match user.id
 		// value: ff13689653e86dc1ad0f9b4a34978192a918c6d4
-	})
+	});
 });
