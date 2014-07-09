@@ -29,7 +29,8 @@ app.use(methodOverride());
 
 
 var models = require('./models'),
-    User = models.User;
+    User = models.User,
+    Post = models.Post;
 
 var admit = require('admit-one')('bookshelf', {
   bookshelf: { modelClass: User }
@@ -50,6 +51,7 @@ api.post('/sessions', admit.authenticate, function(req, res) {
 api.get('/posts', function(req, res){
   Post.fetchAll({ withRelated: 'user' })
   .then(function(collection) {
+    console.log(collection);
     var users = [];
     var posts = collection.toJSON().map(function(model) {
       delete model.user.passwordDigest;
@@ -58,6 +60,7 @@ api.get('/posts', function(req, res){
       delete model.userID;
       return model;
     });
+    console.log(posts);
     res.json({posts: posts, users: users });
   }).done();
 });

@@ -7,7 +7,7 @@ exports.up = function(knex, Promise) {
     table.string('passwordDigest').notNullable();
   }).createTable('tokens', function(table) {
     table.increments('id').primary();
-    table.integer('user_id').references('users.id');
+    table.integer('userID').references('users.id');
     table.string('value').notNullable();
   });
 };

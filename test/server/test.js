@@ -36,16 +36,16 @@ describe('server', function() {
 					username: user.username,
 					passwordDigest: 'digest'
 				};
-				return User.forge(create).save().then(function(author) {
-					return author;
+				return User.forge(create).save().then(function(user) {
+					return user;
 				});
 			});
 		};
 
 		var postSavePromises = function(users) {
-			return fixture.response.json.posts.map(function(bark, idx) {
+			return fixture.response.json.posts.map(function(post, idx) {
 				var create = {
-					content: bark.content,
+					content: post.content,
 					userID: users[idx].id
 				};
 				return Post.forge(create).save();
@@ -60,6 +60,7 @@ describe('server', function() {
 		})
 		.spread(function(response, body){
   		var json = JSON.parse(body);
+  		console.log(response);
   		json.posts[0].id = fixture.response.json.posts[0].id;
   		json.posts[0].user = fixture.response.json.posts[0].user;
   		json.users[0].id = fixture.response.json.users[0].id;
