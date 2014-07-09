@@ -3,7 +3,6 @@
     "method": "GET",
     "url": "/api/posts",
     "headers": {
-      "Authorization": "Token 427a47618ec94187aad56e9648fce009"
     },
     "json": null
   },
