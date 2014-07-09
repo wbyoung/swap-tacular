@@ -22,18 +22,26 @@ We will need...
     * Code climate
     * David DM
 
-### Wednesday
-Work on User Accounts. Making sure they can be created, logged into and authenticated. 
+* ##### Work on User Accounts. Making sure they can be created and logged into. 
 
   * Account creation
   * User Log-in 
+
+### Wednesday
+Set up test database, get posts to POST.
+
+  * Setup tests for posting
+  * Write up some posts
   * User Authentication
+  * Discuss if this is our minimal viable product yet
+  * Reevaluate this week's plan
+
 
 ### Thursday
 Work on anything not completed on time by this point, if we're all caught up reevaluate and keep going.
 
   * Play Catch-Up
-  * Reevaluate this week's plan.
+  * Reevaluate this week's plan
 
 ### Friday
 Continue Catch-Up and create plan for Week 2. Discuss TODO features.
