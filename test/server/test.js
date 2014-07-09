@@ -11,7 +11,8 @@ var port = 383273;
 var baseURL = util.format('http://localhost:%d', port);
 
 var Post = models.Post,
-	  User = models.User;
+	  User = models.User,
+	  Token = models.Token;
 
 var requestFixture = function(fixture) {
 	var requestOptions = {
@@ -28,7 +29,7 @@ describe('server', function() {
 	afterEach(function(done) {
 		models._bookshelf.knex('posts').del().then(function() { 
 			models._bookshelf.knex('users').del().then(function() { done(); }, done); 
-		});
+		}, done);
 	});
   it('will get posts', function(done){
 		var fixture = __fixture('postGET');
@@ -71,6 +72,23 @@ describe('server', function() {
   });
 
 	it('posts posts', function() {
+		var userPromises = function() {
+			var create = {
+				username: 'fakedude',
+				passwordDigest: 'anything?'
+			};
+			User.forge(create, {method: 'insert'}).save();
+		};
+
+		var tokenSavePromises = function() {
+			var create = {
+				id: 23,
+				userID : 1,
+				value: 'ff13689653e86dc1ad0f9b4a34978192a918c6d4'
+			};
+			return Token.forge(create).save();
+		};
+		userPromises();
 		// insert this stuff into db before sending fixture request
 
 		// # user
