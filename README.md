@@ -15,4 +15,4 @@ swap-tacular
 [david-dev-image]: https://david-dm.org/arielspear/swap-tacular/dev-status.png?theme=shields.io
 [david-dev-url]: https://david-dm.org/arielspear/swap-tacular#info=devDependencies
 
-Ariel, Tian and Grant's capstone project. 
+[Ariel Spear](https://github.com/arielspear), [Tian Song](https://github.com/songty), and [Grant Stampfli](https://github.com/grantstampfli)'s capstone project. 
