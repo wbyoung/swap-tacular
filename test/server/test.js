@@ -27,9 +27,16 @@ describe('server', function() {
   before(function(done) { this.server = app.listen(port, function() { done(); }); });
   after(function(done) { this.server.close(done); });
   afterEach(function(done) {
-    models._bookshelf.knex('posts').del().then(function() { 
-      models._bookshelf.knex('users').del().then(function() { done(); }, done); 
-    }, done);
+    Promise.resolve() // start promise sequence
+    .then(function() {
+      return models._bookshelf.knex('posts').del();
+    })
+    .then(function() {
+      return models._bookshelf.knex('tokens').del();
+    })
+    .then(function() {
+      return models._bookshelf.knex('users').del();
+    }).done(function() { done(); }, done);
   });
   it('will get posts', function(done){
     var fixture = __fixture('postGET');
@@ -71,34 +78,41 @@ describe('server', function() {
     }).done(function(){ done(); },done);
   });
 
-  it('posts posts', function() {
-    var userPromises = function() {
+  it('posts posts', function(done) {
+    var fixture = __fixture('postPOST');
+
+    var createUser = function() {
       var create = {
         username: 'fakedude',
         passwordDigest: 'anything?'
       };
-      User.forge(create, {method: 'insert'}).save();
+      return User.forge(create, {method: 'insert'}).save();
     };
 
-    var tokenSavePromises = function() {
-      var create = {
-        id: 23,
-        userID : 1,
-        value: 'ff13689653e86dc1ad0f9b4a34978192a918c6d4'
-      };
+    var createToken = function(user) {
+      var userID = 'user_id';
+      var create = {};
+      create[userID] = user.id; // avoid JSHint error for user_id (TODO: request to admit-one to make life better)
+      create.value = 'ff13689653e86dc1ad0f9b4a34978192a918c6d4';
       return Token.forge(create).save();
     };
-    userPromises();
-    // insert this stuff into db before sending fixture request
 
-    // # user
-    // id: 1/anything
-    // username: fakie/anything
-    // passwordDigest: anything
-
-    // # token
-    // id: 1/anything
-    // user_id: 1/must-match user.id
-    // value: ff13689653e86dc1ad0f9b4a34978192a918c6d4
+    Promise.resolve() // start promise sequence
+    .then(function() { return createUser(); })
+    .then(function(user) { return createToken(user); })
+    .then(function() {
+      return requestFixture(fixture);
+    })
+    .spread(function(response, body){
+      // TODO: this code was copied directly out of another project and is
+      // just here as an example of the types of assertions you could make
+      // in this function
+      // var json = JSON.parse(body);
+      // json.posts[0].id = fixture.response.json.posts[0].id;
+      // json.posts[0].author = fixture.response.json.posts[0].author;
+      // json.users[0].id = fixture.response.json.users[0].id;
+      // expect(json).to.eql(fixture.response.json);
+    })
+    .done(function() { done(); }, done);
   });
 });

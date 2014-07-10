@@ -73,6 +73,7 @@ api.delete('/sessions/current', admit.invalidate, function(req, res) {
 api.post('/posts', function(req, res){
   var user = req.auth.db.user;
   console.log(user.get('id'));
+  res.json({});
   //TODO: write about some stuff
 });
 
