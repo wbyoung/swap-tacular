@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('lodash');
 var expect = require('chai').expect;
 var util = require('util');
 var bluebird = require('bluebird'), Promise = bluebird;
@@ -18,8 +19,13 @@ var requestFixture = function(fixture) {
   var requestOptions = {
     url: baseURL + fixture.request.url,
     method: fixture.request.method,
-    headers: fixture.request.headers,
+    headers: _.extend({
+    	'Content-Type': 'application/json'
+    }, fixture.request.headers)
   };
+  if (fixture.request.json) {
+  	requestOptions.body = JSON.stringify(fixture.request.json);
+  }
   return requestAsync(requestOptions);
 };
 
@@ -78,7 +84,7 @@ describe('server', function() {
     }).done(function(){ done(); },done);
   });
 
-  it('posts posts', function(done) {
+  it.skip('posts posts', function(done) {
     var fixture = __fixture('postPOST');
 
     var createUser = function() {
@@ -104,14 +110,14 @@ describe('server', function() {
       return requestFixture(fixture);
     })
     .spread(function(response, body){
+    	var json = JSON.parse(body);
       // TODO: this code was copied directly out of another project and is
       // just here as an example of the types of assertions you could make
       // in this function
-      // var json = JSON.parse(body);
       // json.posts[0].id = fixture.response.json.posts[0].id;
       // json.posts[0].author = fixture.response.json.posts[0].author;
       // json.users[0].id = fixture.response.json.users[0].id;
-      // expect(json).to.eql(fixture.response.json);
+      expect(json).to.eql(fixture.response.json);
     })
     .done(function() { done(); }, done);
   });

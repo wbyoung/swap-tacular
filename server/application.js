@@ -72,14 +72,14 @@ api.delete('/sessions/current', admit.invalidate, function(req, res) {
 
 api.post('/posts', function(req, res){
   var user = req.auth.db.user;
-  console.log(user.get('id'));
-  var post = req.json.post.content;
+  var post = req.body.post.content;
   var create = {
     content: post,
     userID: user.get('id')
   };
-  Post.forge(create).save();
-  res.json({});
+  Post.forge(create).save().then(function() {
+    res.json({});
+  });
   //TODO: write about some stuff
 });
 
