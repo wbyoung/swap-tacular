@@ -6,7 +6,9 @@
       "Authorization": "Token 9208fbba48fd4fbe9e16f4d5fa7ca4aa"
     },
     "json": {
-      "TODO": "FILL ME"
+      "post": {
+        "content": "HELLO WORLD!"
+      }
     }
   },
   "response": {
