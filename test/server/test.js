@@ -103,37 +103,18 @@ describe('server', function() {
       return Token.forge(create).save();
     };
 
-    var grabContent = function(user) {
-      Post.fetchAll().then(function(collection) {
-        collection.fetchOne({userID: user.id}).then(function(model) {
-          console.log(model);
-        });
-      });
-    };
-
     Promise.resolve() // start promise sequence
     .then(function() { return createUser(); })
     .then(function(user) { return createToken(user); })
-    .then(function() {
-      return requestFixture(fixture);
-    })
+    .then(function() { return requestFixture(fixture); })
     .spread(function(response, body){
     	var json = JSON.parse(body);
-      // TODO: this code was copied directly out of another project and is
-      // just here as an example of the types of assertions you could make
-      // in this function
-      // json.posts[0].id = fixture.response.json.posts[0].id;
-      // json.posts[0].author = fixture.response.json.posts[0].author;
-      // json.users[0].id = fixture.response.json.users[0].id;
-      Post.fetchAll().then(function(collection) {
-        collection.toJSON().map(function(model) {
-          expect(model.content).to.eql(fixture.request.json.post.content);
-          console.log(model);
-        });
-      });
-
       expect(json).to.eql(fixture.response.json);
-      // expect(json).to.eql();
+    })
+    .then(function() { return Post.fetchAll(); })
+    .then(function(collection) {
+      expect(collection.length).to.eql(1);
+      expect(collection.at(0).get('content')).to.eql(fixture.request.json.post.content);
     })
     .done(function() { done(); }, done);
   });
