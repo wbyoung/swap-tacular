@@ -29,8 +29,8 @@ Post = bookshelf.Model.extend({
 });
 
 module.exports = {
-	User: User,
-	Token: Token,
-	Post: Post,
-	_bookshelf: bookshelf // only for testing
+  User: User,
+  Token: Token,
+  Post: Post,
+  _bookshelf: bookshelf // only for testing
 };
