@@ -103,6 +103,14 @@ describe('server', function() {
       return Token.forge(create).save();
     };
 
+    var grabContent = function(user) {
+      Post.fetchAll().then(function(collection) {
+        collection.fetchOne({userID: user.id}).then(function(model) {
+          console.log(model);
+        });
+      });
+    };
+
     Promise.resolve() // start promise sequence
     .then(function() { return createUser(); })
     .then(function(user) { return createToken(user); })
@@ -117,7 +125,15 @@ describe('server', function() {
       // json.posts[0].id = fixture.response.json.posts[0].id;
       // json.posts[0].author = fixture.response.json.posts[0].author;
       // json.users[0].id = fixture.response.json.users[0].id;
+      Post.fetchAll().then(function(collection) {
+        collection.toJSON().map(function(model) {
+          expect(model.content).to.eql(fixture.request.json.post.content);
+          console.log(model);
+        });
+      });
+
       expect(json).to.eql(fixture.response.json);
+      // expect(json).to.eql();
     })
     .done(function() { done(); }, done);
   });
