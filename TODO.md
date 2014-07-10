@@ -27,11 +27,12 @@ We will need...
   * Account creation
   * User Log-in 
 
+
 ### Wednesday
 Set up test database, get posts to POST.
 
   * Setup tests for posting
-  * Write up some posts
+  * Write up some posts back-end
   * User Authentication
   * Discuss if this is our minimal viable product yet
   * Reevaluate this week's plan
@@ -42,12 +43,21 @@ Work on anything not completed on time by this point, if we're all caught up ree
 
   * Play Catch-Up
   * Reevaluate this week's plan
+  * Finishing back-end POST GET posts
+
 
 ### Friday
 Continue Catch-Up and create plan for Week 2. Discuss TODO features.
 
   * Play Catch-Up
+  * Work solo
+    * Tian GET
+    * Grant POST
+    * Ariel Front-end/templates/CSS
+  * Start front-end for POST GET posts
+  * Setting up ember data, router, templates, POST/GET
   * Finalize Week 2's plan
+
 
 ## Week 2
 By the end of this week we plan on having users and posts work on a very basic level. This is our minimal viable product. 
@@ -64,7 +74,6 @@ By the end of this week we plan on having users and posts work on a very basic l
 
 ## TODO features:
 
-  + Email account confirmation
   + Deleting account 
   + Edit profile 
   + Change password
