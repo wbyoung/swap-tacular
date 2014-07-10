@@ -78,7 +78,7 @@ api.post('/posts', function(req, res){
     userID: user.get('id')
   };
   Post.forge(create).save().then(function() {
-    res.json({});
+    res.json({ status: 'ok' });
   });
   //TODO: write about some stuff
 });

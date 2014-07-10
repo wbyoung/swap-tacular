@@ -14,7 +14,7 @@
   "response": {
     "status": 200,
     "json": {
-      "TODO": "FILL ME"
+      "status": "ok"
     }
   }
 }

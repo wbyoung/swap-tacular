@@ -84,7 +84,7 @@ describe('server', function() {
     }).done(function(){ done(); },done);
   });
 
-  it.skip('posts posts', function(done) {
+  it('posts posts', function(done) {
     var fixture = __fixture('postPOST');
 
     var createUser = function() {
