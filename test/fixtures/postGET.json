@@ -15,7 +15,7 @@
         "user": 1
       }],
       "users": [
-				{ "id":1, "username": "Ariel"}
+        { "id":1, "username": "Ariel"}
       ]
     }
   }
