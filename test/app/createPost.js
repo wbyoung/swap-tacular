@@ -17,4 +17,10 @@ describe('app', function() {
       expect(find('button.create.post').length).to.eql(1);
     });
   });
+  it('will have an input box', function() {
+    visit('/create');
+    andThen(function () {
+      expect(find('input[type="text"].content.post').length).to.eql(1);
+    });
+  });
 });
