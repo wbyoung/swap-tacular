@@ -6,6 +6,7 @@ module.exports = function(App) {
     this.route('login');
     this.route('logout');
     this.route('profile');
+    this.route('create');
   });
   // authenticate any route
   App.ProfileRoute = Ember.Route.extend(Ember.AdmitOne.AuthenticatedRouteMixin, {
