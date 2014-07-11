@@ -30,8 +30,8 @@ describe('app', function() {
 			expect(currentRouteName()).to.eql('profile');
 		});
 		it('shows posts from current user', function() {
-			expect(find('ul.barkContent li:first').text()).to
-			.eql('I\'m really excited about using this new Barker service!');
+			expect(find('ul.postContent li:first').text()).to
+			.eql('I\'m really excited about using this new Swap service!');
 		});
 	});
 });
