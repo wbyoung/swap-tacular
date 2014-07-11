@@ -1,17 +1,28 @@
 @import url(http://fonts.googleapis.com/css?family=Fugaz+One|Open+Sans:400,300);
-@import "caribou";
 
 body {
+  background: #f5f5f7;
+  color: #4a4a53;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: lighter;
+  font-size: 14pt;
   padding-top: 50px;
 }
-.content{
+
+textarea.content.post {
   height: 127px;
   width: 100%;
+  margin: 2em 0em 1em 0em;
 }
 .btn-primary{
   background-color: rgb(34,34,34);
 }
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active {
-    color: #fff;
-    background-color: rgb(74,74,75);
-    border-color: rgb(34,34,34); }
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active {
+  color: #fff;
+  background-color: rgb(74,74,75);
+  border-color: rgb(34,34,34);
+}
