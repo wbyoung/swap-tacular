@@ -11,4 +11,10 @@ describe('app', function() {
       expect(currentRouteName()).to.eql('create');
     });
   });
+  it('will have a create button', function() {
+    visit('/create');
+    andThen(function () {
+      expect(find('button.create.post').length).to.eql(1);
+    });
+  });
 });
