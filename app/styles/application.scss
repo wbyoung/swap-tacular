@@ -4,3 +4,14 @@
 body {
   padding-top: 50px;
 }
+.content{
+  height: 127px;
+  width: 100%;
+}
+.btn-primary{
+  background-color: rgb(34,34,34);
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active {
+    color: #fff;
+    background-color: rgb(74,74,75);
+    border-color: rgb(34,34,34); }
