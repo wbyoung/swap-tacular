@@ -9,6 +9,6 @@ module.exports = function(App) {
 
   App.Post = DS.Model.extend({
   	content: attr('string'),
-  	userID: DS.belongsTo('user')
+  	user: DS.belongsTo('user')
   });
 };
