@@ -62,13 +62,28 @@ Continue Catch-Up and create plan for Week 2. Discuss TODO features.
 ## Week 2
 By the end of this week we plan on having users and posts work on a very basic level. This is our minimal viable product. 
 
-  * TBD
+  * TEST THE FRONT END BETTER!
+  * Put content up
+    * Homepage
+    * Create
+  * Orginize posts by time
+  * Have posts link to other user's profile pages
+    * Change profile pages to display only content from that user
+    * Create new Posts page to display all posts that exist
+    * Logo/Favicon
+  * Front end generator
+
+
 
 ## Week 3
 
   * TBD
 
 ## Week 4
+
+  * TBD
+
+## What is the minimul viable product?
 
   * TBD
 
@@ -82,4 +97,6 @@ By the end of this week we plan on having users and posts work on a very basic l
   + Geolocation - using google mapping
   + User messaging
   + Editable Front End
+  + Motion Captcha
+  + Google authentification
   
