@@ -109,6 +109,8 @@ describe('server', function() {
     .then(function() { return requestFixture(fixture); })
     .spread(function(response, body){
     	var json = JSON.parse(body);
+      expect(json.post.id).to.exist;
+      json.post.id = fixture.response.json.post.id;
       expect(json).to.eql(fixture.response.json);
     })
     .then(function() { return Post.fetchAll(); })

@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('lodash');
 var express = require('express');
 var path = require('path');
 var morgan = require('morgan');
@@ -77,8 +78,8 @@ api.post('/posts', function(req, res){
     content: post,
     userID: user.get('id')
   };
-  Post.forge(create).save().then(function() {
-    res.json({ status: 'ok' });
+  Post.forge(create).save().then(function(post) {
+    res.json({ post: _.pick(post.toJSON(), 'id', 'content') });
   });
   //TODO: write about some stuff
 });

@@ -14,7 +14,10 @@
   "response": {
     "status": 200,
     "json": {
-      "status": "ok"
+      "post": {
+        "id": 1,
+        "content": "HELLO WORLD!"
+      }
     }
   }
 }
