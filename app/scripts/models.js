@@ -6,4 +6,11 @@ module.exports = function(App) {
     username: attr('string'),
     password: attr('string')
   });
+
+  App.Post = DS.Model.extend({
+    user: DS.belongsTo('user'),
+    date: attr('date'),
+    content: attr('string')
+  });
+
 };
