@@ -75,11 +75,11 @@ By the end of this week we plan on having users and posts work on a very basic l
 ## TODO features:
 
   + Deleting account 
-  + Edit profile 
+  + Edit profile / Gravatar setup
   + Change password
-  + Upload pictures with post
+  + Upload pictures with post / AWS?
   + User ratings
-  + Geolocation - mapping
+  + Geolocation - using google mapping
   + User messaging
   + Editable Front End
   
