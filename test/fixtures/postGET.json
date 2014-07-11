@@ -11,7 +11,7 @@
     "json": {
       "posts": [{
         "id": 12,
-        "content": "I'm really excited about using this new Barker service!",
+        "content": "I'm really excited about using this new Swap service!",
         "user": 1
       }],
       "users": [

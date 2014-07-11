@@ -1,5 +1,4 @@
 'use strict';
-var fixture = __fixture('postGET');
 
 describe('app', function() {
 	before(function () {
@@ -20,16 +19,17 @@ describe('app', function() {
 		App.reset();
 	});
 	describe('profile page', function() {
+		var fixture = __fixture('postGET');
 		beforeEach(function() {
-		 	// this.server.respondWith(fixture.request.method, fixture.request.url,
-		 	// 	[200, { 'Content-Type': 'application/json' },
-		 	// 	 JSON.stringify(fixture.response.json)]); 
+		 	this.server.respondWith(fixture.request.method, fixture.request.url,
+		 		[200, { 'Content-Type': 'application/json' },
+		 		 JSON.stringify(fixture.response.json)]); 
 			visit('profile');
 		});
-		it.skip('is on profile page', function() {
+		it('is on profile page', function() {
 			expect(currentRouteName()).to.eql('profile');
 		});
-		it.skip('shows posts from current user', function() {
+		it('shows posts from current user', function() {
 			expect(find('ul.postContent li:first').text()).to
 			.eql('I\'m really excited about using this new Swap service!');
 		});
