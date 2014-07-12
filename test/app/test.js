@@ -30,7 +30,7 @@ describe('app', function() {
 			expect(currentRouteName()).to.eql('profile');
 		});
 		it('shows posts from current user', function() {
-			expect(find('ul.postContent li:first').text()).to
+			expect(find('ul.content li:first').text()).to
 			.eql('I\'m really excited about using this new Swap service!');
 		});
 	});
@@ -45,8 +45,8 @@ describe('app', function() {
 	  it('will have a create button', function() {
 	    expect(find('button.create.post').length).to.eql(1);
 	  });
-	  it('will have an input box', function() {
-	    expect(find('input[type="text"].content.post').length).to.eql(1);
+	  it('will have an textarea box', function() {
+	    expect(find('textarea.content.post').length).to.eql(1);
 	  });
 	});  
 });
