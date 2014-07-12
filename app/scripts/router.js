@@ -27,7 +27,7 @@ module.exports = function(App) {
         });
 
         this.controllerFor('create').set('inputPost', '');
-        post.save();
+        post.save().then(this.transitionTo('index'));
       }
     }
   });

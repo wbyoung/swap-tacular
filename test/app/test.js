@@ -57,6 +57,7 @@ describe('app', function() {
 		it('will have created a post on profile page', function() {
 			fillIn('textarea.content.post', 'HELLO WORLD!');
 			andThen(function() { click('button.create.post'); });
+			andThen(function() { expect(currentRouteName()).to.eql('index'); });
 			andThen(function() { visit('profile'); });
 			andThen(function() {
 				expect(find('ul.content li:first').text()).to
