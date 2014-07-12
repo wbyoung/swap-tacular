@@ -24,7 +24,7 @@ describe('app', function() {
 		 	this.server.respondWith(fixture.request.method, fixture.request.url,
 		 		[200, { 'Content-Type': 'application/json' },
 		 		 JSON.stringify(fixture.response.json)]); 
-			visit('profile');
+			visit('/profile');
 		});
 		it('is on profile page', function() {
 			expect(currentRouteName()).to.eql('profile');
@@ -49,4 +49,19 @@ describe('app', function() {
 	    expect(find('textarea.content.post').length).to.eql(1);
 	  });
 	});  
+
+	describe('post on create', function() {
+		beforeEach(function() {
+			visit('/create');
+		});
+		it('will have created a post on profile page', function() {
+			fillIn('textarea.content.post', 'HELLO WORLD!');
+			andThen(function() { click('button.create.post'); });
+			andThen(function() { visit('profile'); });
+			andThen(function() {
+				expect(find('ul.content li:first').text()).to
+				.eql('HELLO WORLD!');
+			});
+		});
+	});
 });
