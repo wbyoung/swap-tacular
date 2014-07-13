@@ -62,6 +62,7 @@ Continue Catch-Up and create plan for Week 2. Discuss TODO features.
 ## Week 2
 By the end of this week we plan on having users and posts work on a very basic level. This is our minimal viable product. 
 
+  * Find out why the two tests are failing
   * TEST THE FRONT END BETTER!
   * Put content up
     * Homepage
