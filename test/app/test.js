@@ -24,13 +24,13 @@ describe('app', function() {
 		 	this.server.respondWith(fixture.request.method, fixture.request.url,
 		 		[200, { 'Content-Type': 'application/json' },
 		 		 JSON.stringify(fixture.response.json)]); 
-			visit('profile');
+			visit('/profile');
 		});
 		it('is on profile page', function() {
 			expect(currentRouteName()).to.eql('profile');
 		});
 		it('shows posts from current user', function() {
-			expect(find('ul.postContent li:first').text()).to
+			expect(find('ul.content li:first').text()).to
 			.eql('I\'m really excited about using this new Swap service!');
 		});
 	});
@@ -45,8 +45,24 @@ describe('app', function() {
 	  it('will have a create button', function() {
 	    expect(find('button.create.post').length).to.eql(1);
 	  });
-	  it('will have an input box', function() {
-	    expect(find('input[type="text"].content.post').length).to.eql(1);
+	  it('will have an textarea box', function() {
+	    expect(find('textarea.content.post').length).to.eql(1);
 	  });
 	});  
+
+	describe('post on create', function() {
+		beforeEach(function() {
+			visit('/create');
+		});
+		it('will have created a post on profile page', function() {
+			fillIn('textarea.content.post', 'HELLO WORLD!');
+			andThen(function() { click('button.create.post'); });
+			andThen(function() { expect(currentRouteName()).to.eql('index'); });
+			andThen(function() { visit('profile'); });
+			andThen(function() {
+				expect(find('ul.content li:first').text()).to
+				.eql('HELLO WORLD!');
+			});
+		});
+	});
 });
