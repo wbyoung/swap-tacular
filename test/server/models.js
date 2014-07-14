@@ -1,15 +1,12 @@
 'use strict';
 
-var _ = require('lodash');
+// var _ = require('lodash');
 var expect = require('chai').expect;
-var util = require('util');
 var bluebird = require('bluebird'), Promise = bluebird;
 var models = require('../../server/models');
 
 var Post = models.Post,
-    User = models.User,
-    Token = models.Token;
-
+    User = models.User;
 
 describe('server', function() {
   afterEach(function(done) {

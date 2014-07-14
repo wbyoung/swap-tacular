@@ -25,7 +25,7 @@ Post = bookshelf.Model.extend({
   user: function() {
     return this.belongsTo(User, 'userID');
   },
-  hasTimestamps: ['created_at', 'updated_at'],
+  hasTimestamps: true,
   tableName: 'posts'
 });
 
