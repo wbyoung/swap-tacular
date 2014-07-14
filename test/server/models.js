@@ -49,7 +49,6 @@ describe('server', function() {
       expect(collection.at(0).get('content')).to.eql('what is up');    
       expect(collection.at(0).get('created_at')).to.exist;    
       expect(collection.at(0).get('updated_at')).to.exist;
-      expect(collection.at(0).get('updated_at')).to.eql('blah');     
     })
     .done(function() { done(); }, done);
   });
