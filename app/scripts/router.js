@@ -10,6 +10,10 @@ module.exports = function(App) {
   });
   // authenticate any route
   App.ProfileRoute = Ember.Route.extend(Ember.AdmitOne.AuthenticatedRouteMixin, {
+
+  });
+
+  App.IndexRoute = Ember.Route.extend({
     model: function() {
       return this.store.find('post');
     }

@@ -18,18 +18,18 @@ describe('app', function() {
 	afterEach(function() {
 		App.reset();
 	});
-	describe('profile page', function() {
+	describe('home page', function() {
 		var fixture = __fixture('postGET');
 		beforeEach(function() {
 		 	this.server.respondWith(fixture.request.method, fixture.request.url,
 		 		[200, { 'Content-Type': 'application/json' },
 		 		 JSON.stringify(fixture.response.json)]); 
-			visit('/profile');
+			visit('/');
 		});
-		it('is on profile page', function() {
-			expect(currentRouteName()).to.eql('profile');
+		it('is on home page', function() {
+			expect(currentRouteName()).to.eql('index');
 		});
-		it('shows posts from current user', function() {
+		it('shows posts from users', function() {
 			expect(find('ul.content li:first').text()).to
 			.eql('I\'m really excited about using this new Swap service!');
 		});
@@ -54,11 +54,10 @@ describe('app', function() {
 		beforeEach(function() {
 			visit('/create');
 		});
-		it('will have created a post on profile page', function() {
+		it('will have created a post on index page', function() {
 			fillIn('textarea.content.post', 'HELLO WORLD!');
 			andThen(function() { click('button.create.post'); });
 			andThen(function() { expect(currentRouteName()).to.eql('index'); });
-			andThen(function() { visit('profile'); });
 			andThen(function() {
 				expect(find('ul.content li:first').text()).to
 				.eql('HELLO WORLD!');
