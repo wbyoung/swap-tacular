@@ -61,6 +61,7 @@ describe('app', function() {
 			andThen(function() {
 				expect(find('ul.content li:first').text()).to
 				.eql('HELLO WORLD!');
+				expect(find('h3.timestamp').text()).to.eql('timestamp');
 			});
 		});
 	});
