@@ -73,6 +73,11 @@ By the end of this week we plan on having users and posts work on a very basic l
     * Logo/Favicon
 
 ### Monday
+  * Move posts from profile to home
+  * Add timestamps to posts
+  * Sanatize user input via posts
+  * Disscuss expectations of server/client APIs
+  * Improve current tests
 
 ### Tuesday
 

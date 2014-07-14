@@ -44,7 +44,7 @@ describe('server', function() {
       return models._bookshelf.knex('users').del();
     }).done(function() { done(); }, done);
   });
-  it('will get posts', function(done){
+  it.skip('will get posts', function(done){
     var fixture = __fixture('postGET');
 
     var userSavePromises = function() {
@@ -92,7 +92,7 @@ describe('server', function() {
     }).done(function(){ done(); },done);
   });
 
-  it('posts posts', function(done) {
+  it.skip('posts posts', function(done) {
     var fixture = __fixture('postPOST');
 
     var createUser = function() {
