@@ -77,13 +77,17 @@ describe('server', function() {
     })
     .spread(function(response, body){
       var json = JSON.parse(body);
+      expect(json.posts[0].id).to.exist;
+      expect(json.posts[0].user).to.exist;
+      expect(json.users[0].id).to.exist;
       json.posts[0].id = fixture.response.json.posts[0].id;
       json.posts[0].user = fixture.response.json.posts[0].user;
       json.users[0].id = fixture.response.json.users[0].id;
       var createdAt = 'created_at', updatedAt = 'updated_at'; // avoiding JSHint errors
+      expect(fixture.response.json.posts[0][createdAt]).to.exist;
+      expect(fixture.response.json.posts[0][updatedAt]).to.exist;
       fixture.response.json.posts[0][createdAt] = json.posts[0][createdAt];
       fixture.response.json.posts[0][updatedAt] = json.posts[0][updatedAt];
-      
       expect(json).to.eql(fixture.response.json);
     }).done(function(){ done(); },done);
   });
@@ -115,6 +119,8 @@ describe('server', function() {
     	var json = JSON.parse(body);
       expect(json.post.id).to.exist;
       json.post.id = fixture.response.json.post.id;
+      expect(json.post.user).to.exist;
+      expect(json.post.createdAt).to.exist;
       expect(json).to.eql(fixture.response.json);
     })
     .then(function() { return Post.fetchAll(); })

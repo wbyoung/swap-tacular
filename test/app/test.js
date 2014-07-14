@@ -59,7 +59,24 @@ describe('app', function() {
 		});
 		it('will have created a post on index page', function() {
 			fillIn('textarea.content.post', 'HELLO WORLD!');
+
+			// before clicking create, we should set up to fake the
+			// POST /api/posts
+
 			andThen(function() { click('button.create.post'); });
+
+			// - check to see that one request was made to the fake server.
+			// - check to see that the one request that was made was the
+			//   fake one we set up before?
+			// - check all this (by looking at this.server.requests[n]):
+			// server expectations for POST /api/posts
+			//   auhorization token must be present
+			//   json content must be present with:
+			//     post object with:
+			//       content
+			//       other properties can be present and are ignored
+			//     other proerties can be present and are ignored
+
 			andThen(function() { expect(currentRouteName()).to.eql('index'); });
 			andThen(function() {
 				expect(find('ul.content li:first').text()).to

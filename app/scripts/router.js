@@ -44,7 +44,9 @@ module.exports = function(App) {
         });
 
         this.controllerFor('create').set('inputPost', '');
-        post.save().then(this.transitionTo('index'));
+        post.save().then(function() {
+          this.transitionTo('index');
+        });
       }
     }
   });
