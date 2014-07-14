@@ -20,7 +20,9 @@ module.exports = function(App) {
   });
 
   App.IndexController = Ember.ArrayController.extend({
-    itemController: 'post'
+    itemController: 'post',
+    sortProperties: ['created_at'],
+    sortAscending: false
   });
 
   App.PostController = Ember.ObjectController.extend({
@@ -55,7 +57,7 @@ module.exports = function(App) {
       }
     }
   });
-  
+
   App.LogoutRoute = Ember.Route.extend({
     beforeModel: function() {
       this._super();
