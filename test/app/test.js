@@ -33,6 +33,9 @@ describe('app', function() {
 			expect(find('ul.content li:first').text()).to
 			.eql('I\'m really excited about using this new Swap service!');
 		});
+		it('shows posts in order starting with the most recent', function(){
+			//TODO: expect firstPost.date > secondPost.date  
+		});
 	});
 
 	describe('create page', function() {
