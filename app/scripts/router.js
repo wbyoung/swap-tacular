@@ -19,6 +19,20 @@ module.exports = function(App) {
     }
   });
 
+  App.IndexController = Ember.ArrayController.extend({
+    itemController: 'post'
+  });
+
+  App.PostController = Ember.ObjectController.extend({
+    message: Ember.computed.alias('model.content'), // TODO: content is a name that Ember doesn't like
+    messageHTML: function() {
+      var text = this.get('message');
+      text = Ember.Handlebars.Utils.escapeExpression(text);
+      text = text.replace(/(\r\n|\n|\r)/gm, '<br>');
+      return new Ember.Handlebars.SafeString(text);
+    }.property('message')
+  });
+
   App.CreateRoute = Ember.Route.extend({
     // model: function() {
     //   return this.store.find('post');
