@@ -62,7 +62,6 @@ Continue Catch-Up and create plan for Week 2. Discuss TODO features.
 ## Week 2
 By the end of this week we plan on having users and posts work on a very basic level. This is our minimal viable product. 
 
-  * Find out why the two tests are failing
   * TEST THE FRONT END BETTER!
   * Put content up
     * Homepage
@@ -72,8 +71,27 @@ By the end of this week we plan on having users and posts work on a very basic l
     * Change profile pages to display only content from that user
     * Create new Posts page to display all posts that exist
     * Logo/Favicon
-  * Front end generator
 
+### Monday
+
+### Tuesday
+
+  * server expectations for GET /api/posts
+    * authorization token optional
+
+  * client expectations for GET /api/posts
+    * must have posts
+    * posts must be an array
+    * each post object must have:
+      * id
+      * user
+      * content
+      * createdAt
+    * must have users
+    * any referenced user from the list of posts will be included in users
+    * each user object must have:
+      * id
+      * username
 
 
 ## Week 3
