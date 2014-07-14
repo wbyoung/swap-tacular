@@ -9,6 +9,7 @@ module.exports = function(App) {
 
   App.Post = DS.Model.extend({
   	content: attr('string'),
+  	created_at: attr('date'),
   	user: DS.belongsTo('user')
   });
 };

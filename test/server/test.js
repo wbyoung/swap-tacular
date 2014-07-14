@@ -80,7 +80,7 @@ describe('server', function() {
       json.posts[0].id = fixture.response.json.posts[0].id;
       json.posts[0].user = fixture.response.json.posts[0].user;
       json.users[0].id = fixture.response.json.users[0].id;
-      var createdAt = 'created_at', updatedAt = 'updated_at';
+      var createdAt = 'created_at', updatedAt = 'updated_at'; // avoiding JSHint errors
       fixture.response.json.posts[0][createdAt] = json.posts[0][createdAt];
       fixture.response.json.posts[0][updatedAt] = json.posts[0][updatedAt];
       

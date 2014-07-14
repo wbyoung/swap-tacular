@@ -34,9 +34,6 @@ module.exports = function(App) {
   });
 
   App.CreateRoute = Ember.Route.extend({
-    // model: function() {
-    //   return this.store.find('post');
-    // },
     actions: {
       post: function() {
         var content = this.controllerFor('create').get('inputPost');
@@ -58,6 +55,7 @@ module.exports = function(App) {
       }
     }
   });
+  
   App.LogoutRoute = Ember.Route.extend({
     beforeModel: function() {
       this._super();
