@@ -13,8 +13,8 @@
         "id": 12,
         "content": "I'm really excited about using this new Swap service!",
         "user": 1,
-        "createdAt": "Some timestamp",
-        "updatedAt": "Some newer timestamp"
+        "createdAt": "2014-07-15T17:35:31.654Z",
+        "updatedAt": "2014-07-15T17:35:31.654Z"
       }],
       "users": [
         { "id":1, "username": "Ariel"}

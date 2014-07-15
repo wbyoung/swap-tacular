@@ -15,6 +15,8 @@ var Post = models.Post,
     User = models.User,
     Token = models.Token;
 
+var dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
+
 var requestFixture = function(fixture) {
   var requestOptions = {
     url: baseURL + fixture.request.url,
@@ -77,21 +79,22 @@ describe('server', function() {
     })
     .spread(function(response, body){
       var json = JSON.parse(body);
-      expect(json.posts[0].id).to.exist;
-      expect(json.posts[0].user).to.exist;
-      expect(json.users[0].id).to.exist;
+      expect(json.posts[0].id).to.be.a('number');
+      expect(json.posts[0].user).to.be.a('number');
+      expect(json.users[0].id).to.be.a('number');
       json.posts[0].id = fixture.response.json.posts[0].id;
       json.posts[0].user = fixture.response.json.posts[0].user;
       json.users[0].id = fixture.response.json.users[0].id;
-      expect(fixture.response.json.posts[0].createdAt).to.exist;
-      expect(fixture.response.json.posts[0].updatedAt).to.exist;
+      expect(fixture.response.json.posts[0].createdAt).to.match(dateRegex);
+      expect(fixture.response.json.posts[0].updatedAt).to.match(dateRegex);
+      //TODO refactoring
       fixture.response.json.posts[0].createdAt = json.posts[0].createdAt;
       fixture.response.json.posts[0].updatedAt = json.posts[0].updatedAt;
       expect(json).to.eql(fixture.response.json);
     }).done(function(){ done(); },done);
   });
 
-  it.skip('posts posts', function(done) {
+  it('posts posts', function(done) {
     var fixture = __fixture('postPOST');
 
     var createUser = function() {
@@ -116,10 +119,17 @@ describe('server', function() {
     .then(function() { return requestFixture(fixture); })
     .spread(function(response, body){
     	var json = JSON.parse(body);
-      expect(json.post.id).to.exist;
+      expect(json.post.id).to.be.a('number');
+      expect(json.post.user).to.be.a('number');
+      expect(json.post.createdAt).to.match(dateRegex);
+      expect(json.post.updatedAt).to.match(dateRegex);
+
+      // can't match generated data, so just copy from fixture
       json.post.id = fixture.response.json.post.id;
-      expect(json.post.user).to.exist;
-      expect(json.post.createdAt).to.exist;
+      json.post.createdAt = fixture.response.json.post.createdAt;
+      json.post.updatedAt = fixture.response.json.post.updatedAt;
+      json.post.user = fixture.response.json.post.user;
+
       expect(json).to.eql(fixture.response.json);
     })
     .then(function() { return Post.fetchAll(); })
