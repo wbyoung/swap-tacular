@@ -58,6 +58,11 @@ api.get('/posts', function(req, res){
       users.push(model.user);
       model.user = model.userID;
       delete model.userID;
+      var cAt = 'created_at', uAt = 'updated_at';
+      model.createdAt = model[cAt];
+      model.updatedAt = model[uAt];
+      delete model[cAt];
+      delete model[uAt];
       return model;
     });
     res.json({posts: posts, users: users });
@@ -79,7 +84,7 @@ api.post('/posts', function(req, res){
     userID: user.get('id')
   };
   Post.forge(create).save().then(function(post) {
-    res.json({ post: _.pick(post.toJSON(), 'id', 'content') });
+    res.json({ post: _.pick(post.toJSON(), 'id', 'content'), user: user.toJSON().username });
   });
   //TODO: write about some stuff
 });

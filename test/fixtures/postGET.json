@@ -12,7 +12,9 @@
       "posts": [{
         "id": 12,
         "content": "I'm really excited about using this new Swap service!",
-        "user": 1
+        "user": 1,
+        "createdAt": "Some timestamp",
+        "updatedAt": "Some newer timestamp"
       }],
       "users": [
         { "id":1, "username": "Ariel"}

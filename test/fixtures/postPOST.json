@@ -16,7 +16,9 @@
     "json": {
       "post": {
         "id": 1,
-        "content": "HELLO WORLD!"
+        "content": "HELLO WORLD!",
+        "user": "Somebody Here",
+        "createdAt": "Some timestamp"
       }
     }
   }
