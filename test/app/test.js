@@ -55,7 +55,7 @@ describe('app', function() {
 		beforeEach(function() {
 			visit('/create');
 		});
-		it.only('will have created a post on index page', function() {
+		it.skip('will have created a post on index page', function() {
 			fillIn('textarea.content.post', 'HELLO WORLD!');
 
 			// before clicking create, we should set up to fake the
