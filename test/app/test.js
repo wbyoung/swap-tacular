@@ -1,13 +1,10 @@
 'use strict';
 
 describe('app', function() {
-	before(function () {
+	beforeEach(function() {
 		this.server = sinon.fakeServer.create();
 		this.server.autoRespond = true;
-	});
-	after(function () { this.server.restore(); });
 
-	beforeEach(function() {
 		var container = applicationContainer();
 		var session = container.lookup('auth-session:main');
 		session.set('content', {
@@ -15,7 +12,8 @@ describe('app', function() {
 		  token: 'fake-token'
 		});
 	});
-	afterEach(function() {
+	afterEach(function() {				
+		this.server.restore();
 		App.reset();
 	});
 	describe('home page', function() {
@@ -57,14 +55,27 @@ describe('app', function() {
 		beforeEach(function() {
 			visit('/create');
 		});
-		it.skip('will have created a post on index page', function() {
+		it.only('will have created a post on index page', function() {
 			fillIn('textarea.content.post', 'HELLO WORLD!');
 
 			// before clicking create, we should set up to fake the
 			// POST /api/posts
+			var fixture = __fixture('postPOST');
+			this.server.respondWith(fixture.request.method, fixture.request.url,
+		 		[200, { 'Content-Type': 'application/json' },
+		 		 JSON.stringify(fixture.response.json)]);
 
-			andThen(function() { click('button.create.post'); });
-
+			click('button.create.post');
+			andThen(function() { 
+				this.server.requests.forEach(function(request) {
+					console.log(request);
+				});
+				expect(this.server.requests.length).to.eql(1);
+				expect(this.server.requests[0].method).to.eql(fixture.request.method);
+				expect(this.server.requests[0].url).to.eql(fixture.request.url);
+				expect(this.server.requests[0].requestHeaders).to.contain(fixture.request.headers);
+	      expect(JSON.parse(this.server.requests[0].requestBody)).to.eql(fixture.request.json);
+			}.bind(this));
 			// - check to see that one request was made to the fake server.
 			// - check to see that the one request that was made was the
 			//   fake one we set up before?
