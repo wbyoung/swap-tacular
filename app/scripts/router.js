@@ -21,7 +21,7 @@ module.exports = function(App) {
 
   App.IndexController = Ember.ArrayController.extend({
     itemController: 'post',
-    sortProperties: ['created_at'],
+    sortProperties: ['createdAt'],
     sortAscending: false
   });
 
