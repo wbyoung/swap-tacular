@@ -38,7 +38,6 @@ module.exports = function(App) {
   App.CreateRoute = Ember.Route.extend({
     actions: {
       post: function() {
-        console.log('posting');
         var self = this;
         var content = this.controllerFor('create').get('inputPost');
         var post = this.store.createRecord('post', {

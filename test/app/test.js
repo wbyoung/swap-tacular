@@ -16,12 +16,18 @@ describe('app', function() {
 		this.server.restore();
 		App.reset();
 	});
+
+	var sendFakeRequest = function(fakeServer, fixtureURL) {
+		var fixture = __fixture(fixtureURL);
+		fakeServer.respondWith(fixture.request.method, fixture.request.url,
+		 		[200, { 'Content-Type': 'application/json' },
+		 		 JSON.stringify(fixture.response.json)]); 
+	};
+
 	describe('home page', function() {
 		var fixture = __fixture('postGET');
 		beforeEach(function() {
-		 	this.server.respondWith(fixture.request.method, fixture.request.url,
-		 		[200, { 'Content-Type': 'application/json' },
-		 		 JSON.stringify(fixture.response.json)]); 
+			sendFakeRequest(this.server, 'postGET');
 			visit('/');
 		});
 		it('is on home page', function() {
@@ -57,6 +63,7 @@ describe('app', function() {
 	    expect(find('textarea.content.post').length).to.eql(1);
 	  });
 	});  
+
 	describe('orders posts in descending order', function () {
 		
 	});
@@ -69,6 +76,7 @@ describe('app', function() {
 	describe('shows users own post on profile page', function () {
 		
 	});
+	
 	describe('post on create', function() {
 		beforeEach(function() {
 			visit('/create');
@@ -79,14 +87,8 @@ describe('app', function() {
 			// before clicking create, we should set up to fake the
 			// POST /api/posts
 			var fixture = __fixture('postPOST');
-			this.server.respondWith(fixture.request.method, fixture.request.url,
-		 		[200, { 'Content-Type': 'application/json' },
-		 		 JSON.stringify(fixture.response.json)]);
-
-			var getFixture = __fixture('postGET');
-			this.server.respondWith(getFixture.request.method, getFixture.request.url,
-		 		[200, { 'Content-Type': 'application/json' },
-		 		 JSON.stringify(getFixture.response.json)]);
+			sendFakeRequest(this.server, 'postPOST');
+			sendFakeRequest(this.server, 'postGET');
 
 			click('button.create.post');
 			andThen(function() { 
