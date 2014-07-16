@@ -3,9 +3,6 @@
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
-   "scripts": {
-    "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --report $(if [ \"$TRAVIS\" ]; then echo lcovonly; else echo html; fi) -- && if [ \"$TRAVIS\" ]; then cat ./coverage/lcov.info | ./node_modules/.bin/coveralls; fi"
-  },
   "dependencies": {
     "jquery": "~2.1.0",
     "bootstrap-sass": "~3.0.2",
