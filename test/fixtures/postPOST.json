@@ -16,7 +16,10 @@
     "json": {
       "post": {
         "id": 1,
-        "content": "HELLO WORLD!"
+        "content": "HELLO WORLD!",
+        "user": 34,
+        "createdAt": "2014-07-15T17:35:31.654Z",
+        "updatedAt": "2014-07-15T17:35:31.654Z"
       }
     }
   }

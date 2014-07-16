@@ -1,6 +1,6 @@
 'use strict';
 
-var _ = require('lodash');
+// var _ = require('lodash');
 var express = require('express');
 var path = require('path');
 var morgan = require('morgan');
@@ -58,6 +58,11 @@ api.get('/posts', function(req, res){
       users.push(model.user);
       model.user = model.userID;
       delete model.userID;
+      var cAt = 'created_at', uAt = 'updated_at';
+      model.createdAt = model[cAt]; //this coult be refractored into a helper function
+      model.updatedAt = model[uAt];
+      delete model[cAt];
+      delete model[uAt];
       return model;
     });
     res.json({posts: posts, users: users });
@@ -79,7 +84,16 @@ api.post('/posts', function(req, res){
     userID: user.get('id')
   };
   Post.forge(create).save().then(function(post) {
-    res.json({ post: _.pick(post.toJSON(), 'id', 'content') });
+    var newPost = post.toJSON();
+    var cAt = 'created_at', uAt = 'updated_at';
+    newPost.createdAt =  newPost[cAt];
+    newPost.updatedAt = newPost[uAt];
+    delete newPost[cAt];
+    delete newPost[uAt];
+    newPost.user = newPost.userID;
+    delete newPost.userID;
+    // res.json({ post: _.pick(post.toJSON(), 'id', 'content') });
+    res.json({ post: newPost});
   });
   //TODO: write about some stuff
 });

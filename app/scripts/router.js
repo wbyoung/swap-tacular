@@ -21,7 +21,7 @@ module.exports = function(App) {
 
   App.IndexController = Ember.ArrayController.extend({
     itemController: 'post',
-    sortProperties: ['created_at'],
+    sortProperties: ['createdAt'],
     sortAscending: false
   });
 
@@ -38,6 +38,8 @@ module.exports = function(App) {
   App.CreateRoute = Ember.Route.extend({
     actions: {
       post: function() {
+        console.log('posting');
+        var self = this;
         var content = this.controllerFor('create').get('inputPost');
         var post = this.store.createRecord('post', {
           content: content
@@ -45,7 +47,7 @@ module.exports = function(App) {
 
         this.controllerFor('create').set('inputPost', '');
         post.save().then(function() {
-          this.transitionTo('index');
+          self.transitionTo('index');
         });
       }
     }
