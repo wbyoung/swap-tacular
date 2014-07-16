@@ -94,7 +94,7 @@ describe('app', function() {
 				expect(this.server.requests[0].method).to.eql(fixture.request.method);
 				expect(this.server.requests[0].url).to.eql(fixture.request.url);
 				// expect(this.server.requests[0].requestHeaders).to.contain(fixture.request.headers);
-	   //    expect(JSON.parse(this.server.requests[0].requestBody)).to.eql(fixture.request.json);
+				// expect(JSON.parse(this.server.requests[0].requestBody)).to.eql(fixture.request.json);
 			}.bind(this));
 			// - check to see that one request was made to the fake server.
 			// - check to see that the one request that was made was the

@@ -141,11 +141,14 @@ describe('server', function() {
     })
     .done(function() { done(); }, done);
   });
-  describe('deletes a post', function () {
-    
-  });
+
   describe('edits a post', function () {
     
   });
+
+  describe('deletes a post', function () {
+    
+  });
+
 });
 
