@@ -1,0 +1,39 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/posts",
+    "headers": {
+    },
+    "json": null
+  },
+  "response": {
+    "status": 200,
+    "json": {
+      "posts": [{
+        "id": 14,
+        "content": "I'm really excited about using this new Swap service!",
+        "user": 1,
+        "createdAt": "2014-07st
+        -14T17:35:31.654Z",
+        "updatedAt": "2014-07-14T17:35:31.654Z"
+      },
+      {
+        "id": 13,
+        "content": "I'm really excited about using this new Swap service!",
+        "user": 1,
+        "createdAt": "2014-07-14T17:35:31.654Z",
+        "updatedAt": "2014-07-14T17:35:31.654Z"
+      },
+      {
+        "id": 12,
+        "content": "I'm really excited about using this new Swap service!",
+        "user": 1,
+        "createdAt": "2014-07-14T17:35:31.654Z",
+        "updatedAt": "2014-07-14T17:35:31.654Z"
+      }],
+      "users": [
+        { "id":1, "username": "Ariel"}
+      ]
+    }
+  }
+}
