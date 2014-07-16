@@ -34,6 +34,13 @@ describe('app', function() {
 		it('shows posts in order starting with the most recent', function(){
 			//TODO: expect firstPost.date > secondPost.date  
 		});
+		describe('api requests', function() {
+			it('makes one request', function() {
+				expect(this.server.requests.length).to.eql(1);
+				expect(this.server.requests[0].method).to.eql(fixture.request.method);
+				expect(this.server.requests[0].url).to.eql(fixture.request.url);
+			});
+		});
 	});
 
 	describe('create page', function() {
@@ -83,10 +90,7 @@ describe('app', function() {
 
 			click('button.create.post');
 			andThen(function() { 
-				this.server.requests.forEach(function(request) {
-					console.log(request);
-				});
-				expect(this.server.requests.length).to.eql(3);
+				expect(this.server.requests.length).to.eql(2);
 				expect(this.server.requests[0].method).to.eql(fixture.request.method);
 				expect(this.server.requests[0].url).to.eql(fixture.request.url);
 				// expect(this.server.requests[0].requestHeaders).to.contain(fixture.request.headers);
