@@ -33,5 +33,6 @@ module.exports = {
   User: User,
   Token: Token,
   Post: Post,
+  _kenx: knex,
   _bookshelf: bookshelf // only for testing
 };
