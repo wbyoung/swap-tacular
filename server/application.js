@@ -90,7 +90,9 @@ api.post('/posts', function(req, res){
   Post.forge(create).save().then(function(post) {
     var newPost = post.toJSON();
     renameProperties(newPost);
-    res.json({ post: newPost});
+    var sendUser = user.toJSON();
+    delete sendUser.passwordDigest;
+    res.json({ post: newPost, users: [sendUser]});
   });
 });
 

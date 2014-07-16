@@ -129,6 +129,8 @@ describe('server', function() {
       json.post.createdAt = fixture.response.json.post.createdAt;
       json.post.updatedAt = fixture.response.json.post.updatedAt;
       json.post.user = fixture.response.json.post.user;
+      json.users[0].id = fixture.response.json.users[0].id;
+      json.users[0].username = fixture.response.json.users[0].username;
 
       expect(json).to.eql(fixture.response.json);
     })
