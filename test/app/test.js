@@ -55,7 +55,7 @@ describe('app', function() {
 		beforeEach(function() {
 			visit('/create');
 		});
-		it.skip('will have created a post on index page', function() {
+		it('will have created a post on index page', function() {
 			fillIn('textarea.content.post', 'HELLO WORLD!');
 
 			// before clicking create, we should set up to fake the
@@ -97,7 +97,7 @@ describe('app', function() {
 			andThen(function() {
 				expect(find('ul.content li:first').text()).to
 				.eql('HELLO WORLD!');
-				expect(find('h6.timestamp').text()).to.eql('Tue Jul 15 2014 10:35:31 GMT-0700 (PDT)');
+				expect(find('h6.timestamp:first').text()).to.eql('Tue Jul 15 2014 10:35:31 GMT-0700 (PDT)');
 			});
 		});
 	});
