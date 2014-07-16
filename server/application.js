@@ -28,9 +28,15 @@ app.use(bodyParser.json());
 app.use(methodOverride());
 
 
-var renameProperty = function(object, currentName, newName) {
-  object[newName] = object[currentName];
-  delete object[currentName];
+var renameProperties = function(object){
+  var renameProperty = function(object, currentName, newName) {
+    object[newName] = object[currentName];
+    delete object[currentName];
+  };
+  var properties = [['created_at', 'createdAt'], ['updated_at', 'updatedAt'], ['userID', 'user']];
+    properties.forEach(function(pair){
+      renameProperty(object, pair[0], pair[1]);
+    });
 };
 
 var models = require('./models'),
@@ -60,9 +66,7 @@ api.get('/posts', function(req, res){
     var posts = collection.toJSON().map(function(model) {
       delete model.user.passwordDigest;
       users.push(model.user);
-      renameProperty(model, 'created_at', 'createdAt');
-      renameProperty(model, 'updated_at', 'updatedAt');
-      renameProperty(model, 'userID', 'user');
+      renameProperties(model);
       return model;
     });
     res.json({posts: posts, users: users });
@@ -85,9 +89,7 @@ api.post('/posts', function(req, res){
   };
   Post.forge(create).save().then(function(post) {
     var newPost = post.toJSON();
-    renameProperty(newPost, 'created_at', 'createdAt');
-    renameProperty(newPost, 'updated_at', 'updatedAt');
-    renameProperty(newPost, 'userID', 'user');
+    renameProperties(newPost);
     res.json({ post: newPost});
   });
 });
