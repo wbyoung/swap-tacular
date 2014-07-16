@@ -98,7 +98,6 @@ By the end of this week we plan on having users and posts work on a very basic l
       * id
       * username
 
-
 ## Week 3
 
   * TBD

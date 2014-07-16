@@ -1,6 +1,5 @@
 'use strict';
 
-// var _ = require('lodash');
 var express = require('express');
 var path = require('path');
 var morgan = require('morgan');
@@ -29,6 +28,11 @@ app.use(bodyParser.json());
 app.use(methodOverride());
 
 
+var renameProperty = function(object, currentName, newName) {
+  object[newName] = object[currentName];
+  delete object[currentName];
+};
+
 var models = require('./models'),
     User = models.User,
     Post = models.Post;
@@ -56,13 +60,9 @@ api.get('/posts', function(req, res){
     var posts = collection.toJSON().map(function(model) {
       delete model.user.passwordDigest;
       users.push(model.user);
-      model.user = model.userID;
-      delete model.userID;
-      var cAt = 'created_at', uAt = 'updated_at';
-      model.createdAt = model[cAt]; //this coult be refractored into a helper function
-      model.updatedAt = model[uAt];
-      delete model[cAt];
-      delete model[uAt];
+      renameProperty(model, 'created_at', 'createdAt');
+      renameProperty(model, 'updated_at', 'updatedAt');
+      renameProperty(model, 'userID', 'user');
       return model;
     });
     res.json({posts: posts, users: users });
@@ -85,17 +85,11 @@ api.post('/posts', function(req, res){
   };
   Post.forge(create).save().then(function(post) {
     var newPost = post.toJSON();
-    var cAt = 'created_at', uAt = 'updated_at';
-    newPost.createdAt =  newPost[cAt];
-    newPost.updatedAt = newPost[uAt];
-    delete newPost[cAt];
-    delete newPost[uAt];
-    newPost.user = newPost.userID;
-    delete newPost.userID;
-    // res.json({ post: _.pick(post.toJSON(), 'id', 'content') });
+    renameProperty(newPost, 'created_at', 'createdAt');
+    renameProperty(newPost, 'updated_at', 'updatedAt');
+    renameProperty(newPost, 'userID', 'user');
     res.json({ post: newPost});
   });
-  //TODO: write about some stuff
 });
 
 // application routes
