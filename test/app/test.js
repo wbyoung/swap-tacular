@@ -77,14 +77,25 @@ describe('app', function() {
 			expect(find('ul.content:last li').text()).to.eql('This should be second');
 		});
 	});
+
 	describe('edits posts', function () {
-		
+		var fixture = __fixture('postGET');
+		beforeEach(function() {
+			sendFakeRequest(this.server, 'postGET');
+			visit('/profile');
+		});
+		it('is on the profile page', function() {
+			expect(currentRouteName()).to.eql('profile');
+		});
+		it('has an edit button', function() {
+			expect(find('button.edit.post').length).to.eql(1);
+		});
 	});
-	describe('deletes posts', function () {
+	describe('deletes posts', function() {
 		
 	});
 
-	describe('orders posts in descending order', function () {
+	describe('orders posts in descending order', function() {
 		beforeEach(function() {
 			sendFakeRequest(this.server, 'postOrder');
 			visit('/');
