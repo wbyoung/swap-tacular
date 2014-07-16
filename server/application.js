@@ -33,10 +33,13 @@ var renameProperties = function(object){
     object[newName] = object[currentName];
     delete object[currentName];
   };
-  var properties = [['created_at', 'createdAt'], ['updated_at', 'updatedAt'], ['userID', 'user']];
-    properties.forEach(function(pair){
+  var properties = [
+    ['created_at', 'createdAt'], 
+    ['updated_at', 'updatedAt'], 
+    ['userID', 'user']];
+  properties.forEach(function(pair){
       renameProperty(object, pair[0], pair[1]);
-    });
+  });
 };
 
 var models = require('./models'),
