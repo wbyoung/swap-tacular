@@ -19,7 +19,7 @@
       {
         "id": 13,
         "content": "This should be last",
-        "user": 1,
+        "user": 2,
         "createdAt": "2014-07-10T17:35:31.654Z",
         "updatedAt": "2014-07-10T17:35:31.654Z"
       },
@@ -31,7 +31,8 @@
         "updatedAt": "2014-07-14T17:35:31.654Z"
       }],
       "users": [
-        { "id":1, "username": "Ariel"}
+        { "id":1, "username": "fake-username"},
+        { "id":2, "username": "Tian"}
       ]
     }
   }

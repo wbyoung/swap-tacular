@@ -64,8 +64,18 @@ describe('app', function() {
 	  });
 	});  
 
-	describe('shows users own post on profile page', function () {
-		
+	describe('shows user\'s own post on profile page', function () {
+		beforeEach(function() {
+			sendFakeRequest(this.server, 'postOrder');
+			visit('/profile');
+		});
+		it('will have all the posts by fake-username', function() {
+			expect(currentRouteName()).to.eql('profile');
+			expect(find('h3.user:first').text()).to.eql('fake-username');
+			expect(find('h3.user:last').text()).to.eql('fake-username');
+			expect(find('ul.content:first li').text()).to.eql('This should be first');
+			expect(find('ul.content:last li').text()).to.eql('This should be second');
+		});
 	});
 	describe('edits posts', function () {
 		

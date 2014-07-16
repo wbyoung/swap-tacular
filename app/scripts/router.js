@@ -10,13 +10,21 @@ module.exports = function(App) {
   });
   // authenticate any route
   App.ProfileRoute = Ember.Route.extend(Ember.AdmitOne.AuthenticatedRouteMixin, {
-
+    model: function() {
+      return this.store.find('post');
+    }
   });
 
   App.IndexRoute = Ember.Route.extend({
     model: function() {
       return this.store.find('post');
     }
+  });
+
+  App.ProfileController = Ember.ArrayController.extend({
+    itemController: 'post',
+    sortProperties: ['createdAt'],
+    sortAscending: false  
   });
 
   App.IndexController = Ember.ArrayController.extend({
