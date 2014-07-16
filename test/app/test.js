@@ -50,7 +50,18 @@ describe('app', function() {
 	    expect(find('textarea.content.post').length).to.eql(1);
 	  });
 	});  
-
+	describe('orders posts in descending order', function () {
+		
+	});
+	describe('edits posts', function () {
+		
+	});
+	describe('deletes posts', function () {
+		
+	});
+	describe('shows users own post on profile page', function () {
+		
+	});
 	describe('post on create', function() {
 		beforeEach(function() {
 			visit('/create');
