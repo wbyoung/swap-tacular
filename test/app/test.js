@@ -73,6 +73,7 @@ describe('app', function() {
 	describe('deletes posts', function () {
 		
 	});
+	
 	describe('shows users own post on profile page', function () {
 		beforeEach(function() {
 			sendFakeRequest(this.server, 'postOrder');
@@ -81,8 +82,8 @@ describe('app', function() {
 		it('will order posts by date', function() {
 			expect(currentRouteName()).to.eql('index');
 			expect(find('ul.content:first li').text()).to.eql('This should be first');
-			expect(find('ul.content:last li').text()).to.eql('This should be last');
 			expect(find('ul.content:nth-of-type(2) li').text()).to.eql('This should be second');
+			expect(find('ul.content:last li').text()).to.eql('This should be last');
 		});
 
 	});
