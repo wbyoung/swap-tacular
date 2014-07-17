@@ -128,7 +128,8 @@ describe('app', function() {
 			andThen(function() {
 				expect(find('ul.content li:first').text()).to
 				.eql('HELLO WORLD!');
-				expect(find('h6.timestamp:first').text()).to.eql('Tue Jul 15 2014 10:35:31 GMT-0700 (PDT)');
+				var dateString = new Date(fixture.response.json.post.createdAt).toString();
+				expect(find('h6.timestamp:first').text()).to.eql(dateString);
 			});
 		});
 	});
