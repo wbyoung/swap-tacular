@@ -135,7 +135,48 @@ describe('server', function() {
     .done(function() { done(); }, done);
   });
   
-  it('gets posts by userID', function() {
+  it.only('gets posts by userID', function(done) {
+    var fixture = __fixture('postUser');
+
+    var createUser = function() {
+      var create = {
+        id: fixture.response.json.users[0].id,
+        username: fixture.response.json.users[0].username,
+        passwordDigest: 'fakePassDigest'
+      };
+      return User.forge(create).save({}, { method: 'insert' });
+    };
+    var createToken = function(user) {
+      var userID = 'user_id';
+      var create = {};
+      create[userID] = user.id; // avoid JSHint error for user_id (TODO: request to admit-one to make life better)
+      create.value = 'ff13689653e86dc1ad0f9b4a34978192a918c6d4';
+      return Token.forge(create).save();
+    };
+
+    Promise.resolve() // start promise sequence
+    .then(function() { return createUser(); })
+    .then(function(user) { return createToken(user); })
+    .then(function() { return requestFixture(fixture); })
+    .spread(function(response, body){
+      var json = JSON.parse(body);
+      expect(json.post.id).to.be.a('number');
+      expect(json.post.createdAt).to.match(dateRegex);
+      expect(json.post.updatedAt).to.match(dateRegex);
+
+      // can't match generated data, so just copy from fixture
+      json.post.id = fixture.response.json.post.id;
+      json.post.createdAt = fixture.response.json.post.createdAt;
+      json.post.updatedAt = fixture.response.json.post.updatedAt;
+
+      expect(json).to.eql(fixture.response.json);
+    })
+    .then(function() { return Post.fetchAll(); })
+    .then(function(collection) {
+      expect(collection.length).to.eql(1);
+      expect(collection.at(0).get('content')).to.eql(fixture.request.json.post.content);
+    })
+    .done(function() { done(); }, done);
 
   });
 
