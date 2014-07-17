@@ -113,7 +113,7 @@ describe('app', function() {
 		beforeEach(function() {
 			visit('/create');
 		});
-		it.skip('will have created a post on index page', function() {
+		it('will have created a post on index page', function() {
 			fillIn('textarea.content.post', 'HELLO WORLD!');
 			var fixture = __fixture('postPOST');
 			sendFakeRequest(this.server, 'postPOST');
@@ -128,8 +128,8 @@ describe('app', function() {
 			andThen(function() {
 				expect(find('ul.content li:first').text()).to
 				.eql('HELLO WORLD!');
-				// TODO: don't test dates this way
-				expect(find('h6.timestamp:first').text()).to.eql('Tue Jul 15 2014 10:35:31 GMT-0700 (PDT)');
+				var dateString = new Date(fixture.response.json.post.createdAt).toString();
+				expect(find('h6.timestamp:first').text()).to.eql(dateString);
 			});
 		});
 	});
