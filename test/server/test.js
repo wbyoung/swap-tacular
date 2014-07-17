@@ -134,12 +134,16 @@ describe('server', function() {
     })
     .done(function() { done(); }, done);
   });
+  
+  it('gets posts by userID', function() {
 
-  describe('edits a post', function () {
+  });
+
+  it('edits a post', function () {
     
   });
 
-  describe('deletes a post', function () {
+  it('deletes a post', function () {
     
   });
 

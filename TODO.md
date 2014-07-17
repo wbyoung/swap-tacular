@@ -80,7 +80,6 @@ By the end of this week we plan on having users and posts work on a very basic l
   * Improve current tests
 
 ### Tuesday
-
   * server expectations for GET /api/posts
     * authorization token optional
 
@@ -97,6 +96,16 @@ By the end of this week we plan on having users and posts work on a very basic l
     * each user object must have:
       * id
       * username
+
+### Wednesday
+  * Date on posts
+  * Work on profile page 
+
+### Thursday
+  * Comments
+    * Edit comments
+  * Profile page display user's posts
+  * Edit posts
 
 ## Week 3
 
