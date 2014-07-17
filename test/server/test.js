@@ -52,10 +52,11 @@ describe('server', function() {
     var userSavePromises = function() {
       return fixture.response.json.users.map(function(user) {
         var create = {
+          id: user.id,
           username: user.username,
           passwordDigest: 'digest'
         };
-        return User.forge(create).save().then(function(user) {
+        return User.forge(create).save({}, { method: 'insert' }).then(function(user) {
           return user;
         });
       });
@@ -64,10 +65,11 @@ describe('server', function() {
     var postSavePromises = function(users) {
       return fixture.response.json.posts.map(function(post, idx) {
         var create = {
+          id: post.id,
           content: post.content,
           userID: users[idx].id
         };
-        return Post.forge(create).save();
+        return Post.forge(create).save({}, { method: 'insert' });
       });
     };
 
@@ -79,12 +81,6 @@ describe('server', function() {
     })
     .spread(function(response, body){
       var json = JSON.parse(body);
-      expect(json.posts[0].id).to.be.a('number');
-      expect(json.posts[0].user).to.be.a('number');
-      expect(json.users[0].id).to.be.a('number');
-      json.posts[0].id = fixture.response.json.posts[0].id;
-      json.posts[0].user = fixture.response.json.posts[0].user;
-      json.users[0].id = fixture.response.json.users[0].id;
       expect(fixture.response.json.posts[0].createdAt).to.match(dateRegex);
       expect(fixture.response.json.posts[0].updatedAt).to.match(dateRegex);
       //TODO refactoring
@@ -99,10 +95,11 @@ describe('server', function() {
 
     var createUser = function() {
       var create = {
-        username: 'fakedude',
-        passwordDigest: 'anything?'
+        id: fixture.response.json.users[0].id,
+        username: fixture.response.json.users[0].username,
+        passwordDigest: 'fakePassDigest'
       };
-      return User.forge(create, {method: 'insert'}).save();
+      return User.forge(create).save({}, { method: 'insert' });
     };
 
     var createToken = function(user) {
@@ -120,7 +117,6 @@ describe('server', function() {
     .spread(function(response, body){
     	var json = JSON.parse(body);
       expect(json.post.id).to.be.a('number');
-      expect(json.post.user).to.be.a('number');
       expect(json.post.createdAt).to.match(dateRegex);
       expect(json.post.updatedAt).to.match(dateRegex);
 
@@ -128,9 +124,6 @@ describe('server', function() {
       json.post.id = fixture.response.json.post.id;
       json.post.createdAt = fixture.response.json.post.createdAt;
       json.post.updatedAt = fixture.response.json.post.updatedAt;
-      json.post.user = fixture.response.json.post.user;
-      json.users[0].id = fixture.response.json.users[0].id;
-      json.users[0].username = fixture.response.json.users[0].username;
 
       expect(json).to.eql(fixture.response.json);
     })
