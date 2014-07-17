@@ -89,8 +89,12 @@ describe('app', function() {
 			expect(currentRouteName()).to.eql('profile');
 		});
 		it('has an edit button', function() {
+<<<<<<< HEAD
 			expect(find('button.edit.post').text()).to.eql('Edit');
 			expect(find('button.edit.post')).to.exist;
+=======
+			expect(find('button.edit.post').length).to.exist;
+>>>>>>> af804eaf17b53a61890c383992d5404602be0add
 		});
 	});
 	describe('deletes posts', function() {
