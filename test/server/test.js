@@ -151,12 +151,23 @@ describe('server', function() {
       var create = {};
       create[userID] = user.id; // avoid JSHint error for user_id (TODO: request to admit-one to make life better)
       create.value = 'ff13689653e86dc1ad0f9b4a34978192a918c6d4';
-      return Token.forge(create).save();
+      return [Token.forge(create).save(), user];
+    };
+    var postSavePromises = function(user) {
+      return fixture.response.json.posts.map(function(post) {
+        var create = {
+          id: post.id,
+          content: post.content,
+          userID: user[1].id
+        };
+        return Post.forge(create).save({}, { method: 'insert' });
+      });
     };
 
     Promise.resolve() // start promise sequence
     .then(function() { return createUser(); })
     .then(function(user) { return createToken(user); })
+    .then(function(user) { return postSavePromises(user); })
     .then(function() { return requestFixture(fixture); })
     .spread(function(response, body){
       var json = JSON.parse(body);

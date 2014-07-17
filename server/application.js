@@ -72,8 +72,22 @@ api.get('/posts', function(req, res){
       renameProperties(model);
       return model;
     });
-    res.json({posts: posts, users: users });
+    res.json({ posts: posts, users: users });
   }).done();
+});
+
+api.get('/posts/:id', function(req, res){
+  Post.where({ user: req.params.id}).fetchAll({ withRelated: 'user' })
+  .then(function(collection) {
+    var user = [];
+    var posts = collection.toJSON.map(function(model) {
+      delete model.user.passwordDigest;
+      user.push(model.user);
+      renameProperties(model);
+      return model;
+    });
+    res.json({ posts: posts, users: user});
+  });
 });
 
 // all routes defined below this line will require authorization
