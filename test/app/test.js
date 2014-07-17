@@ -1,5 +1,7 @@
 'use strict';
 
+// testing checkout from previous commit
+
 describe('app', function() {
 	beforeEach(function() {
 		this.server = sinon.fakeServer.create();
