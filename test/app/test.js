@@ -78,12 +78,6 @@ describe('app', function() {
 			expect(find('ul.content:last li').text()).to.eql('This should be second');
 		});
 	});
-
-	describe('comments on posts', function() {
-		it('has a comment button', function() {
-			expect(find('button.comment.post').length).to.exist;
-		});
-	});
 	
 	describe('edits posts', function () {
 		beforeEach(function() {
@@ -139,6 +133,20 @@ describe('app', function() {
 				var dateString = new Date(fixture.response.json.post.createdAt).toString();
 				expect(find('h6.timestamp:first').text()).to.eql(dateString);
 			});
+		});
+	});
+
+	describe('comments on posts', function() {
+		beforeEach(function() {
+			sendFakeRequest(this.server, 'postGET');
+			visit('/');
+		});
+		it('has a comment button', function() {
+			expect(find('button.comment.post').text()).to.eql('Comment');
+			expect(find('button.comment.post').length).to.exist;
+		});
+		it('will create an input fiield when comment button is clicked', function(){
+			
 		});
 	});
 });
