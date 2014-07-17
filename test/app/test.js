@@ -88,7 +88,7 @@ describe('app', function() {
 			expect(currentRouteName()).to.eql('profile');
 		});
 		it('has an edit button', function() {
-			expect(find('button.edit.post').length).to.eql(1);
+			expect(find('button.edit.post').length).to.exist;
 		});
 	});
 	describe('deletes posts', function() {
