@@ -34,7 +34,7 @@ var requestFixture = function(fixture) {
 describe('server', function() {
   before(function(done) { this.server = app.listen(port, function() { done(); }); });
   after(function(done) { this.server.close(done); });
-  afterEach(function(done) {
+  beforeEach(function(done) {
     Promise.resolve() // start promise sequence
     .then(function() {
       return models._bookshelf.knex('posts').del();
@@ -137,7 +137,6 @@ describe('server', function() {
   
   it.only('gets posts by userID', function(done) {
     var fixture = __fixture('postGETUser');
-
     var createUser = function() {
       var create = {
         id: fixture.response.json.users[0].id,
@@ -171,14 +170,15 @@ describe('server', function() {
     .then(function() { return requestFixture(fixture); })
     .spread(function(response, body){
       var json = JSON.parse(body);
-      expect(json.post.id).to.be.a('number');
-      expect(json.post.createdAt).to.match(dateRegex);
-      expect(json.post.updatedAt).to.match(dateRegex);
+      console.log(json);
+      expect(json.posts[0].id).to.be.a('number');
+      expect(json.posts[0].createdAt).to.match(dateRegex);
+      expect(json.posts[0].updatedAt).to.match(dateRegex);
 
       // can't match generated data, so just copy from fixture
-      json.post.id = fixture.response.json.post.id;
-      json.post.createdAt = fixture.response.json.post.createdAt;
-      json.post.updatedAt = fixture.response.json.post.updatedAt;
+      json.posts[0].id = fixture.response.json.posts[0].id;
+      json.posts[0].createdAt = fixture.response.json.posts[0].createdAt;
+      json.posts[0].updatedAt = fixture.response.json.posts[0].updatedAt;
 
       expect(json).to.eql(fixture.response.json);
     })
