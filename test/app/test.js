@@ -58,6 +58,7 @@ describe('app', function() {
   	});
 	  it('will have a create button', function() {
 	    expect(find('button.create.post').length).to.eql(1);
+	    expect(find('button.create.post').text()).to.eql('Add');
 	  });
 	  it('will have an textarea box', function() {
 	    expect(find('textarea.content.post').length).to.eql(1);
@@ -79,16 +80,17 @@ describe('app', function() {
 	});
 
 	describe('edits posts', function () {
-		var fixture = __fixture('postGET');
 		beforeEach(function() {
 			sendFakeRequest(this.server, 'postGET');
+			visit('/');
 			visit('/profile');
 		});
 		it('is on the profile page', function() {
 			expect(currentRouteName()).to.eql('profile');
 		});
 		it('has an edit button', function() {
-			expect(find('button.edit.post').length).to.eql(1);
+			expect(find('button.edit.post').text()).to.eql('Edit');
+			expect(find('button.edit.post')).to.exist;
 		});
 	});
 	describe('deletes posts', function() {
