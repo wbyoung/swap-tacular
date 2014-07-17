@@ -2,10 +2,10 @@
   <h1>I'm the Home page.</h1>
   <div>
     {{#each}}
-      <h3 class="user">{{user.username}}</h3>
+      <h4 class="user">{{user.username}}</h4>
       <h6 class="timestamp">{{createdAt}}</h6>
       {{!-- Discuss semantic Markup with Whit --}}
-      <br/>
+      <button class="comment post">Comment</button>
       <ul class="content">
         <li>{{messageHTML}}</li>
       </ul>

@@ -78,6 +78,12 @@ describe('app', function() {
 		});
 	});
 
+	describe('comments on posts', function() {
+		it('has a comment button', function() {
+			expect(find('button.comment.post').length).to.exist;
+		});
+	});
+	
 	describe('edits posts', function () {
 		var fixture = __fixture('postGET');
 		beforeEach(function() {
