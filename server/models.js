@@ -6,6 +6,10 @@ var knex = require('knex')(knexConfig);
 var bookshelf = require('bookshelf')(knex);
 
 var User, Token, Post;
+
+/**
+ * TODO: document me
+ */
 User = bookshelf.Model.extend({
   tokens: function() {
     return this.hasMany(Token);
@@ -15,12 +19,22 @@ User = bookshelf.Model.extend({
   },
   tableName: 'users'
 });
+
+
+/**
+ * TODO: document me
+ */
 Token = bookshelf.Model.extend({
   user: function() {
     return this.belongsTo(User);
   },
   tableName: 'tokens'
 });
+
+
+/**
+ * TODO: document me
+ */
 Post = bookshelf.Model.extend({
   user: function() {
     return this.belongsTo(User, 'userID');
