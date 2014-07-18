@@ -48,6 +48,7 @@ var paths = (function() {
     'src.server.scripts.entry': './server/application.js',
     'src.server.scripts.supporting': ['server/**/*', '!server/**/*.js'],
     'src.server.tests': ['test/server_helper.js', 'test/server/**/*.js'],
+    'src.server.tests.coverage': ['test/server_coverage.js'],
     'src.server.tests.fixtures': ['test/fixtures/**/*.json'],
     'dest.root': '<%= dist %>',
     'dest.app.static': '<%= dist %>/public',
@@ -402,6 +403,10 @@ tasks['.test:server'] = function(options) {
 
   // all other dependencies must finish before test files are added
   dependencies.push(gulp.src(paths('src.server.tests', opts)));
+
+  if (opts.coverage) {
+    dependencies.push(gulp.src(paths('src.server.tests.coverage', opts)));
+  }
 
   var stream = new OrderedStreams(dependencies)
     .pipe($.plumber())

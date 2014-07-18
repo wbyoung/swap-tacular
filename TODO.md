@@ -99,7 +99,8 @@ By the end of this week we plan on having users and posts work on a very basic l
 
 ### Wednesday
   * Date on posts
-  * Work on profile page 
+  * Work on profile page
+  * Posts are ordered by date
 
 ### Thursday
   * Comments
