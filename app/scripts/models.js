@@ -1,15 +1,18 @@
 'use strict';
 
 module.exports = function(App) {
+  var Model = DS.Model;
   var attr = DS.attr;
-  App.User = DS.Model.extend({
+  var belongsTo = DS.belongsTo;
+
+  App.User = Model.extend({
     username: attr('string'),
     password: attr('string')
   });
 
-  App.Post = DS.Model.extend({
+  App.Post = Model.extend({
   	content: attr('string'),
   	createdAt: attr('date'),
-  	user: DS.belongsTo('user')
+  	user: belongsTo('user')
   });
 };
