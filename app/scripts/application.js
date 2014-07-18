@@ -5,7 +5,14 @@ App.AdmitOneContainers = {}; //overridable by tests
 Ember.AdmitOne.setup( { containers: App.AdmitOneContainers });
 require('./models.js')(App);
 require('./router.js')(App);
-require('./controllers/authentication.js')(App);
+
+require('./pods/create.js')(App);
+require('./pods/index.js')(App);
+require('./pods/login.js')(App);
+require('./pods/logout.js')(App);
+require('./pods/post.js')(App);
+require('./pods/profile.js')(App);
+require('./pods/signup.js')(App);
 
 App.ApplicationAdapter = DS.RESTAdapter.extend({
   namespace: 'api'

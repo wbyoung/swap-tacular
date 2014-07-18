@@ -2,6 +2,15 @@
 
 module.exports = function(App) {
 
+  App.LoginRoute = Ember.Route.extend({
+    beforeModel: function() {
+      this._super();
+      if (this.get('session').get('isAuthenticated')) {
+        this.transitionTo('profile');
+      }
+    }
+  });
+
   /**
    * TODO: document me
    */
@@ -23,30 +32,6 @@ module.exports = function(App) {
           }
         })
         .catch(function(error) {
-          self.set('error', error);
-        });
-      }
-    }
-  });
-
-  /**
-   * TODO: document me
-   */
-  App.SignupController = Ember.ObjectController.extend({
-    actions: {
-      signup: function() {
-        var self = this;
-        var session = self.get('session');
-
-        self.set('error', undefined);
-        self.get('model').save() // create the user
-        .then(function() {
-          session.login({ username: self.get('model.username') });
-          self.transitionToRoute('profile');
-        })
-        .catch(function(error) {
-          if (error.responseJSON) { error = error.responseJSON; }
-          if (error.error) { error = error.error; }
           self.set('error', error);
         });
       }
