@@ -8,6 +8,7 @@ describe('app', function() {
 		var container = applicationContainer();
 		var session = container.lookup('auth-session:main');
 		session.set('content', {
+		  id: 2,
 		  username: 'fake-username',
 		  token: 'fake-token'
 		});
@@ -70,26 +71,24 @@ describe('app', function() {
 			sendFakeRequest(this.server, 'postGETUser');
 			visit('/profile');
 		});
-		it.skip('will have all the posts by fake-username', function() {
+		it('will have all the posts by Tian', function() {
 			expect(currentRouteName()).to.eql('profile');
-			expect(find('h3.user:first').text()).to.eql('fake-username');
-			expect(find('h3.user:last').text()).to.eql('fake-username');
+			expect(find('h1.user:first').text()).to.eql('fake-username\'s profile page.');
 			expect(find('ul.message:first li').text()).to.eql('This should be first');
-			expect(find('ul.message:last li').text()).to.eql('This should be second');
+			expect(find('ul.message:last li').text()).to.eql('This should be last');
 		});
 	});
 	
 	describe('edits posts', function () {
 		beforeEach(function() {
-			sendFakeRequest(this.server, 'postGET');
-			visit('/');
+			sendFakeRequest(this.server, 'postGETUser');
 			visit('/profile');
 		});
 		it('is on the profile page', function() {
 			expect(currentRouteName()).to.eql('profile');
 		});
 		it('has an edit button', function() {
-			expect(find('button.edit.post').text()).to.eql('Edit');
+			expect(find('button.edit.post:first').text()).to.eql('Edit');
 			expect(find('button.edit.post')).to.exist;
 		});
 	});
