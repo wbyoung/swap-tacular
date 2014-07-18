@@ -63,6 +63,7 @@ api.post('/sessions', admit.authenticate, function(req, res) {
 });
 
 api.get('/posts', function(req, res){
+  if (req.query.user) { Post = Post.where({ userID: req.query.user}); }
   Post.fetchAll({ withRelated: 'user' })
   .then(function(collection) {
     var users = [];
@@ -72,7 +73,23 @@ api.get('/posts', function(req, res){
       renameProperties(model);
       return model;
     });
-    res.json({posts: posts, users: users });
+    res.json({ posts: posts, users: users });
+  }).done();
+});
+
+api.get('/posts/:id', function(req, res){
+  Post.where({ userID: req.params.id})
+  .fetchAll({ withRelated: 'user' })
+  .then(function(models) {
+    var user = [];
+    var posts = models.toJSON().map(function(model) {
+      delete model.user.passwordDigest;
+      if(user.length === 0) { user.push(model.user); }
+      renameProperties(model);
+      return model;
+    });
+    console.log(posts);
+    res.json({ posts: posts, users: user});
   }).done();
 });
 

@@ -1,0 +1,38 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/posts/2",
+    "headers": {
+    },
+    "json": null
+  },
+  "response": {
+    "status": 200,
+    "json": {
+      "posts": [{
+        "id": 14,
+        "content": "This should be second",
+        "user": 2,
+        "createdAt": "2014-07-13T17:35:31.654Z",
+        "updatedAt": "2014-07-13T17:35:31.654Z"
+      },
+      {
+        "id": 13,
+        "content": "This should be last",
+        "user": 2,
+        "createdAt": "2014-07-10T17:35:31.654Z",
+        "updatedAt": "2014-07-10T17:35:31.654Z"
+      },
+      {
+        "id": 12,
+        "content": "This should be first",
+        "user": 2,
+        "createdAt": "2014-07-14T17:35:31.654Z",
+        "updatedAt": "2014-07-14T17:35:31.654Z"
+      }],
+      "users": [
+        { "id":2, "username": "Tian"}
+      ]
+    }
+  }
+}

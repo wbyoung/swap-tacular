@@ -10,8 +10,11 @@ module.exports = function(App) {
   });
   // authenticate any route
   App.ProfileRoute = Ember.Route.extend(Ember.AdmitOne.AuthenticatedRouteMixin, {
+    beforeModel: function() {
+      return this.get('session');
+    }, 
     model: function() {
-      return this.store.all('post');
+      return this.store.find('post', { user: this.get('session.id') });
     }
   });
 
