@@ -20,6 +20,7 @@
   "globals": {
     "App": true,
     "Ember": true,
-    "DS": true
+    "DS": true,
+    "$": true
   }
 }
