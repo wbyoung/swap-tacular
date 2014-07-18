@@ -11,6 +11,9 @@ var models = require('../../server/models');
 var port = 383273;
 var baseURL = util.format('http://localhost:%d', port);
 
+var fixtureHelpers = require('./helpers/fixtures'),
+    createUser = fixtureHelpers.createUser;
+
 var Post = models.Post,
     User = models.User,
     Token = models.Token;
@@ -91,14 +94,6 @@ describe('server', function() {
   it('posts posts', function(done) {
     var fixture = __fixture('postPOST');
 
-    var createUser = function() {
-      var create = {
-        username: fixture.response.json.users[0].username,
-        passwordDigest: 'fakePassDigest'
-      };
-      return User.forge(create).save({ id: fixture.response.json.users[0].id }, { method: 'insert' });
-    };
-
     var createToken = function(user) {
       var userID = 'user_id';
       var create = {};
@@ -108,7 +103,7 @@ describe('server', function() {
     };
 
     Promise.resolve() // start promise sequence
-    .then(function() { return createUser(); })
+    .then(function() { return createUser(fixture.response.json.users[0]); })
     .then(function(user) { return createToken(user); })
     .then(function() { return requestFixture(fixture); })
     .spread(function(response, body){
@@ -134,13 +129,6 @@ describe('server', function() {
   
   it('gets posts by userID', function(done) {
     var fixture = __fixture('postGETUser');
-    var createUser = function() {
-      var create = {
-        username: fixture.response.json.users[0].username,
-        passwordDigest: 'fakePassDigest'
-      };
-      return User.forge(create).save({ id: fixture.response.json.users[0].id }, { method: 'insert' });
-    };
     var createToken = function(user) {
       var userID = 'user_id';
       var create = {};
@@ -159,7 +147,7 @@ describe('server', function() {
     };
 
     Promise.resolve() // start promise sequence
-    .then(function() { return createUser(); })
+    .then(function() { return createUser(fixture.response.json.users[0]); })
     .tap(function(user) { return createToken(user); })
     .tap(function(user) { return postSavePromises(user); })
     .then(function() { return requestFixture(fixture); })
