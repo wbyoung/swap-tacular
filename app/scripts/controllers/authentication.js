@@ -2,6 +2,9 @@
 
 module.exports = function(App) {
 
+  /**
+   * TODO: document me
+   */
   App.LoginController = Ember.Controller.extend({
     actions: {
       authenticate: function() {
@@ -26,6 +29,9 @@ module.exports = function(App) {
     }
   });
 
+  /**
+   * TODO: document me
+   */
   App.SignupController = Ember.ObjectController.extend({
     actions: {
       signup: function() {
