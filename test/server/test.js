@@ -135,7 +135,7 @@ describe('server', function() {
     .done(function() { done(); }, done);
   });
   
-  it.only('gets posts by userID', function(done) {
+  it.skip('gets posts by userID', function(done) {
     var fixture = __fixture('postGETUser');
     var createUser = function() {
       var create = {
