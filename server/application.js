@@ -102,9 +102,9 @@ api.delete('/sessions/current', admit.invalidate, function(req, res) {
 
 api.post('/posts', function(req, res){
   var user = req.auth.db.user;
-  var post = req.body.post.content;
+  var post = req.body.post.message;
   var create = {
-    content: post,
+    message: post,
     userID: user.get('id')
   };
   Post.forge(create).save().then(function(post) {

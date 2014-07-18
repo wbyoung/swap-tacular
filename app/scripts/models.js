@@ -11,7 +11,7 @@ module.exports = function(App) {
   });
 
   App.Post = Model.extend({
-  	content: attr('string'),
+  	message: attr('string'),
   	createdAt: attr('date'),
   	user: belongsTo('user')
   });

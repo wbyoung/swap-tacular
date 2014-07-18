@@ -34,7 +34,7 @@ describe('app', function() {
 			expect(currentRouteName()).to.eql('index');
 		});
 		it('shows posts from users', function() {
-			expect(find('ul.content li:first').text()).to
+			expect(find('ul.message li:first').text()).to
 			.eql('I\'m really excited about using this new Swap service!');
 		});
 		it('shows posts in order starting with the most recent', function(){
@@ -61,7 +61,7 @@ describe('app', function() {
 	    expect(find('button.create.post').text()).to.eql('Add');
 	  });
 	  it('will have an textarea box', function() {
-	    expect(find('textarea.content.post').length).to.eql(1);
+	    expect(find('textarea.message.post').length).to.eql(1);
 	  });
 	});  
 
@@ -74,8 +74,8 @@ describe('app', function() {
 			expect(currentRouteName()).to.eql('profile');
 			expect(find('h3.user:first').text()).to.eql('fake-username');
 			expect(find('h3.user:last').text()).to.eql('fake-username');
-			expect(find('ul.content:first li').text()).to.eql('This should be first');
-			expect(find('ul.content:last li').text()).to.eql('This should be second');
+			expect(find('ul.message:first li').text()).to.eql('This should be first');
+			expect(find('ul.message:last li').text()).to.eql('This should be second');
 		});
 	});
 	
@@ -104,9 +104,9 @@ describe('app', function() {
 		});
 		it('will order posts by date', function() {
 			expect(currentRouteName()).to.eql('index');
-			expect(find('ul.content:first li').text()).to.eql('This should be first');
-			expect(find('ul.content:nth-of-type(2) li').text()).to.eql('This should be second');
-			expect(find('ul.content:last li').text()).to.eql('This should be last');
+			expect(find('ul.message:first li').text()).to.eql('This should be first');
+			expect(find('ul.message:nth-of-type(2) li').text()).to.eql('This should be second');
+			expect(find('ul.message:last li').text()).to.eql('This should be last');
 		});
 
 	});
@@ -116,7 +116,7 @@ describe('app', function() {
 			visit('/create');
 		});
 		it('will have created a post on index page', function() {
-			fillIn('textarea.content.post', 'HELLO WORLD!');
+			fillIn('textarea.message.post', 'HELLO WORLD!');
 			var fixture = __fixture('postPOST');
 			sendFakeRequest(this.server, 'postPOST');
 			sendFakeRequest(this.server, 'postGET');
@@ -128,7 +128,7 @@ describe('app', function() {
 			}.bind(this));
 			andThen(function() { expect(currentRouteName()).to.eql('index'); });
 			andThen(function() {
-				expect(find('ul.content li:first').text()).to
+				expect(find('ul.message li:first').text()).to
 				.eql('HELLO WORLD!');
 				var dateString = new Date(fixture.response.json.post.createdAt).toString();
 				expect(find('h6.timestamp:first').text()).to.eql(dateString);

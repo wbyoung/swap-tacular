@@ -66,7 +66,7 @@ describe('server', function() {
       return fixture.response.json.posts.map(function(post, idx) {
         var create = {
           id: post.id,
-          content: post.content,
+          message: post.message,
           userID: users[idx].id
         };
         return Post.forge(create).save({}, { method: 'insert' });
@@ -130,7 +130,7 @@ describe('server', function() {
     .then(function() { return Post.fetchAll(); })
     .then(function(collection) {
       expect(collection.length).to.eql(1);
-      expect(collection.at(0).get('content')).to.eql(fixture.request.json.post.content);
+      expect(collection.at(0).get('message')).to.eql(fixture.request.json.post.message);
     })
     .done(function() { done(); }, done);
   });
@@ -156,7 +156,7 @@ describe('server', function() {
       return fixture.response.json.posts.map(function(post) {
         var create = {
           id: post.id,
-          content: post.content,
+          message: post.message,
           userID: user[1].id
         };
         return Post.forge(create).save({}, { method: 'insert' });
@@ -185,7 +185,7 @@ describe('server', function() {
     .then(function() { return Post.fetchAll(); })
     .then(function(collection) {
       expect(collection.length).to.eql(1);
-      expect(collection.at(0).get('content')).to.eql(fixture.request.json.post.content);
+      expect(collection.at(0).get('message')).to.eql(fixture.request.json.post.message);
     })
     .done(function() { done(); }, done);
 

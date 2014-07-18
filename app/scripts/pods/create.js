@@ -6,9 +6,9 @@ module.exports = function(App) {
     actions: {
       post: function() {
         var self = this;
-        var content = this.controllerFor('create').get('inputPost');
+        var message = this.controllerFor('create').get('inputPost');
         var post = this.store.createRecord('post', {
-          content: content
+          message: message
         });
 
         this.controllerFor('create').set('inputPost', '');

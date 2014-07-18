@@ -31,7 +31,7 @@ describe('server', function() {
     // create post assoiated with that user & save
     var createPost = function(user) {
       var create = {
-        content: 'what is up',
+        message: 'what is up',
         userID: user.id
       };
       return Post.forge(create).save();
@@ -43,7 +43,7 @@ describe('server', function() {
     .then(function() { return Post.fetchAll(); })
     .then(function(collection) {
       expect(collection.length).to.eql(1);
-      expect(collection.at(0).get('content')).to.eql('what is up');    
+      expect(collection.at(0).get('message')).to.eql('what is up');    
       expect(collection.at(0).get('created_at')).to.exist;    
       expect(collection.at(0).get('updated_at')).to.exist;
     })
