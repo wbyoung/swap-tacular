@@ -11,14 +11,16 @@ var models = require('../../server/models');
 var port = 383273;
 var baseURL = util.format('http://localhost:%d', port);
 
-var fixtureHelpers = require('./helpers/fixtures'),
-    createUser = fixtureHelpers.createUser;
+var Post = models.Post;
 
-var Post = models.Post,
-    User = models.User,
-    Token = models.Token;
+var fixtureHelpers = require('./helpers/fixtures'),
+    createUser = fixtureHelpers.createUser,
+    createUsers = fixtureHelpers.createUsers,
+    createToken = fixtureHelpers.createToken,
+    createPosts = fixtureHelpers.createPosts;
 
 var dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
+var tokenValue = 'ff13689653e86dc1ad0f9b4a34978192a918c6d4';
 
 var requestFixture = function(fixture) {
   var requestOptions = {
@@ -52,34 +54,10 @@ describe('server', function() {
   it('will get posts', function(done){
     var fixture = __fixture('postGET');
 
-    var userSavePromises = function() {
-      return Promise.all(fixture.response.json.users.map(function(user) {
-        var create = {
-          username: user.username,
-          passwordDigest: 'digest'
-        };
-        return User.forge(create).save({ id: user.id }, { method: 'insert' }).then(function(user) {
-          return user;
-        });
-      }));
-    };
-
-    var postSavePromises = function(users) {
-      return Promise.all(fixture.response.json.posts.map(function(post, idx) {
-        var create = {
-          message: post.message,
-          userID: users[idx].id
-        };
-        return Post.forge(create).save({ id: post.id }, { method: 'insert' });
-      }));
-    };
-
-    Promise.all(userSavePromises()).then(function(users) {
-      return Promise.all(postSavePromises(users));
-    })
-    .then(function() {
-      return requestFixture(fixture);
-    })
+    Promise.resolve() // start promise sequence
+    .then(function() { return createUsers(fixture.response.json.users); })
+    .then(function(users) { return createPosts(users, fixture.response.json.posts); })
+    .then(function() { return requestFixture(fixture); })
     .spread(function(response, body){
       var json = JSON.parse(body);
       expect(fixture.response.json.posts[0].createdAt).to.match(dateRegex);
@@ -94,17 +72,9 @@ describe('server', function() {
   it('posts posts', function(done) {
     var fixture = __fixture('postPOST');
 
-    var createToken = function(user) {
-      var userID = 'user_id';
-      var create = {};
-      create[userID] = user.id; // avoid JSHint error for user_id (TODO: request to admit-one to make life better)
-      create.value = 'ff13689653e86dc1ad0f9b4a34978192a918c6d4';
-      return Token.forge(create).save();
-    };
-
     Promise.resolve() // start promise sequence
     .then(function() { return createUser(fixture.response.json.users[0]); })
-    .then(function(user) { return createToken(user); })
+    .then(function(user) { return createToken(user, { value: tokenValue }); })
     .then(function() { return requestFixture(fixture); })
     .spread(function(response, body){
     	var json = JSON.parse(body);
@@ -129,27 +99,11 @@ describe('server', function() {
   
   it('gets posts by userID', function(done) {
     var fixture = __fixture('postGETUser');
-    var createToken = function(user) {
-      var userID = 'user_id';
-      var create = {};
-      create[userID] = user.id; // avoid JSHint error for user_id (TODO: request to admit-one to make life better)
-      create.value = 'ff13689653e86dc1ad0f9b4a34978192a918c6d4';
-      return Token.forge(create).save();
-    };
-    var postSavePromises = function(user) {
-      return Promise.all(fixture.response.json.posts.map(function(post) {
-        var create = {
-          message: post.message,
-          userID: user.id
-        };
-        return Post.forge(create).save({ id: post.id }, { method: 'insert' });
-      }));
-    };
-
+    
     Promise.resolve() // start promise sequence
     .then(function() { return createUser(fixture.response.json.users[0]); })
-    .tap(function(user) { return createToken(user); })
-    .tap(function(user) { return postSavePromises(user); })
+    .tap(function(user) { return createToken(user, { value: tokenValue }); })
+    .tap(function(user) { return createPosts(user, fixture.response.json.posts); })
     .then(function() { return requestFixture(fixture); })
     .spread(function(response, body){
       var json = JSON.parse(body);
