@@ -67,7 +67,7 @@ describe('app', function() {
 
 	describe('shows user\'s own post on profile page', function () {
 		beforeEach(function() {
-			sendFakeRequest(this.server, 'postOrder');
+			sendFakeRequest(this.server, 'postGETUser');
 			visit('/profile');
 		});
 		it.skip('will have all the posts by fake-username', function() {
