@@ -50,27 +50,25 @@ describe('server', function() {
     var fixture = __fixture('postGET');
 
     var userSavePromises = function() {
-      return fixture.response.json.users.map(function(user) {
+      return Promise.all(fixture.response.json.users.map(function(user) {
         var create = {
-          id: user.id,
           username: user.username,
           passwordDigest: 'digest'
         };
-        return User.forge(create).save({}, { method: 'insert' }).then(function(user) {
+        return User.forge(create).save({ id: user.id }, { method: 'insert' }).then(function(user) {
           return user;
         });
-      });
+      }));
     };
 
     var postSavePromises = function(users) {
-      return fixture.response.json.posts.map(function(post, idx) {
+      return Promise.all(fixture.response.json.posts.map(function(post, idx) {
         var create = {
-          id: post.id,
           message: post.message,
           userID: users[idx].id
         };
-        return Post.forge(create).save({}, { method: 'insert' });
-      });
+        return Post.forge(create).save({ id: post.id }, { method: 'insert' });
+      }));
     };
 
     Promise.all(userSavePromises()).then(function(users) {
@@ -95,11 +93,10 @@ describe('server', function() {
 
     var createUser = function() {
       var create = {
-        id: fixture.response.json.users[0].id,
         username: fixture.response.json.users[0].username,
         passwordDigest: 'fakePassDigest'
       };
-      return User.forge(create).save({}, { method: 'insert' });
+      return User.forge(create).save({ id: fixture.response.json.users[0].id }, { method: 'insert' });
     };
 
     var createToken = function(user) {
@@ -135,57 +132,55 @@ describe('server', function() {
     .done(function() { done(); }, done);
   });
   
-  it.skip('gets posts by userID', function(done) {
+  it('gets posts by userID', function(done) {
     var fixture = __fixture('postGETUser');
     var createUser = function() {
       var create = {
-        id: fixture.response.json.users[0].id,
         username: fixture.response.json.users[0].username,
         passwordDigest: 'fakePassDigest'
       };
-      return User.forge(create).save({}, { method: 'insert' });
+      return User.forge(create).save({ id: fixture.response.json.users[0].id }, { method: 'insert' });
     };
     var createToken = function(user) {
       var userID = 'user_id';
       var create = {};
       create[userID] = user.id; // avoid JSHint error for user_id (TODO: request to admit-one to make life better)
       create.value = 'ff13689653e86dc1ad0f9b4a34978192a918c6d4';
-      return [Token.forge(create).save(), user];
+      return Token.forge(create).save();
     };
     var postSavePromises = function(user) {
-      return fixture.response.json.posts.map(function(post) {
+      return Promise.all(fixture.response.json.posts.map(function(post) {
         var create = {
-          id: post.id,
           message: post.message,
-          userID: user[1].id
+          userID: user.id
         };
-        return Post.forge(create).save({}, { method: 'insert' });
-      });
+        return Post.forge(create).save({ id: post.id }, { method: 'insert' });
+      }));
     };
 
     Promise.resolve() // start promise sequence
     .then(function() { return createUser(); })
-    .then(function(user) { return createToken(user); })
-    .then(function(user) { return postSavePromises(user); })
+    .tap(function(user) { return createToken(user); })
+    .tap(function(user) { return postSavePromises(user); })
     .then(function() { return requestFixture(fixture); })
     .spread(function(response, body){
       var json = JSON.parse(body);
-      console.log(json);
       expect(json.posts[0].id).to.be.a('number');
       expect(json.posts[0].createdAt).to.match(dateRegex);
       expect(json.posts[0].updatedAt).to.match(dateRegex);
 
       // can't match generated data, so just copy from fixture
-      json.posts[0].id = fixture.response.json.posts[0].id;
-      json.posts[0].createdAt = fixture.response.json.posts[0].createdAt;
-      json.posts[0].updatedAt = fixture.response.json.posts[0].updatedAt;
+      json.posts.forEach(function(post, index) {
+        post.createdAt = fixture.response.json.posts[index].createdAt;
+        post.updatedAt = fixture.response.json.posts[index].updatedAt;
+      });
 
       expect(json).to.eql(fixture.response.json);
     })
     .then(function() { return Post.fetchAll(); })
     .then(function(collection) {
-      expect(collection.length).to.eql(1);
-      expect(collection.at(0).get('message')).to.eql(fixture.request.json.post.message);
+      expect(collection.length).to.eql(3);
+      expect(collection.at(0).get('message')).to.eql(fixture.response.json.posts[0].message);
     })
     .done(function() { done(); }, done);
 

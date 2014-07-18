@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('lodash');
 var express = require('express');
 var path = require('path');
 var morgan = require('morgan');
@@ -73,25 +74,10 @@ api.get('/posts', function(req, res){
       renameProperties(model);
       return model;
     });
-    res.json({ posts: posts, users: users });
+    res.json({ posts: posts, users: _.uniq(users, function(user) { return user.id; }) });
   }).done();
 });
 
-api.get('/posts/:id', function(req, res){
-  Post.where({ userID: req.params.id})
-  .fetchAll({ withRelated: 'user' })
-  .then(function(models) {
-    var user = [];
-    var posts = models.toJSON().map(function(model) {
-      delete model.user.passwordDigest;
-      if(user.length === 0) { user.push(model.user); }
-      renameProperties(model);
-      return model;
-    });
-    console.log(posts);
-    res.json({ posts: posts, users: user});
-  }).done();
-});
 
 // all routes defined below this line will require authorization
 api.use(admit.authorize);
