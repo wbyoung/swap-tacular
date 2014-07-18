@@ -14,10 +14,10 @@ App.LoginController = Ember.Controller.extend({
   actions: {
     authenticate: function() {
       var self = this;
-      var session = this.get('session');
-      var credentials = this.getProperties('username', 'password');
-      this.set('error', undefined);
-      this.set('password', undefined);
+      var session = self.get('session');
+      var credentials = self.getProperties('username', 'password');
+      self.set('error', undefined);
+      self.set('password', undefined);
       session.authenticate(credentials).then(function() {
         var attemptedTransition = self.get('attemptedTransition');
         if (attemptedTransition) {
@@ -37,11 +37,11 @@ App.LoginController = Ember.Controller.extend({
 App.SignupController = Ember.ObjectController.extend({
   actions: {
     signup: function() {
-      var session = this.get('session');
       var self = this;
+      var session = self.get('session');
 
-      this.set('error', undefined);
-      this.get('model').save() // create the user
+      self.set('error', undefined);
+      self.get('model').save() // create the user
       .then(function() {
         session.login({ username: self.get('model.username') });
         self.transitionToRoute('profile');
