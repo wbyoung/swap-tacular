@@ -149,7 +149,7 @@ describe('app', function() {
 			andThen(function() {
 				expect(find('ul.message li:first').text()).to
 				.eql('HELLO WORLD!');
-				var dateString = new Date(fixture.response.json.post.createdAt).toString();
+				var dateString = new Date(fixture.response.json.posts[0].createdAt).toString();
 				expect(find('h6.timestamp:first').text()).to.eql(dateString);
 			});
 		});
