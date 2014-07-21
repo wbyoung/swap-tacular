@@ -20,7 +20,6 @@ module.exports = function(App) {
 
   App.PostRoute = Ember.Route.extend({
     model: function(params) {
-      console.log(params.post);
       return this.store.find('post', params.postId);
     }
   });
