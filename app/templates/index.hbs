@@ -5,13 +5,8 @@
       <h4 class="user">{{user.username}}</h4>
       <h6 class="timestamp">{{createdAt}}</h6>
       {{!-- Discuss semantic Markup with Whit --}}
-      {{#if isEditing}}
-        <textarea class="comment post"></textarea>
-      {{else}}
-        <button class="comment post" {{action 'showComment'}}>Comment</button>
-      {{/if}}
       <ul class="message">
-        <li>{{messageHTML}}</li>
+        <li>{{#link-to 'post' id}}{{messageHTML}}{{/link-to}}</li>
       </ul>
     {{/each}}
   </div>
