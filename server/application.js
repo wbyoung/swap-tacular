@@ -78,7 +78,7 @@ api.get('/posts', function(req, res){
   }).done();
 });
 
-api.get('/post/:id', function(req, res){
+api.get('/posts/:id', function(req, res){
   Post.where({ id: req.params.id})
   .fetch({ withRelated: 'user' })
   .then(function(model) {
