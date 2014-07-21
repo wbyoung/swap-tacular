@@ -66,7 +66,7 @@ describe('app', function() {
 	  });
 	});  
 
-	describe('shows user\'s own post on profile page', function () {
+	describe('shows user\'s own post on profile page', function() {
 		beforeEach(function() {
 			sendFakeRequest(this.server, 'postGETUser');
 			visit('/profile');
@@ -89,8 +89,21 @@ describe('app', function() {
 			});
 		});
 	});
+
+	describe('shows post page by sending single query request', function() {
+		beforeEach(function() {
+			sendFakeRequest(this.server, 'postGET');
+			visit('/post/12');
+		});
+		it('will have one single post', function() {
+			expect(currentRouteName()).to.eql('post');
+			expect(find('ul.message:first li').text()).to.eql('I\'m really excited about using this new Swap service!');
+			expect(find('button.edit.post:first').text()).to.eql('Edit');
+			expect(find('button.edit.post')).to.exist;
+		});
+	});
 	
-	describe('edits posts', function () {
+	describe('edits posts', function() {
 		beforeEach(function() {
 			sendFakeRequest(this.server, 'postGETUser');
 			visit('/profile');
@@ -142,10 +155,11 @@ describe('app', function() {
 		});
 	});
 
-	describe('comments on posts', function() {
+	describe('comments on post', function() {
 		beforeEach(function() {
 			sendFakeRequest(this.server, 'postsGET');
 			visit('/');
+			click('ul.message:first li a');
 		});
 		it('has a comment button', function() {
 			expect(find('button.comment.post').text()).to.eql('Comment');
@@ -156,14 +170,14 @@ describe('app', function() {
 			expect(find('textarea.comment.post').length).to.eql(0);
 		});
 
-		it('will create an input area when comment btn is clicked', function(){
+		it('will create an input area when comment btn is clicked', function() {
 			click('button.comment.post:first');
 			andThen(function() {
 				expect(find('textarea.comment.post').length).to.eql(1);
 			});
 		});
 
-		it('will hide the comment btn when clicked', function(){
+		it('will hide the comment btn when clicked', function() {
 			click('button.comment.post:first');
 			andThen(function() {
 				expect(find('button.comment.post:first').length).to.eql(0);

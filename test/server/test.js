@@ -70,7 +70,7 @@ describe('server', function() {
     }).done(function(){ done(); },done);
   });
 
-  it.only('gets single post', function(done) {
+  it('gets single post', function(done) {
     var fixture = __fixture('postGET');
 
     Promise.resolve() // start promise sequence
