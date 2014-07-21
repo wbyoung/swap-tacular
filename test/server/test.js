@@ -51,7 +51,26 @@ describe('server', function() {
       return models._bookshelf.knex('users').del();
     }).done(function() { done(); }, done);
   });
-  it('will get posts', function(done){
+
+  it('will get posts', function(done) {
+    var fixture = __fixture('postsGET');
+
+    Promise.resolve() // start promise sequence
+    .then(function() { return createUsers(fixture.response.json.users); })
+    .then(function(users) { return createPosts(users, fixture.response.json.posts); })
+    .then(function() { return requestFixture(fixture); })
+    .spread(function(response, body){
+      var json = JSON.parse(body);
+      expect(fixture.response.json.posts[0].createdAt).to.match(dateRegex);
+      expect(fixture.response.json.posts[0].updatedAt).to.match(dateRegex);
+      //TODO refactoring
+      fixture.response.json.posts[0].createdAt = json.posts[0].createdAt;
+      fixture.response.json.posts[0].updatedAt = json.posts[0].updatedAt;
+      expect(json).to.eql(fixture.response.json);
+    }).done(function(){ done(); },done);
+  });
+
+  it.only('gets single post', function(done) {
     var fixture = __fixture('postGET');
 
     Promise.resolve() // start promise sequence

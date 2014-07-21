@@ -26,9 +26,9 @@ describe('app', function() {
 	};
 
 	describe('home page', function() {
-		var fixture = __fixture('postGET');
+		var fixture = __fixture('postsGET');
 		beforeEach(function() {
-			sendFakeRequest(this.server, 'postGET');
+			sendFakeRequest(this.server, 'postsGET');
 			visit('/');
 		});
 		it('is on home page', function() {
@@ -125,7 +125,7 @@ describe('app', function() {
 			fillIn('textarea.message.post', 'HELLO WORLD!');
 			var fixture = __fixture('postPOST');
 			sendFakeRequest(this.server, 'postPOST');
-			sendFakeRequest(this.server, 'postGET');
+			sendFakeRequest(this.server, 'postsGET');
 			click('button.create.post');
 			andThen(function() { 
 				expect(this.server.requests.length).to.eql(2);
@@ -144,7 +144,7 @@ describe('app', function() {
 
 	describe('comments on posts', function() {
 		beforeEach(function() {
-			sendFakeRequest(this.server, 'postGET');
+			sendFakeRequest(this.server, 'postsGET');
 			visit('/');
 		});
 		it('has a comment button', function() {

@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "url": "/api/post/12",
+    "url": "/api/posts",
     "headers": {
     },
     "json": null
