@@ -11,7 +11,7 @@
       <button class="delete post">Delete</button>
       {{#if isEditing}}
         <button class="comment done">Done</button>
-        <textarea class="comment post"></textarea>
+        <textarea rows="3" cols="10"class="comment post"></textarea>
       {{else}}
         <button class="comment post" {{action 'showComment'}}>Comment</button>
       {{/if}}
