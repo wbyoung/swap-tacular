@@ -10,21 +10,21 @@
     "status": 200,
     "json": {
       "posts": [{
-        "id": 14,
+        "id": 13,
         "message": "This should be second",
         "user": 2,
         "createdAt": "2014-07-13T17:35:31.654Z",
         "updatedAt": "2014-07-13T17:35:31.654Z"
       },
       {
-        "id": 13,
+        "id": 12,
         "message": "This should be last",
         "user": 2,
         "createdAt": "2014-07-10T17:35:31.654Z",
         "updatedAt": "2014-07-10T17:35:31.654Z"
       },
       {
-        "id": 12,
+        "id": 14,
         "message": "This should be first",
         "user": 2,
         "createdAt": "2014-07-14T17:35:31.654Z",

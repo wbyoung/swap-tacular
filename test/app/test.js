@@ -78,9 +78,14 @@ describe('app', function() {
 			expect(find('ul.message:last li').text()).to.eql('This should be last');
 		});
 		it('can click on link to one post', function() {
-			click('ul.message:first li');
+			click('ul.message:first li a');
 			andThen(function() {
-				expect(currentRouteName()).to.eql('post/1');
+				expect(currentRouteName()).to.eql('post');
+				it('has an edit button', function() {
+				expect(find('ul.message:first li').text()).to.eql('This should be first');
+				expect(find('button.edit.post:first').text()).to.eql('Edit');
+				expect(find('button.edit.post')).to.exist;
+		});
 			});
 		});
 	});
@@ -92,10 +97,6 @@ describe('app', function() {
 		});
 		it('is on the profile page', function() {
 			expect(currentRouteName()).to.eql('profile');
-		});
-		it('has an edit button', function() {
-			expect(find('button.edit.post:first').text()).to.eql('Edit');
-			expect(find('button.edit.post')).to.exist;
 		});
 	});
 	describe('deletes posts', function() {
