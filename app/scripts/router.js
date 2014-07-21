@@ -6,6 +6,7 @@ module.exports = function(App) {
     this.route('login');
     this.route('logout');
     this.route('profile');
+    this.resource('post');
     this.route('create');
   });
 };
