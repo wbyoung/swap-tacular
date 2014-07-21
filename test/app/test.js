@@ -82,10 +82,10 @@ describe('app', function() {
 			andThen(function() {
 				expect(currentRouteName()).to.eql('post');
 				it('has an edit button', function() {
-				expect(find('ul.message:first li').text()).to.eql('This should be first');
-				expect(find('button.edit.post:first').text()).to.eql('Edit');
-				expect(find('button.edit.post')).to.exist;
-		});
+					expect(find('ul.message:first li').text()).to.eql('This should be first');
+					expect(find('button.edit.post:first').text()).to.eql('Edit');
+					expect(find('button.edit.post')).to.exist;
+				});
 			});
 		});
 	});
