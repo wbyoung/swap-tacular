@@ -113,6 +113,30 @@ api.post('/posts', function(req, res){
     renameProperties(newPost);
     var sendUser = user.toJSON();
     delete sendUser.passwordDigest;
+    res.json({ posts: [newPost], users: [sendUser]});
+  });
+});
+
+api.put('/posts/:id', function(req, res){
+  var user = req.auth.db.user;
+  var post = req.body.post.message;
+  var id = req.params.id;
+  console.log(id);
+  var create = {
+    message: post,
+    userID: user.get('id')
+  };
+  console.log(create);
+  new Post({ id: id }).save({ message: post }, { method: 'update' }, { patch: true })
+  .then(function(model) {
+    console.log(model);
+  });
+     
+  Post.forge(create).save().then(function(post) {
+    var newPost = post.toJSON();
+    renameProperties(newPost);
+    var sendUser = user.toJSON();
+    delete sendUser.passwordDigest;
     res.json({ post: newPost, users: [sendUser]});
   });
 });

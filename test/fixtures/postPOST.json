@@ -14,13 +14,13 @@
   "response": {
     "status": 200,
     "json": {
-      "post": {
+      "posts": [{
         "id": 1,
         "message": "HELLO WORLD!",
         "user": 34,
         "createdAt": "2014-07-15T17:35:31.654Z",
         "updatedAt": "2014-07-15T17:35:31.654Z"
-      },
+      }],
       "users": [{
         "id": 34,
         "username": "Tian"

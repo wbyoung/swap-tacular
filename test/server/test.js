@@ -88,7 +88,7 @@ describe('server', function() {
     }).done(function(){ done(); },done);
   });
 
-  it('posts posts', function(done) {
+  it('posts post', function(done) {
     var fixture = __fixture('postPOST');
 
     Promise.resolve() // start promise sequence
@@ -97,14 +97,15 @@ describe('server', function() {
     .then(function() { return requestFixture(fixture); })
     .spread(function(response, body){
     	var json = JSON.parse(body);
-      expect(json.post.id).to.be.a('number');
-      expect(json.post.createdAt).to.match(dateRegex);
-      expect(json.post.updatedAt).to.match(dateRegex);
+      console.log(json);
 
+      expect(json.posts[0].id).to.be.a('number');
+      expect(json.posts[0].createdAt).to.match(dateRegex);
+      expect(json.posts[0].updatedAt).to.match(dateRegex);
       // can't match generated data, so just copy from fixture
-      json.post.id = fixture.response.json.post.id;
-      json.post.createdAt = fixture.response.json.post.createdAt;
-      json.post.updatedAt = fixture.response.json.post.updatedAt;
+      json.posts[0].id = fixture.response.json.posts[0].id;
+      json.posts[0].createdAt = fixture.response.json.posts[0].createdAt;
+      json.posts[0].updatedAt = fixture.response.json.posts[0].updatedAt;
 
       expect(json).to.eql(fixture.response.json);
     })
@@ -147,8 +148,33 @@ describe('server', function() {
 
   });
 
-  it('edits a post', function () {
-    
+  it.skip('edits a post', function(done) {
+    var fixture = __fixture('postPUT');
+
+    Promise.resolve() // start promise sequence
+    .then(function() { return createUser(fixture.response.json.users[0]); })
+    .then(function(user) { return createToken(user, { value: tokenValue }); })
+    .tap(function(user) { return createPosts(user, fixture.response.json.posts); })
+    .then(function() { return requestFixture(fixture); })
+    .spread(function(response, body){
+      var json = JSON.parse(body);
+      expect(json.post.id).to.be.a('number');
+      expect(json.post.createdAt).to.match(dateRegex);
+      expect(json.post.updatedAt).to.match(dateRegex);
+
+      // can't match generated data, so just copy from fixture
+      json.post.id = fixture.response.json.post.id;
+      json.post.createdAt = fixture.response.json.post.createdAt;
+      json.post.updatedAt = fixture.response.json.post.updatedAt;
+
+      expect(json).to.eql(fixture.response.json);
+    })
+    .then(function() { return Post.fetchAll(); })
+    .then(function(collection) {
+      expect(collection.length).to.eql(1);
+      expect(collection.at(0).get('message')).to.eql(fixture.request.json.post.message);
+    })
+    .done(function() { done(); }, done);
   });
 
   it('deletes a post', function () {
