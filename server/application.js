@@ -78,6 +78,23 @@ api.get('/posts', function(req, res){
   }).done();
 });
 
+api.get('/post/:id', function(req, res){
+  console.log(require.params.id);
+  Post.where({ id: req.params.id})
+  .fetch()
+  .then(function(models) {
+    var user = [];
+    var post = models.toJSON().map(function(model) {
+      delete model.user.passwordDigest;
+      if(user.length === 0) { user.push(model.user); }
+      renameProperties(model);
+      return model;
+    });
+    console.log(post);
+    res.json({ posts: post, users: user});
+  }).done();
+});
+
 
 // all routes defined below this line will require authorization
 api.use(admit.authorize);

@@ -1,18 +1,15 @@
-<div class="profile">
-  <h1 class="user">{{session.username}}'s profile page.</h1>
-  <h2>Following are my posts:</h2>
+<div class="post">
+  <h1 class="user">Post page.</h1>
+  <h2>Following are just one post:</h2>
   <div>
-  {{#each}}
       {{!-- <h3 class="user">{{user.username}}</h3> --}}      
       <h6 class="timestamp">{{createdAt}}</h6>
       <ul class="message">
-        <li>{{#link-to 'post' post.postId}}{{messageHTML}}{{/link-to}}</li>
+        <li>{{messageHTML}}</li>
       </ul>
       <button class="edit post">Edit</button>
       <button class="delete post">Delete</button>
       {{!-- Discuss semantic Markup with Whit --}}
       <br/>
-      
-    {{/each}}
   </div>
 </div>
