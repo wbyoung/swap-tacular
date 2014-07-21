@@ -77,6 +77,12 @@ describe('app', function() {
 			expect(find('ul.message:first li').text()).to.eql('This should be first');
 			expect(find('ul.message:last li').text()).to.eql('This should be last');
 		});
+		it('can click on link to one post', function() {
+			click('ul.message:first li');
+			andThen(function() {
+				expect(currentRouteName()).to.eql('post/1');
+			});
+		});
 	});
 	
 	describe('edits posts', function () {
