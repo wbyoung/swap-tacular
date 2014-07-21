@@ -142,10 +142,11 @@ describe('app', function() {
 		});
 	});
 
-	describe('comments on posts', function() {
+	describe('comments on post', function() {
 		beforeEach(function() {
 			sendFakeRequest(this.server, 'postsGET');
 			visit('/');
+			click('ul.message:first li a');
 		});
 		it('has a comment button', function() {
 			expect(find('button.comment.post').text()).to.eql('Comment');
