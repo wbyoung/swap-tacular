@@ -148,12 +148,12 @@ describe('server', function() {
 
   });
 
-  it.skip('edits a post', function(done) {
+  it.only('edits a post', function(done) {
     var fixture = __fixture('postPUT');
 
     Promise.resolve() // start promise sequence
     .then(function() { return createUser(fixture.response.json.users[0]); })
-    .then(function(user) { return createToken(user, { value: tokenValue }); })
+    .tap(function(user) { return createToken(user, { value: tokenValue }); })
     .tap(function(user) { return createPosts(user, fixture.response.json.posts); })
     .then(function() { return requestFixture(fixture); })
     .spread(function(response, body){
