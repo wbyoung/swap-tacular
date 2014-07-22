@@ -97,7 +97,6 @@ describe('server', function() {
     .then(function() { return requestFixture(fixture); })
     .spread(function(response, body){
     	var json = JSON.parse(body);
-      console.log(json);
 
       expect(json.posts[0].id).to.be.a('number');
       expect(json.posts[0].createdAt).to.match(dateRegex);
@@ -148,7 +147,7 @@ describe('server', function() {
 
   });
 
-  it.only('edits a post', function(done) {
+  it('edits a post', function(done) {
     var fixture = __fixture('postPUT');
 
     Promise.resolve() // start promise sequence
