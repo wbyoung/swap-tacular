@@ -26,9 +26,9 @@ describe('app', function() {
 	};
 
 	describe('home page', function() {
-		var fixture = __fixture('/post/postsGET');
+		var fixture = __fixture('post/postsGET');
 		beforeEach(function() {
-			sendFakeRequest(this.server, '/post/postsGET');
+			sendFakeRequest(this.server, 'post/postsGET');
 			visit('/');
 		});
 		it('is on home page', function() {
@@ -162,7 +162,7 @@ describe('app', function() {
 						click('button.edit.post');
 						fillIn('textarea.edit.post', 'HELLO!');
 						// var fixture = __fixture('postPUT');
-						sendFakeRequest(self.server, 'postPUT');
+						sendFakeRequest(self.server, 'post/postPUT');
 						click('button.edit.done');
 						andThen(function() {
 							expect(self.server.requests.length).to.eql(3);
