@@ -26,9 +26,9 @@ describe('app', function() {
 	};
 
 	describe('home page', function() {
-		var fixture = __fixture('postsGET');
+		var fixture = __fixture('/post/postsGET');
 		beforeEach(function() {
-			sendFakeRequest(this.server, 'postsGET');
+			sendFakeRequest(this.server, '/post/postsGET');
 			visit('/');
 		});
 		it('is on home page', function() {
@@ -68,7 +68,7 @@ describe('app', function() {
 
 	describe('shows user\'s own post on profile page', function() {
 		beforeEach(function() {
-			sendFakeRequest(this.server, 'postGETUser');
+			sendFakeRequest(this.server, 'post/postGETUser');
 			visit('/profile');
 		});
 		it('will have all the posts by Tian', function() {
@@ -92,7 +92,7 @@ describe('app', function() {
 
 	describe('shows post page by sending single query request', function() {
 		beforeEach(function() {
-			sendFakeRequest(this.server, 'postGET');
+			sendFakeRequest(this.server, 'post/postGET');
 			visit('/post/12');
 		});
 		it('will have one single post', function() {
@@ -105,7 +105,7 @@ describe('app', function() {
 	
 	describe('edits posts', function() {
 		beforeEach(function() {
-			sendFakeRequest(this.server, 'postGETUser');
+			sendFakeRequest(this.server, 'post/postGETUser');
 			visit('/profile');
 		});
 		it('is on the profile page', function() {
@@ -119,7 +119,7 @@ describe('app', function() {
 
 	describe('orders posts in descending order', function() {
 		beforeEach(function() {
-			sendFakeRequest(this.server, 'postOrder');
+			sendFakeRequest(this.server, 'post/postOrder');
 			visit('/');
 		});
 		it('will order posts by date', function() {
@@ -137,10 +137,10 @@ describe('app', function() {
 		});
 		it('will have created a post on index page', function() {
 			fillIn('textarea.message.post', 'HELLO WORLD!');
-			var fixture = __fixture('postPOST');
+			var fixture = __fixture('post/postPOST');
 			var self = this;
-			sendFakeRequest(this.server, 'postPOST');
-			sendFakeRequest(this.server, 'postsGET');
+			sendFakeRequest(this.server, 'post/postPOST');
+			sendFakeRequest(this.server, 'post/postsGET');
 			click('button.create.post');
 			andThen(function() { 
 				expect(this.server.requests.length).to.eql(2);
@@ -175,7 +175,7 @@ describe('app', function() {
 
 	describe('comments on post', function() {
 		beforeEach(function() {
-			sendFakeRequest(this.server, 'postsGET');
+			sendFakeRequest(this.server, 'post/postsGET');
 			visit('/');
 			click('ul.message:first li a');
 		});

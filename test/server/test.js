@@ -53,7 +53,7 @@ describe('server', function() {
   });
 
   it('will get posts', function(done) {
-    var fixture = __fixture('postsGET');
+    var fixture = __fixture('post/postsGET');
 
     Promise.resolve() // start promise sequence
     .then(function() { return createUsers(fixture.response.json.users); })
@@ -71,7 +71,7 @@ describe('server', function() {
   });
 
   it('gets single post', function(done) {
-    var fixture = __fixture('postGET');
+    var fixture = __fixture('post/postGET');
 
     Promise.resolve() // start promise sequence
     .then(function() { return createUsers(fixture.response.json.users); })
@@ -89,7 +89,7 @@ describe('server', function() {
   });
 
   it('posts post', function(done) {
-    var fixture = __fixture('postPOST');
+    var fixture = __fixture('post/postPOST');
 
     Promise.resolve() // start promise sequence
     .then(function() { return createUser(fixture.response.json.users[0]); })
@@ -117,7 +117,7 @@ describe('server', function() {
   });
   
   it('gets posts by userID', function(done) {
-    var fixture = __fixture('postGETUser');
+    var fixture = __fixture('post/postGETUser');
     
     Promise.resolve() // start promise sequence
     .then(function() { return createUser(fixture.response.json.users[0]); })
@@ -148,7 +148,7 @@ describe('server', function() {
   });
 
   it('edits a post', function(done) {
-    var fixture = __fixture('postPUT');
+    var fixture = __fixture('post/postPUT');
 
     Promise.resolve() // start promise sequence
     .then(function() { return createUser(fixture.response.json.users[0]); })
