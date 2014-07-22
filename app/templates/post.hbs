@@ -2,7 +2,7 @@
   <h1 class="user">Post page.</h1>
   <h2>Following are just one post:</h2>
   <div>
-      {{!-- <h3 class="user">{{user.username}}</h3> --}}      
+      <h3 class="user">{{user.username}}</h3>      
       <h6 class="timestamp">{{createdAt}}</h6>
       <ul class="message">
         <li>{{messageHTML}}</li>
@@ -10,7 +10,7 @@
       <button class="delete post">Delete</button>
       {{#if isCommenting}}
         <button class="comment done">Done</button>
-        <textarea class="comment post"></textarea>
+        <textarea rows="3" cols="50"class="comment post"></textarea>
       {{else}}
         <button class="comment post" {{action 'showComment'}}>Comment</button>
       {{/if}}
