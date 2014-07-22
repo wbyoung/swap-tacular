@@ -15,11 +15,8 @@
     "status": 200,
     "json": {
       "posts": [{
-        "id": 1,
-        "message": "HELLO WORLD!",
-        "user": 34,
-        "createdAt": "2014-07-15T17:35:31.654Z",
-        "updatedAt": "2014-07-15T17:35:31.654Z"
+        "id": 1
+
       }],
       "users": [{
         "id": 34,

@@ -175,7 +175,17 @@ describe('server', function() {
     .done(function() { done(); }, done);
   });
 
-  it('deletes a post', function () {
+  it.skip('deletes a post', function () {
+    var fixture = __fixture('postDELETE');
+    Promise.resove()
+    .then(function () { return createUser(fixture.response.json.users[0]); })
+    .tap(function (user) { return createToken(user, { value: tokenValue }); })
+    .tap(function (user) { return createPosts(user, { value: tokenValue }); })
+    .then(function () { return requestFixture(fixture); })
+    .spread(function(response, body) {
+      var json = JSON.parse(body);
+
+    });
     
   });
 

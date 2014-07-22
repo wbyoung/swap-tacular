@@ -135,6 +135,24 @@ api.put('/posts/:id', function(req, res){
   });
 });
 
+
+api.delete('/posts/:id', function(req, res){
+  var user = req.auth.db.user;
+  var post = req.body.post.message;
+  var id = req.params.id;
+  Post.where({ id: id })
+  .fetch({ withRelated: 'user' })
+  .then(function(model) {
+    model.destroy({ message: post }, { method: 'update' }, { patch: true })
+    .then(function(model) {
+      // var sendUser = user.toJSON();
+      // var newPost = model.toJSON();
+      // renameProperties(newPost);
+      // delete sendUser.passwordDigest;
+      // res.json({ posts: [newPost], users: [sendUser] });
+    });  
+  });
+});
 // application routes
 app.use('/api', api);
 
