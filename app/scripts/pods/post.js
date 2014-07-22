@@ -23,7 +23,11 @@ module.exports = function(App) {
         var newMessage = this.get('messageHTML').toString();
         newPost.get('message');
         newPost.set('message', newMessage);
-        newPost.save();
+        newPost.save()
+        .then(function() {
+          this.set('isEditing', false);
+          // this.transitionTo('/post/');
+        }.bind(this));
       }
     }
   });
