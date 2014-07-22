@@ -14,6 +14,7 @@ var fixtureHelpers = require('./helpers/fixtures'),
     createUsers = fixtureHelpers.createUsers,
     createToken = fixtureHelpers.createToken,
     createPosts = fixtureHelpers.createPosts,
+    createComments = fixtureHelpers.createComments,
     requestFixture = fixtureHelpers.requestFixture;
 
 var dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
@@ -38,9 +39,27 @@ describe('server', function() {
     }).done(function() { done(); }, done);
   });
 
-  it('will get comments', function(done) {
-    var fixture = __fixture('commentsGET');
-  
+  it.only('will get comment', function(done) {
+    var fixture = __fixture('comment/commentGET');
+
+    Promise.bind({}) // start promise sequence
+    .then(function() { return createUsers(fixture.response.json.users); })
+    .then(function(user) { 
+      this.user = user;
+      return createPosts(user, fixture.response.json.posts); 
+    })
+    .then(function(post) { return createComments(this.user, post, fixture.response.json.comments); })
+    .then(function() { return requestFixture(fixture); })
+    .spread(function(response, body){
+      var json = JSON.parse(body);
+      console.log(json);
+      expect(fixture.response.json.posts[0].createdAt).to.match(dateRegex);
+      expect(fixture.response.json.posts[0].updatedAt).to.match(dateRegex);
+      //TODO refactoring
+      fixture.response.json.posts[0].createdAt = json.posts[0].createdAt;
+      fixture.response.json.posts[0].updatedAt = json.posts[0].updatedAt;
+      expect(json).to.eql(fixture.response.json);
+    }).done(function(){ done(); },done);
   });
 
 });

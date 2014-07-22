@@ -50,7 +50,7 @@ describe('server', function() {
       fixture.response.json.posts[0].createdAt = json.posts[0].createdAt;
       fixture.response.json.posts[0].updatedAt = json.posts[0].updatedAt;
       expect(json).to.eql(fixture.response.json);
-    }).done(function(){ done(); },done);
+    }).done(function() { done(); }, done);
   });
 
   it('gets single post', function(done) {
@@ -68,7 +68,7 @@ describe('server', function() {
       fixture.response.json.posts[0].createdAt = json.posts[0].createdAt;
       fixture.response.json.posts[0].updatedAt = json.posts[0].updatedAt;
       expect(json).to.eql(fixture.response.json);
-    }).done(function(){ done(); },done);
+    }).done(function() { done(); }, done);
   });
 
   it('posts post', function(done) {
