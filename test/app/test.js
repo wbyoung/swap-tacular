@@ -135,7 +135,7 @@ describe('app', function() {
 		beforeEach(function() {
 			visit('/create');
 		});
-		it.skip('will have created a post on index page', function() {
+		it('will have created a post on index page', function() {
 			fillIn('textarea.message.post', 'HELLO WORLD!');
 			var fixture = __fixture('postPOST');
 			var self = this;
@@ -162,13 +162,10 @@ describe('app', function() {
 						click('button.edit.post');
 						fillIn('textarea.edit.post', 'HELLO!');
 						// var fixture = __fixture('postPUT');
-						sendFakeRequest(self.server, 'postPUT'); //Not sending the request?
+						sendFakeRequest(self.server, 'postPUT');
 						click('button.edit.done');
 						andThen(function() {
-							self.server.requests.forEach(function(elem) {
-								console.log(elem.method);
-							});
-							expect(self.server.requests.length).to.eql(2); //Should be 3 here..
+							expect(self.server.requests.length).to.eql(3);
 							expect(find('ul.message li:first').text()).to.eql('HELLO!');
 						});
 					});
