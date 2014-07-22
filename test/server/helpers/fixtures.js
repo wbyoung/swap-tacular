@@ -2,12 +2,31 @@
 
 var _ = require('lodash');
 var bluebird = require('bluebird'), Promise = bluebird;
+var util = require('util');
+var request = require('request'),
+    requestAsync = bluebird.promisify(request, request);
 var models = require('../../../server/models');
+var port = 383273;
+var baseURL = util.format('http://localhost:%d', port);
 
 var Post = models.Post,
     User = models.User,
     Token = models.Token,
     Comment = models.Comment;
+
+exports.requestFixture = function(fixture) {
+  var requestOptions = {
+    url: baseURL + fixture.request.url,
+    method: fixture.request.method,
+    headers: _.extend({
+     'Content-Type': 'application/json'
+    }, fixture.request.headers)
+  };
+  if (fixture.request.json) {
+   requestOptions.body = JSON.stringify(fixture.request.json);
+  }
+  return requestAsync(requestOptions);
+};
 
 var createUser = exports.createUser = function(attrs) {
   var create = {
