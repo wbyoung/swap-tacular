@@ -11,9 +11,6 @@ var Post = models.Post,
 describe('server', function() {
   afterEach(function(done) {
     Promise.resolve() // start promise sequence
-    .then(function () {
-      return models._bookshelf.knex('message').del();
-    })
     .then(function() {
       return models._bookshelf.knex('posts').del();
     })
