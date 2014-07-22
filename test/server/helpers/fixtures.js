@@ -6,7 +6,8 @@ var models = require('../../../server/models');
 
 var Post = models.Post,
     User = models.User,
-    Token = models.Token;
+    Token = models.Token,
+    Comment = models.Comment;
 
 var createUser = exports.createUser = function(attrs) {
   var create = {
@@ -36,6 +37,15 @@ var createPost = exports.createPost = function(user, attrs) {
   return Post.forge(create).save({ id: attrs.id }, { method: 'insert' });
 };
 
+var createComment = exports.createComment = function(user, post, attrs) {
+  var create = {
+    message: attrs.message,
+    userID: user.id,
+    postID: post.id
+  };
+  return Comment.forge(create).save({ id: attrs.id }, { method: 'insert' });
+};
+
 /**
  * Create posts
  *
@@ -52,4 +62,12 @@ exports.createPosts = function(users, posts) {
 		var user = _.isArray(users) ? users[idx] : users;
 		return createPost(user, post);
 	}));
+};
+
+exports.createComments = function(users, posts, comments) {
+  return Promise.all(comments.map(function(comment, idx) {
+    var user = _.isArray(users) ? users[idx] : users;
+    var post = _.isArray(posts) ? posts[idx] : posts;
+    return createComment(user, post, comment);
+  }));
 };
