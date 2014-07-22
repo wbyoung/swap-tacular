@@ -11,6 +11,9 @@ var Post = models.Post,
 describe('server', function() {
   afterEach(function(done) {
     Promise.resolve() // start promise sequence
+    .then(function () {
+      return models._bookshelf.knex('message').del();
+    })
     .then(function() {
       return models._bookshelf.knex('posts').del();
     })
@@ -42,7 +45,6 @@ describe('server', function() {
     .then(function(user) { return createPost(user); })
     .then(function() { return Post.fetchAll(); })
     .then(function(collection) {
-      console.log(collection)
       expect(collection.length).to.eql(1);
       expect(collection.at(0).get('message')).to.eql('what is up');    
       expect(collection.at(0).get('created_at')).to.exist;    

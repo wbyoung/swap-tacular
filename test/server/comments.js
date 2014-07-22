@@ -38,7 +38,7 @@ describe('server', function() {
     }).done(function() { done(); }, done);
   });
 
-  it('will get comments', function(done) {
+  it.skip('will get comments', function(done) {
     var fixture = __fixture('commentsGET');
   
   });
