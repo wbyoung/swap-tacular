@@ -17,6 +17,13 @@ module.exports = function(App) {
       },
       showEdit: function() {
         this.set('isEditing', true);
+      },
+      editPost: function() {
+        var newPost = this.get('model'); 
+        var newMessage = this.get('messageHTML').toString();
+        newPost.get('message');
+        newPost.set('message', newMessage);
+        newPost.save();
       }
     }
   });
