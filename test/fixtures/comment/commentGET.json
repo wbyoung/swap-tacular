@@ -1,0 +1,28 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/comments/12",
+    "headers": {
+    },
+    "json": null
+  },
+  "response": {
+    "status": 200,
+    "json": {
+      "comments": [{
+        "id": 12,
+        "message": "I'm really excited about using this new Swap service!",
+        "user": 1,
+        "post": 1,
+        "createdAt": "2014-07-14T17:35:31.654Z",
+        "updatedAt": "2014-07-14T17:35:31.654Z"
+      }],
+      "users": [
+        { "id": 1, "username": "Ariel"}
+      ],
+      "posts": [
+        { "id": 1, "message": "This is Swap-tacular!" }
+      ]
+    }
+  }
+}
