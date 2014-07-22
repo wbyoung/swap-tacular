@@ -16,7 +16,7 @@
       {{/if}}
       {{#if isEditing}}
         <button class="edit done" {{action "editPost"}}>Done</button>
-        {{input type="textarea" class="edit post" value=messageHTML placeholder="Edit me?"}}
+        {{textarea class="edit post" value=messageHTML placeholder="Edit me?"}}
       {{else}}
         <button class="edit post" {{action "showEdit"}}>Edit</button>
       {{/if}}

@@ -2,11 +2,31 @@
 
 var _ = require('lodash');
 var bluebird = require('bluebird'), Promise = bluebird;
+var util = require('util');
+var request = require('request'),
+    requestAsync = bluebird.promisify(request, request);
 var models = require('../../../server/models');
+var port = 383273;
+var baseURL = util.format('http://localhost:%d', port);
 
 var Post = models.Post,
     User = models.User,
-    Token = models.Token;
+    Token = models.Token,
+    Comment = models.Comment;
+
+exports.requestFixture = function(fixture) {
+  var requestOptions = {
+    url: baseURL + fixture.request.url,
+    method: fixture.request.method,
+    headers: _.extend({
+     'Content-Type': 'application/json'
+    }, fixture.request.headers)
+  };
+  if (fixture.request.json) {
+   requestOptions.body = JSON.stringify(fixture.request.json);
+  }
+  return requestAsync(requestOptions);
+};
 
 var createUser = exports.createUser = function(attrs) {
   var create = {
@@ -36,6 +56,15 @@ var createPost = exports.createPost = function(user, attrs) {
   return Post.forge(create).save({ id: attrs.id }, { method: 'insert' });
 };
 
+var createComment = exports.createComment = function(user, post, attrs) {
+  var create = {
+    message: attrs.message,
+    userID: user.id,
+    postID: post.id
+  };
+  return Comment.forge(create).save({ id: attrs.id }, { method: 'insert' });
+};
+
 /**
  * Create posts
  *
@@ -52,4 +81,12 @@ exports.createPosts = function(users, posts) {
 		var user = _.isArray(users) ? users[idx] : users;
 		return createPost(user, post);
 	}));
+};
+
+exports.createComments = function(users, posts, comments) {
+  return Promise.all(comments.map(function(comment, idx) {
+    var user = _.isArray(users) ? users[idx] : users;
+    var post = _.isArray(posts) ? posts[idx] : posts;
+    return createComment(user, post, comment);
+  }));
 };

@@ -5,7 +5,7 @@ var knexConfig = require('./config/knexfile.js')[config.env];
 var knex = require('knex')(knexConfig);
 var bookshelf = require('bookshelf')(knex);
 
-var User, Token, Post;
+var User, Token, Post, Comment;
 
 /**
  * TODO: document me
@@ -16,6 +16,9 @@ User = bookshelf.Model.extend({
   },
   posts: function() {
     return this.hasMany(Post);
+  },
+  comments: function() {
+    return this.hasMany(Comment).through(Post);
   },
   tableName: 'users'
 });
@@ -43,10 +46,25 @@ Post = bookshelf.Model.extend({
   tableName: 'posts'
 });
 
+/**
+ * TODO: document me
+ */
+Comment = bookshelf.Model.extend({
+  user: function() {
+    return this.belongsTo(User, 'userID').through(Post);
+  },
+  post: function() {
+    return this.belongsTo(Post, 'postID');
+  },
+  hasTimestamps: true,
+  tableName: 'comments'
+});
+
 module.exports = {
   User: User,
   Token: Token,
   Post: Post,
+  Comment: Comment,
   _kenx: knex,
   _bookshelf: bookshelf // only for testing
 };
