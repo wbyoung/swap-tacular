@@ -13,6 +13,9 @@ module.exports = function(App) {
 
     actions: {
       showComment: function() {
+        this.set('isCommenting', true);
+      },
+      showEdit: function() {
         this.set('isEditing', true);
       }
     }

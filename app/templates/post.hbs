@@ -7,13 +7,18 @@
       <ul class="message">
         <li>{{messageHTML}}</li>
       </ul>
-      <button class="edit post">Edit</button>
       <button class="delete post">Delete</button>
-      {{#if isEditing}}
+      {{#if isCommenting}}
         <button class="comment done">Done</button>
         <textarea class="comment post"></textarea>
       {{else}}
         <button class="comment post" {{action 'showComment'}}>Comment</button>
+      {{/if}}
+      {{#if isEditing}}
+        <button class="edit done">Done</button>
+        <textarea class="edit post"></textarea>
+      {{else}}
+        <button class="edit post" {{action 'showEdit'}}>Edit</button>
       {{/if}}
       {{!-- Discuss semantic Markup with Whit --}}
       <br/>
