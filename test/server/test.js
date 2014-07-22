@@ -1,15 +1,10 @@
 'use strict';
 
-var _ = require('lodash');
 var expect = require('chai').expect;
-var util = require('util');
 var bluebird = require('bluebird'), Promise = bluebird;
-var request = require('request'),
-    requestAsync = bluebird.promisify(request, request);
 var app = require('../../server/application');
 var models = require('../../server/models');
 var port = 383273;
-var baseURL = util.format('http://localhost:%d', port);
 
 var Post = models.Post;
 
@@ -17,24 +12,12 @@ var fixtureHelpers = require('./helpers/fixtures'),
     createUser = fixtureHelpers.createUser,
     createUsers = fixtureHelpers.createUsers,
     createToken = fixtureHelpers.createToken,
-    createPosts = fixtureHelpers.createPosts;
+    createPosts = fixtureHelpers.createPosts,
+    requestFixture = fixtureHelpers.requestFixture;
 
 var dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
 var tokenValue = 'ff13689653e86dc1ad0f9b4a34978192a918c6d4';
 
-var requestFixture = function(fixture) {
-  var requestOptions = {
-    url: baseURL + fixture.request.url,
-    method: fixture.request.method,
-    headers: _.extend({
-    	'Content-Type': 'application/json'
-    }, fixture.request.headers)
-  };
-  if (fixture.request.json) {
-  	requestOptions.body = JSON.stringify(fixture.request.json);
-  }
-  return requestAsync(requestOptions);
-};
 
 describe('server', function() {
   before(function(done) { this.server = app.listen(port, function() { done(); }); });
@@ -53,7 +36,7 @@ describe('server', function() {
   });
 
   it('will get posts', function(done) {
-    var fixture = __fixture('postsGET');
+    var fixture = __fixture('post/postsGET');
 
     Promise.resolve() // start promise sequence
     .then(function() { return createUsers(fixture.response.json.users); })
@@ -71,7 +54,7 @@ describe('server', function() {
   });
 
   it('gets single post', function(done) {
-    var fixture = __fixture('postGET');
+    var fixture = __fixture('post/postGET');
 
     Promise.resolve() // start promise sequence
     .then(function() { return createUsers(fixture.response.json.users); })
@@ -89,7 +72,7 @@ describe('server', function() {
   });
 
   it('posts post', function(done) {
-    var fixture = __fixture('postPOST');
+    var fixture = __fixture('post/postPOST');
 
     Promise.resolve() // start promise sequence
     .then(function() { return createUser(fixture.response.json.users[0]); })
@@ -117,7 +100,7 @@ describe('server', function() {
   });
   
   it('gets posts by userID', function(done) {
-    var fixture = __fixture('postGETUser');
+    var fixture = __fixture('post/postGETUser');
     
     Promise.resolve() // start promise sequence
     .then(function() { return createUser(fixture.response.json.users[0]); })
@@ -148,7 +131,7 @@ describe('server', function() {
   });
 
   it('edits a post', function(done) {
-    var fixture = __fixture('postPUT');
+    var fixture = __fixture('post/postPUT');
 
     Promise.resolve() // start promise sequence
     .then(function() { return createUser(fixture.response.json.users[0]); })
