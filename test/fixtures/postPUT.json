@@ -16,7 +16,7 @@
     "json": {
       "posts": [{
         "id": 1,
-        "message": "HELLO WORLD!",
+        "message": "HELLO!",
         "user": 34,
         "createdAt": "2014-07-15T17:35:31.654Z",
         "updatedAt": "2014-07-15T17:35:31.654Z"

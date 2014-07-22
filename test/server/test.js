@@ -158,15 +158,14 @@ describe('server', function() {
     .then(function() { return requestFixture(fixture); })
     .spread(function(response, body){
       var json = JSON.parse(body);
-      expect(json.post.id).to.be.a('number');
-      expect(json.post.createdAt).to.match(dateRegex);
-      expect(json.post.updatedAt).to.match(dateRegex);
+      expect(json.posts[0].id).to.be.a('number');
+      expect(json.posts[0].createdAt).to.match(dateRegex);
+      expect(json.posts[0].updatedAt).to.match(dateRegex);
 
       // can't match generated data, so just copy from fixture
-      json.post.id = fixture.response.json.post.id;
-      json.post.createdAt = fixture.response.json.post.createdAt;
-      json.post.updatedAt = fixture.response.json.post.updatedAt;
-
+      json.posts[0].id = fixture.response.json.posts[0].id;
+      json.posts[0].createdAt = fixture.response.json.posts[0].createdAt;
+      json.posts[0].updatedAt = fixture.response.json.posts[0].updatedAt;
       expect(json).to.eql(fixture.response.json);
     })
     .then(function() { return Post.fetchAll(); })
