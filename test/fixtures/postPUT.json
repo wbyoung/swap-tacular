@@ -1,26 +1,26 @@
 {
   "request": {
     "method": "PUT",
-    "url": "/api/posts",
+    "url": "/api/posts/1",
     "headers": {
       "Authorization": "Token 9208fbba48fd4fbe9e16f4d5fa7ca4aa"
     },
     "json": {
       "post": {
-        "message": "HELLO WORLD!"
+        "message": "HELLO!"
       }
     }
   },
   "response": {
     "status": 200,
     "json": {
-      "post": {
+      "posts": [{
         "id": 1,
-        "message": "HELLO WORLD!",
+        "message": "HELLO!",
         "user": 34,
         "createdAt": "2014-07-15T17:35:31.654Z",
         "updatedAt": "2014-07-15T17:35:31.654Z"
-      },
+      }],
       "users": [{
         "id": 34,
         "username": "Tian"

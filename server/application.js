@@ -89,7 +89,7 @@ api.get('/posts/:id', function(req, res){
     user.push(post.user);
     renameProperties(post);
     newPost.push(post);
-    res.json({ posts: newPost, users: user});
+    res.json({ posts: newPost, users: user });
   }).done();
 });
 
@@ -113,7 +113,25 @@ api.post('/posts', function(req, res){
     renameProperties(newPost);
     var sendUser = user.toJSON();
     delete sendUser.passwordDigest;
-    res.json({ post: newPost, users: [sendUser]});
+    res.json({ posts: [newPost], users: [sendUser] });
+  });
+});
+
+api.put('/posts/:id', function(req, res){
+  var user = req.auth.db.user;
+  var post = req.body.post.message;
+  var id = req.params.id;
+  Post.where({ id: id })
+  .fetch({ withRelated: 'user' })
+  .then(function(model) {
+    model.save({ message: post }, { method: 'update' }, { patch: true })
+    .then(function(model) {
+      var sendUser = user.toJSON();
+      var newPost = model.toJSON();
+      renameProperties(newPost);
+      delete sendUser.passwordDigest;
+      res.json({ posts: [newPost], users: [sendUser] });
+    });  
   });
 });
 

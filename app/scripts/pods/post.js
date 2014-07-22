@@ -13,7 +13,21 @@ module.exports = function(App) {
 
     actions: {
       showComment: function() {
+        this.set('isCommenting', true);
+      },
+      showEdit: function() {
         this.set('isEditing', true);
+      },
+      editPost: function() {
+        var newPost = this.get('model'); 
+        var newMessage = this.get('messageHTML').toString();
+        newPost.get('message');
+        newPost.set('message', newMessage);
+        newPost.save()
+        .then(function() {
+          this.set('isEditing', false);
+          // this.transitionTo('/post/');
+        }.bind(this));
       }
     }
   });

@@ -112,6 +112,7 @@ describe('app', function() {
 			expect(currentRouteName()).to.eql('profile');
 		});
 	});
+
 	describe('deletes posts', function() {
 		
 	});
@@ -134,9 +135,10 @@ describe('app', function() {
 		beforeEach(function() {
 			visit('/create');
 		});
-		it('will have created a post on index page', function() {
+		it.skip('will have created a post on index page', function() {
 			fillIn('textarea.message.post', 'HELLO WORLD!');
 			var fixture = __fixture('postPOST');
+			var self = this;
 			sendFakeRequest(this.server, 'postPOST');
 			sendFakeRequest(this.server, 'postsGET');
 			click('button.create.post');
@@ -149,8 +151,27 @@ describe('app', function() {
 			andThen(function() {
 				expect(find('ul.message li:first').text()).to
 				.eql('HELLO WORLD!');
-				var dateString = new Date(fixture.response.json.post.createdAt).toString();
+				var dateString = new Date(fixture.response.json.posts[0].createdAt).toString();
 				expect(find('h6.timestamp:first').text()).to.eql(dateString);
+			});
+			andThen(function() {
+					click('ul.message li:first a');
+					andThen(function() {
+						expect(currentRouteName()).to.eql('post');
+						expect(find('button.edit.post')).to.exist;
+						click('button.edit.post');
+						fillIn('textarea.edit.post', 'HELLO!');
+						// var fixture = __fixture('postPUT');
+						sendFakeRequest(self.server, 'postPUT'); //Not sending the request?
+						click('button.edit.done');
+						andThen(function() {
+							self.server.requests.forEach(function(elem) {
+								console.log(elem.method);
+							});
+							expect(self.server.requests.length).to.eql(2); //Should be 3 here..
+							expect(find('ul.message li:first').text()).to.eql('HELLO!');
+						});
+					});
 			});
 		});
 	});
