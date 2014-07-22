@@ -39,7 +39,7 @@ describe('server', function() {
     }).done(function() { done(); }, done);
   });
 
-  it.only('will get comment', function(done) {
+  it.skip('will get comment', function(done) {
     var fixture = __fixture('comment/commentGET');
 
     Promise.bind({}) // start promise sequence
