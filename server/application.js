@@ -45,7 +45,8 @@ var renameProperties = function(object){
 
 var models = require('./models'),
     User = models.User,
-    Post = models.Post;
+    Post = models.Post,
+    Comment = models.Comment;
 
 var admit = require('admit-one')('bookshelf', {
   bookshelf: { modelClass: User }
@@ -90,6 +91,24 @@ api.get('/posts/:id', function(req, res){
     renameProperties(post);
     newPost.push(post);
     res.json({ posts: newPost, users: user });
+  }).done();
+});
+
+api.get('/comments/:id', function(req, res) {
+  console.log('getting comment by id');
+  Comment.where({ id: req.params.id})
+  .fetch({ withRelated: ['user', 'post'] })
+  .then(function(model) {
+    var user = [];
+    var post = [];
+    var newComment = [];
+    var comment = model.toJSON();
+    console.log(comment);
+    delete post.user.passwordDigest;
+    user.push(post.user);
+    renameProperties(post);
+    newPost.push(post);
+    res.json({ comments: comment, posts: post, users: user });
   }).done();
 });
 

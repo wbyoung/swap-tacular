@@ -17,11 +17,11 @@
         "createdAt": "2014-07-14T17:35:31.654Z",
         "updatedAt": "2014-07-14T17:35:31.654Z"
       }],
-      "users": [
-        { "id": 1, "username": "Ariel"}
-      ],
       "posts": [
         { "id": 1, "message": "This is Swap-tacular!" }
+      ],
+      "users": [
+        { "id": 1, "username": "Ariel"}
       ]
     }
   }
