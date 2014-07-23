@@ -31,15 +31,18 @@ app.use(methodOverride());
 
 var renameProperties = function(object){
   var renameProperty = function(object, currentName, newName) {
-    object[newName] = object[currentName];
-    delete object[currentName];
+    if (object[currentName]) {
+      object[newName] = object[currentName];
+      delete object[currentName];
+    }  
   };
   var properties = [
     ['created_at', 'createdAt'], 
     ['updated_at', 'updatedAt'], 
-    ['userID', 'user']];
+    ['userID', 'user'],
+    ['postID', 'post']];
   properties.forEach(function(pair){
-      renameProperty(object, pair[0], pair[1]);
+    renameProperty(object, pair[0], pair[1]);
   });
 };
 
@@ -98,22 +101,19 @@ api.get('/posts/:id', function(req, res){
 });
 
 api.get('/comments/:id', function(req, res) {
-  console.log('getting comment by id');
   Comment.where({ id: req.params.id})
-  .fetch({ withRelated: ['user', 'post'] })
+  .fetch( {withRelated: ['post', 'user']})
   .then(function(model) {
-  console.log('oopopo');
-    var user = [];
-    var post = [];
-    var newComment = [];
     var comment = model.toJSON();
-    console.log(comment);
-    delete post.user.passwordDigest;
-    user.push(post.user);
+    var post = comment.post;
+    var user = comment.user;
     renameProperties(post);
-    newPost.push(post);
-  console.log('lkjlkj');
-    res.json({ comments: comment, posts: post, users: user });
+    renameProperties(comment);
+    //Man, we need to refactor or rethink api response
+    user = _.pick(user, 'id', 'username');
+    post = _.pick(post, 'id', 'message');
+    res.json({ comments: [comment], posts: [post], users: [user] });
+
   }).done();
 });
 
@@ -167,8 +167,6 @@ api.delete('/posts/:id', function(req, res){
   Post.where({ id: id })
   .fetch({ withRelated: 'user' })
   .then(function(model) {
-    console.log(id);
-    console.log(model);
     // model.destroy({ message: post }, { method: 'update' }, { patch: true })
   //   .then(function(model) {
   //     var sendUser = user.toJSON();
