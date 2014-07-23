@@ -159,7 +159,7 @@ describe('server', function() {
     .done(function() { done(); }, done);
   });
 
-  it('deletes a post', function(done) {
+  it.skip('deletes a post', function(done) {
     var fixture = __fixture('post/postDELETE');
     // console.log(fixture);
     Promise.resolve() // start promise sequence
