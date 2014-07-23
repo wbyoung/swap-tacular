@@ -33,6 +33,33 @@ describe('server', function() {
     }).done(function() { done(); }, done);
   });
 
+  it('will get all of comments on post', function(done) {
+    var fixture = __fixture('comment/commentsGET');
+
+    Promise.bind({}) // start promise sequence
+    .then(function() { return createUsers(fixture.response.json.users); })
+    .then(function(user) { 
+      this.user = user;
+      return createPosts(user, fixture.response.json.posts); 
+    })
+    .then(function(post) { return createComments(this.user, post, fixture.response.json.comments); })
+    .then(function() { return requestFixture(fixture); })
+    .spread(function(response, body){
+      var json = JSON.parse(body);
+      expect(fixture.response.json.comments[0].createdAt).to.match(dateRegex);
+      expect(fixture.response.json.comments[1].updatedAt).to.match(dateRegex);
+      //TODO refactoring
+      fixture.response.json.comments[0].createdAt = json.comments[0].createdAt;
+      fixture.response.json.comments[0].updatedAt = json.comments[0].updatedAt;
+      fixture.response.json.comments[1].createdAt = json.comments[1].createdAt;
+      fixture.response.json.comments[1].updatedAt = json.comments[1].updatedAt;
+
+      expect(json).to.eql(fixture.response.json);
+    })
+    .done(function(){ done(); },done);
+
+  });
+
   it('will get comment by id', function(done) {
     var fixture = __fixture('comment/commentGET');
 
@@ -51,7 +78,6 @@ describe('server', function() {
       //TODO refactoring
       fixture.response.json.comments[0].createdAt = json.comments[0].createdAt;
       fixture.response.json.comments[0].updatedAt = json.comments[0].updatedAt;
-
       expect(json).to.eql(fixture.response.json);
     })
     .done(function(){ done(); },done);
