@@ -1,0 +1,23 @@
+  describe('shows user\'s own post on profile page', function() {
+    beforeEach(function() {
+      sendFakeRequest(this.server, 'post/postGETUser');
+      visit('/profile');
+    });
+    it('will have all the posts by Tian', function() {
+      expect(currentRouteName()).to.eql('profile');
+      expect(find('h1.user:first').text()).to.eql('fake-username\'s profile page.');
+      expect(find('ul.message:first li').text()).to.eql('This should be first');
+      expect(find('ul.message:last li').text()).to.eql('This should be last');
+    });
+    it('can click on link to one post', function() {
+      click('ul.message:first li a');
+      andThen(function() {
+        expect(currentRouteName()).to.eql('post');
+        it('has an edit button', function() {
+          expect(find('ul.message:first li').text()).to.eql('This should be first');
+          expect(find('button.edit.post:first').text()).to.eql('Edit');
+          expect(find('button.edit.post')).to.exist;
+        });
+      });
+    });
+  });
