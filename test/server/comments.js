@@ -23,7 +23,7 @@ var tokenValue = 'ff13689653e86dc1ad0f9b4a34978192a918c6d4';
 describe('server', function() {
   before(function(done) { this.server = app.listen(port, function() { done(); }); });
   after(function(done) { this.server.close(done); });
-  beforeEach(function(done) {
+  afterEach(function(done) {
     Promise.resolve() // start promise sequence
     .then(function() {
       return models._bookshelf.knex('comments').del();
@@ -60,6 +60,7 @@ describe('server', function() {
       fixture.response.json.posts[0].updatedAt = json.posts[0].updatedAt;
       expect(json).to.eql(fixture.response.json);
     }).done(function(){ done(); },done);
+
   });
 
 });

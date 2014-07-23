@@ -65,8 +65,11 @@ api.post('/sessions', admit.authenticate, function(req, res) {
 });
 
 api.get('/posts', function(req, res){
-  if (req.query.user) { Post = Post.where({ userID: req.query.user}); }
-  Post.fetchAll({ withRelated: 'user' })
+  var query = Post;
+  if (req.query.user) {
+    query = Post.where({ userID: req.query.user});
+  }
+  query.fetchAll({ withRelated: 'user' })
   .then(function(collection) {
     var users = [];
     var posts = collection.toJSON().map(function(model) {
@@ -156,6 +159,27 @@ api.put('/posts/:id', function(req, res){
   });
 });
 
+
+api.delete('/posts/:id', function(req, res){
+  var user = req.auth.db.user;
+  var post = req.body.post;
+  var id = req.params.id;
+  Post.where({ id: id })
+  .fetch({ withRelated: 'user' })
+  .then(function(model) {
+    console.log(id);
+    console.log(model);
+    // model.destroy({ message: post }, { method: 'update' }, { patch: true })
+  //   .then(function(model) {
+  //     var sendUser = user.toJSON();
+  //     var deletePost = model.toJSON();
+  //     renameProperties(deletePost);
+  //     delete sendUser.passwordDigest;
+      // res.json({ posts: [deletePost], users: [sendUser] });
+      res.json({});
+  //   });  
+  });
+});
 // application routes
 app.use('/api', api);
 

@@ -12,6 +12,7 @@ var fixtureHelpers = require('./helpers/fixtures'),
     createUser = fixtureHelpers.createUser,
     createUsers = fixtureHelpers.createUsers,
     createToken = fixtureHelpers.createToken,
+    createPost = fixtureHelpers.createPost,
     createPosts = fixtureHelpers.createPosts,
     requestFixture = fixtureHelpers.requestFixture;
 
@@ -22,7 +23,7 @@ var tokenValue = 'ff13689653e86dc1ad0f9b4a34978192a918c6d4';
 describe('server', function() {
   before(function(done) { this.server = app.listen(port, function() { done(); }); });
   after(function(done) { this.server.close(done); });
-  beforeEach(function(done) {
+  afterEach(function(done) {
     Promise.resolve() // start promise sequence
     .then(function() {
       return models._bookshelf.knex('posts').del();
@@ -158,8 +159,30 @@ describe('server', function() {
     .done(function() { done(); }, done);
   });
 
-  it('deletes a post', function () {
-    
+  it('deletes a post', function(done) {
+    var fixture = __fixture('post/postDELETE');
+    // console.log(fixture);
+    Promise.resolve() // start promise sequence
+    .then(function () { return createUser(fixture.data.users[0]); })
+    .tap(function(user) { return createToken(user, { value: tokenValue }); })
+    .tap(function(user) { return createPost(user, fixture.data.posts[0]); })
+    .then(function() { return Post.fetchAll(); })
+    .then(function(posts) {
+      console.log(posts.toJSON());
+
+    })
+
+    .then(function() { return requestFixture(fixture); })
+    .spread(function(response, body) {
+      console.log(body);
+      var json = JSON.parse(body);
+      expect(json).to.eql(fixture.response.json);
+    })
+    .then(function() { return Post.fetchAll(); })
+    .then(function(collection) {
+      expect(collection.length).to.eql(1);
+    })
+    .done(function() { done(); }, done);
   });
 
 });
