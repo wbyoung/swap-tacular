@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 app.use(methodOverride());
 
 
-var renameProperties = function(object){
+var renameProperties = function(object) {
   var renameProperty = function(object, currentName, newName) {
     if (object[currentName]) {
       object[newName] = object[currentName];
@@ -41,7 +41,7 @@ var renameProperties = function(object){
     ['updated_at', 'updatedAt'], 
     ['userID', 'user'],
     ['postID', 'post']];
-  properties.forEach(function(pair){
+  properties.forEach(function(pair) {
     renameProperty(object, pair[0], pair[1]);
   });
 };
@@ -67,7 +67,7 @@ api.post('/sessions', admit.authenticate, function(req, res) {
   res.json({ session: req.auth.user });
 });
 
-api.get('/posts', function(req, res){
+api.get('/posts', function(req, res) {
   var query = Post;
   if (req.query.user) {
     query = Post.where({ userID: req.query.user});
@@ -85,7 +85,7 @@ api.get('/posts', function(req, res){
   }).done();
 });
 
-api.get('/posts/:id', function(req, res){
+api.get('/posts/:id', function(req, res) {
   Post.where({ id: req.params.id})
   .fetch({ withRelated: 'user' })
   .then(function(model) {
@@ -153,7 +153,7 @@ api.delete('/sessions/current', admit.invalidate, function(req, res) {
   res.json({ status: 'ok' });
 });
 
-api.post('/posts', function(req, res){
+api.post('/posts', function(req, res) {
   var user = req.auth.db.user;
   var post = req.body.post.message;
   var create = {
@@ -169,7 +169,26 @@ api.post('/posts', function(req, res){
   });
 });
 
-api.put('/posts/:id', function(req, res){
+api.post('/comments', function(req, res) {
+  var user = req.auth.db.user;
+  var post = req.body.post;
+  var comment = req.body.comment.message;
+  var create = {
+    message: comment,
+    userID: user.get('id'),
+    postID: post.id
+  };
+  Comment.forge(create).save().then(function(comment) {
+    var newComment = comment.toJSON();
+    renameProperties(newComment);
+    var sendUser = user.toJSON();
+    var sendPost = post.toJSON();
+    delete sendUser.passwordDigest;
+    res.json({ comments: [newComment], posts: [sendPost], users: [sendUser] });
+  });
+});
+
+api.put('/posts/:id', function(req, res) {
   var user = req.auth.db.user;
   var post = req.body.post.message;
   var id = req.params.id;
