@@ -7,12 +7,15 @@ var models = require('../../server/models');
 var port = 383273;
 
 var fixtureHelpers = require('./helpers/fixtures'),
+    createUser = fixtureHelpers.createUser,
     createUsers = fixtureHelpers.createUsers,
     createPosts = fixtureHelpers.createPosts,
+    createToken = fixtureHelpers.createToken,
     createComments = fixtureHelpers.createComments,
     requestFixture = fixtureHelpers.requestFixture;
 
 var dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
+var tokenValue = 'ff13689653e86dc1ad0f9b4a34978192a918c6d4';
 
 describe('server', function() {
   before(function(done) { this.server = app.listen(port, function() { done(); }); });
@@ -71,7 +74,30 @@ describe('server', function() {
     })
     .then(function(post) { return createComments(this.user, post, fixture.response.json.comments); })
     .then(function() { return requestFixture(fixture); })
-    .spread(function(response, body){
+    .spread(function(response, body) {
+      var json = JSON.parse(body);
+      expect(fixture.response.json.comments[0].createdAt).to.match(dateRegex);
+      expect(fixture.response.json.comments[0].updatedAt).to.match(dateRegex);
+      //TODO refactoring
+      fixture.response.json.comments[0].createdAt = json.comments[0].createdAt;
+      fixture.response.json.comments[0].updatedAt = json.comments[0].updatedAt;
+      expect(json).to.eql(fixture.response.json);
+    })
+    .done(function(){ done(); },done);
+  });
+  
+  it('will post a comment on post', function(done) {
+    var fixture = __fixture('comment/commentPOST');
+
+    Promise.bind({})
+    .then(function() { return createUser(fixture.response.json.users[0]); })
+    .then(function(user) { 
+      this.user = user;
+      return createToken(user, { value: tokenValue }); 
+    })
+    .then(function() { return createPosts(this.user, fixture.response.json.posts); })
+    .then(function() { return requestFixture(fixture); })
+    .spread(function(response, body) {
       var json = JSON.parse(body);
       expect(fixture.response.json.comments[0].createdAt).to.match(dateRegex);
       expect(fixture.response.json.comments[0].updatedAt).to.match(dateRegex);
@@ -83,5 +109,4 @@ describe('server', function() {
     .done(function(){ done(); },done);
 
   });
-
 });
