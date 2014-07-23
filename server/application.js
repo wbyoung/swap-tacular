@@ -99,6 +99,7 @@ api.get('/comments/:id', function(req, res) {
   Comment.where({ id: req.params.id})
   .fetch({ withRelated: ['user', 'post'] })
   .then(function(model) {
+  console.log('oopopo');
     var user = [];
     var post = [];
     var newComment = [];
@@ -108,6 +109,7 @@ api.get('/comments/:id', function(req, res) {
     user.push(post.user);
     renameProperties(post);
     newPost.push(post);
+  console.log('lkjlkj');
     res.json({ comments: comment, posts: post, users: user });
   }).done();
 });

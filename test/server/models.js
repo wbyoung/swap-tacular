@@ -9,6 +9,34 @@ var Post = models.Post,
     User = models.User,
     Comment = models.Comment;
 
+// create user & save
+var createUser = function() {
+  var create = {
+    username: 'testdude',
+    passwordDigest: 'digest'
+  };
+  return User.forge(create).save();
+};
+
+// create post associated with that user & save
+var createPost = function(user) {
+  var create = {
+    message: 'what is up',
+    userID: user.id
+  };
+  return Post.forge(create).save();
+};
+
+//create comment associated with that post and user
+var createComment = function(user, post) {
+  var create = {
+    message: 'What do you mean what\'s up:',
+    userID: user.id,
+    postID: post.id
+  };
+  return Comment.forge(create).save();
+};
+
 describe('server', function() {
   afterEach(function(done) {
     Promise.resolve() // start promise sequence
@@ -23,23 +51,7 @@ describe('server', function() {
     }).done(function() { done(); }, done);
   });
   it('will get post models', function(done){
-    // create user & save
-    var createUser = function() {
-      var create = {
-        username: 'testdude',
-        passwordDigest: 'digest'
-      };
-      return User.forge(create).save();
-    };
     
-    // create post associated with that user & save
-    var createPost = function(user) {
-      var create = {
-        message: 'what is up',
-        userID: user.id
-      };
-      return Post.forge(create).save();
-    };
 
     Promise.resolve()
     .then(function() { return createUser(); })
@@ -55,34 +67,6 @@ describe('server', function() {
   });
 
   it('will get comment models', function(done) {
-    // create user & save
-    var createUser = function() {
-      var create = {
-        username: 'testdude',
-        passwordDigest: 'digest'
-      };
-      return User.forge(create).save();
-    };
-    
-    // create post associated with that user & save
-    var createPost = function(user) {
-      var create = {
-        message: 'what is up',
-        userID: user.id
-      };
-      return Post.forge(create).save();
-    };
-
-    //create comment associated with that post and user
-    var createComment = function(user, post) {
-      var create = {
-        message: 'What do you mean what\'s up:',
-        userID: user.id,
-        postID: post.id
-      };
-      return Comment.forge(create).save();
-    };
-
     Promise.bind({})
     .then(function() { return createUser(); })
     .then(function(user) { 
