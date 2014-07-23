@@ -6,18 +6,13 @@ var app = require('../../server/application');
 var models = require('../../server/models');
 var port = 383273;
 
-var Post = models.Post,
-    Comment = models.Comment;
-
 var fixtureHelpers = require('./helpers/fixtures'),
-    createUser = fixtureHelpers.createUser,
     createUsers = fixtureHelpers.createUsers,
-    createToken = fixtureHelpers.createToken,
     createPosts = fixtureHelpers.createPosts,
+    createComments = fixtureHelpers.createComments,
     requestFixture = fixtureHelpers.requestFixture;
 
 var dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
-var tokenValue = 'ff13689653e86dc1ad0f9b4a34978192a918c6d4';
 
 describe('server', function() {
   before(function(done) { this.server = app.listen(port, function() { done(); }); });
@@ -38,9 +33,29 @@ describe('server', function() {
     }).done(function() { done(); }, done);
   });
 
-  it.skip('will get comments', function(done) {
-    var fixture = __fixture('commentsGET');
-  
+  it('will get comment by id', function(done) {
+    var fixture = __fixture('comment/commentGET');
+
+    Promise.bind({}) // start promise sequence
+    .then(function() { return createUsers(fixture.response.json.users); })
+    .then(function(user) { 
+      this.user = user;
+      return createPosts(user, fixture.response.json.posts); 
+    })
+    .then(function(post) { return createComments(this.user, post, fixture.response.json.comments); })
+    .then(function() { return requestFixture(fixture); })
+    .spread(function(response, body){
+      var json = JSON.parse(body);
+      expect(fixture.response.json.comments[0].createdAt).to.match(dateRegex);
+      expect(fixture.response.json.comments[0].updatedAt).to.match(dateRegex);
+      //TODO refactoring
+      fixture.response.json.comments[0].createdAt = json.comments[0].createdAt;
+      fixture.response.json.comments[0].updatedAt = json.comments[0].updatedAt;
+
+      expect(json).to.eql(fixture.response.json);
+    })
+    .done(function(){ done(); },done);
+
   });
 
 });

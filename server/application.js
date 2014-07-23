@@ -31,21 +31,25 @@ app.use(methodOverride());
 
 var renameProperties = function(object){
   var renameProperty = function(object, currentName, newName) {
-    object[newName] = object[currentName];
-    delete object[currentName];
+    if (object[currentName]) {
+      object[newName] = object[currentName];
+      delete object[currentName];
+    }  
   };
   var properties = [
     ['created_at', 'createdAt'], 
     ['updated_at', 'updatedAt'], 
-    ['userID', 'user']];
+    ['userID', 'user'],
+    ['postID', 'post']];
   properties.forEach(function(pair){
-      renameProperty(object, pair[0], pair[1]);
+    renameProperty(object, pair[0], pair[1]);
   });
 };
 
 var models = require('./models'),
     User = models.User,
-    Post = models.Post;
+    Post = models.Post,
+    Comment = models.Comment;
 
 var admit = require('admit-one')('bookshelf', {
   bookshelf: { modelClass: User }
@@ -96,6 +100,23 @@ api.get('/posts/:id', function(req, res){
   }).done();
 });
 
+api.get('/comments/:id', function(req, res) {
+  Comment.where({ id: req.params.id})
+  .fetch( {withRelated: ['post', 'user']})
+  .then(function(model) {
+    var comment = model.toJSON();
+    var post = comment.post;
+    var user = comment.user;
+    renameProperties(post);
+    renameProperties(comment);
+    //Man, we need to refactor or rethink api response
+    user = _.pick(user, 'id', 'username');
+    post = _.pick(post, 'id', 'message');
+    res.json({ comments: [comment], posts: [post], users: [user] });
+
+  }).done();
+});
+
 
 // all routes defined below this line will require authorization
 api.use(admit.authorize);
@@ -141,7 +162,6 @@ api.put('/posts/:id', function(req, res){
 
 api.delete('/posts/:id', function(req, res){
   var user = req.auth.db.user;
-  var post = req.body.post;
   var id = req.params.id;
   Post.where({ id: id })
   .fetch({ withRelated: 'user' })

@@ -22,3 +22,39 @@ To run migrations in heroku
 To migrate and make migrations
 	./node_modules/.bin/knex make:blah
 	$ NODE_ENV='test' ./node_modules/.bin/knex migrate:latest
+
+Dealing with returning multiple promises
+// arrays
+Promise.resolve() // start promise sequence
+.then(function() { return createUser(); })
+.then(function(user) { return Promise.all([user, createTokens()]); })
+.spead(function(user, tokens) {
+})
+
+
+// scoping
+var user;
+var tokens;
+
+Promise.resolve() // start promise sequence
+.then(function() { return createUser(); })
+.then(function(aUser) {
+  user = aUser;
+  return createTokens();
+})
+.then(function(theTokens) {
+  tokens = theTokens;
+})
+
+
+// bind
+Promise.bind({})
+.then(function() { return createUser(); })
+.then(function(user) {
+  this.user = user;
+  return createTokens();
+})
+.then(function(tokens) {
+  this.tokens = tokens;
+  console.log(this.user);
+})
