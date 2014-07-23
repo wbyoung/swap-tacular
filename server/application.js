@@ -64,8 +64,11 @@ api.post('/sessions', admit.authenticate, function(req, res) {
 });
 
 api.get('/posts', function(req, res){
-  if (req.query.user) { Post = Post.where({ userID: req.query.user}); }
-  Post.fetchAll({ withRelated: 'user' })
+  var query = Post;
+  if (req.query.user) {
+    query = Post.where({ userID: req.query.user});
+  }
+  query.fetchAll({ withRelated: 'user' })
   .then(function(collection) {
     var users = [];
     var posts = collection.toJSON().map(function(model) {
