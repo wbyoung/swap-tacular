@@ -138,19 +138,22 @@ api.put('/posts/:id', function(req, res){
 
 api.delete('/posts/:id', function(req, res){
   var user = req.auth.db.user;
-  var post = req.body.post.message;
+  var post = req.body.post;
   var id = req.params.id;
   Post.where({ id: id })
   .fetch({ withRelated: 'user' })
   .then(function(model) {
-    model.destroy({ message: post }, { method: 'update' }, { patch: true })
-    .then(function(model) {
-      var sendUser = user.toJSON();
-      var deletePost = model.toJSON();
-      renameProperties(deletePost);
-      delete sendUser.passwordDigest;
-      res.json({ posts: [deletePost], users: [sendUser] });
-    });  
+    console.log(id);
+    console.log(model);
+    // model.destroy({ message: post }, { method: 'update' }, { patch: true })
+  //   .then(function(model) {
+  //     var sendUser = user.toJSON();
+  //     var deletePost = model.toJSON();
+  //     renameProperties(deletePost);
+  //     delete sendUser.passwordDigest;
+      // res.json({ posts: [deletePost], users: [sendUser] });
+      res.json({});
+  //   });  
   });
 });
 // application routes

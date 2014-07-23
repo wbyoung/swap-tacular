@@ -159,16 +159,22 @@ describe('server', function() {
     .done(function() { done(); }, done);
   });
 
-  it.skip('deletes a post', function(done) {
+  it('deletes a post', function(done) {
     var fixture = __fixture('post/postDELETE');
-    console.log(fixture);
+    // console.log(fixture);
     Promise.resolve() // start promise sequence
     .then(function () { return createUser(fixture.data.users[0]); })
     .tap(function(user) { return createToken(user, { value: tokenValue }); })
     .tap(function(user) { return createPost(user, fixture.data.posts[0]); })
+    .then(function() { return Post.fetchAll(); })
+    .then(function(posts) {
+      console.log(posts.toJSON());
+
+    })
+
     .then(function() { return requestFixture(fixture); })
     .spread(function(response, body) {
-      console.log(JSON.parse(body));
+      console.log(body);
       var json = JSON.parse(body);
       expect(json).to.eql(fixture.response.json);
     })
