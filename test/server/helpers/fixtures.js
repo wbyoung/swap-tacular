@@ -84,9 +84,6 @@ exports.createPosts = function(users, posts) {
 };
 
 exports.createComments = function(users, posts, comments) {
-  // console.log('here is the user' + JSON.stringify(users));
-  // console.log('here is the posts:' + JSON.stringify(posts));
-  // console.log('here is the comments' + JSON.stringify(comments));
   return Promise.all(comments.map(function(comment, idx) {
     var user = _.isArray(users) ? users[idx] : users;
     var post = _.isArray(posts) ? posts[idx] : posts;
