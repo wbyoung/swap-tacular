@@ -148,7 +148,7 @@ describe('post on create', function() {
 });
 describe('it will show a map', function () {
   visit('/post');
-  it('will show a 500x500 map', function () {
+  it.skip('will show a 500x500 map', function () {
     expect(find('.map')).to.exist;
   });
 });
