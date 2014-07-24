@@ -171,12 +171,12 @@ api.post('/posts', function(req, res) {
 
 api.post('/comments', function(req, res) {
   var user = req.auth.db.user;
-  var post = req.body.post;
+  var post = req.body.comment.post;
   var comment = req.body.comment.message;
   var create = {
     message: comment,
     userID: user.get('id'),
-    postID: post.id
+    postID: post
   };
   Comment.forge(create).save().then(function(comment) {
     var newComment = comment.toJSON();

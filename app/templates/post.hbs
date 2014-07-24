@@ -9,8 +9,8 @@
       </ul>
       <button class="delete post" {{action "deletePost"}}>Delete</button>
       {{#if isCommenting}}
-        <button class="comment done">Done</button>
-        <textarea rows="3" cols="50"class="comment post"></textarea>
+        <button class="comment done" {{action "commentPost"}}>Done</button>
+        {{textarea class="comment post" value=inputComment placeholder="Comment me?"}}
       {{else}}
         <button class="comment post" {{action "showComment"}}>Comment</button>
       {{/if}}

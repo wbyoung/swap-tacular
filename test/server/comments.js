@@ -107,6 +107,8 @@ describe('server', function() {
       fixture.response.json.comments[0].id = json.comments[0].id;
       fixture.response.json.comments[0].createdAt = json.comments[0].createdAt;
       fixture.response.json.comments[0].updatedAt = json.comments[0].updatedAt;
+      console.log(json);
+      console.log(fixture.response.json);
       expect(json).to.eql(fixture.response.json);
     })
     .done(function(){ done(); },done);

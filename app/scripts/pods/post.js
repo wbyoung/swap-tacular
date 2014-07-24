@@ -14,6 +14,7 @@ module.exports = function(App) {
     actions: {
       showComment: function() {
         this.set('isCommenting', true);
+        this.transitionToRoute('comments');
       },
       showEdit: function() {
         this.set('isEditing', true);
@@ -41,8 +42,26 @@ module.exports = function(App) {
   });
 
   App.PostRoute = Ember.Route.extend({
+    needs: ['post'],
     model: function(params) {
       return this.store.find('post', params.postId);
+    }, 
+    actions: {
+      commentPost: function() {
+        var self = this;
+        var message = this.controllerFor('post').get('inputComment');
+        var create = {
+          message: message,
+          userID: this.get('session').get('id'),
+          postID: this.currentModel.get('id'),
+        };
+        console.log(create);
+        var comment = this.store.createRecord('comment', create);
+        comment.set('post', this.currentModel);
+        // this.currentModel.get('comments').add(comment);
+        this.controllerFor('post').set('inputComment', '');
+        comment.save();
+      }
     }
   });
 
