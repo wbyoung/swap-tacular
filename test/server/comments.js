@@ -86,7 +86,7 @@ describe('server', function() {
     .done(function(){ done(); },done);
   });
   
-  it('will post a comment on post', function(done) {
+  it('will post a comment on a post', function(done) {
     var fixture = __fixture('comment/commentPOST');
 
     Promise.bind({})
@@ -101,7 +101,9 @@ describe('server', function() {
       var json = JSON.parse(body);
       expect(fixture.response.json.comments[0].createdAt).to.match(dateRegex);
       expect(fixture.response.json.comments[0].updatedAt).to.match(dateRegex);
-      //TODO refactoring
+      //TODO: refactoring
+      // can't match generated data, so just copy from fixture
+      fixture.response.json.comments[0].id = json.comments[0].id;
       fixture.response.json.comments[0].createdAt = json.comments[0].createdAt;
       fixture.response.json.comments[0].updatedAt = json.comments[0].updatedAt;
       expect(json).to.eql(fixture.response.json);

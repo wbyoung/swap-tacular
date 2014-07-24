@@ -8,6 +8,10 @@
     "json": {
       "comment": {
         "message": "HELLOoooow WORLD!"
+      },
+      "post": {
+        "id": 1,
+        "message": "This is Swap-tacular!"
       }
     }
   },

@@ -182,9 +182,8 @@ api.post('/comments', function(req, res) {
     var newComment = comment.toJSON();
     renameProperties(newComment);
     var sendUser = user.toJSON();
-    var sendPost = post.toJSON();
     delete sendUser.passwordDigest;
-    res.json({ comments: [newComment], posts: [sendPost], users: [sendUser] });
+    res.json({ comments: [newComment], posts: [post], users: [sendUser] });
   });
 });
 
