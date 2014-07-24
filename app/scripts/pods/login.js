@@ -17,6 +17,7 @@ module.exports = function(App) {
   App.LoginController = Ember.Controller.extend({
     actions: {
       authenticate: function() {
+        //make a permanent state of 'this'
         var self = this;
         var session = self.get('session');
         var credentials = self.getProperties('username', 'password');
