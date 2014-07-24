@@ -39,8 +39,10 @@ describe('shows user\'s own post on profile page', function() {
     });
   });
   it.only('deletes the post', function() {
+    __sendFakeRequest(this.server, 'post/postDELETE');
     click('ul.message:first li a');
     andThen(function() {
+      console.log('deleting')
       expect(find('ul.message:first li').text()).to.eql('This should be first');
       expect(currentRouteName()).to.eql('post');
       it('has an delete button', function() {

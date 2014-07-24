@@ -9,9 +9,7 @@
   },
   "response": {
     "status": 200,
-    "json": {
-      "posts":[{}]
-    }
+    "json": {}
   },
   "data": {
     "users": [{

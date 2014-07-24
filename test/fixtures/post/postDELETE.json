@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "DELETE",
-    "url": "/api/posts/1",
+    "url": "/api/posts/14",
     "headers": {
       "Authorization": "Token 9208fbba48fd4fbe9e16f4d5fa7ca4aa"
     },
@@ -9,9 +9,7 @@
   },
   "response": {
     "status": 200,
-    "json": {
-      "posts":[{}]
-    }
+    "json": {}
   },
   "data": {
     "users": [{
@@ -26,7 +24,7 @@
       "updatedAt": "2014-07-15T17:35:31.654Z"
     },
     {
-      "id": 2,
+      "id": 14,
       "message": "GOODBYE WORLD!",
       "user": 34,
       "createdAt": "2014-07-15T17:35:31.654Z",

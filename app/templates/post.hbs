@@ -7,7 +7,7 @@
       <ul class="message">
         <li>{{messageHTML}}</li>
       </ul>
-      <button class="delete post">Delete</button>
+      <button class="delete post" {{action "deletePost"}}>Delete</button>
       {{#if isCommenting}}
         <button class="comment done">Done</button>
         <textarea rows="3" cols="50"class="comment post"></textarea>

@@ -239,7 +239,7 @@ api.delete('/posts/:id', function(req, res) {
   .then(function(model) {
     model.destroy()
     .then(function() {
-      res.json({ posts: [{}] });
+      res.json({});
     });  
   }).done();
 });
@@ -254,7 +254,7 @@ api.delete('/comments/:id', function(req, res) {
   .then(function(model) {
     model.destroy()
     .then(function() {
-      res.json({ posts: [{}] });
+      res.json({});
     });
   }).done();
 });

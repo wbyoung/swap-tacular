@@ -43,16 +43,14 @@ describe('Posts', function() {
     .tap(function(user) { return createPost(user, fixture.data.posts[0]); })
     .tap(function(user) { return createPost(user, fixture.data.posts[1]); })
     .then(function() { return Post.fetchAll(); })
-    .then(function() {})
+    .then(function(collection) { expect(collection.length).to.eql(2); })
     .then(function() { return requestFixture(fixture); })
     .spread(function(response, body) {
       var json = JSON.parse(body);
       expect(json).to.eql(fixture.response.json);
     })
     .then(function() { return Post.fetchAll(); })
-    .then(function(collection) {
-      expect(collection.length).to.eql(1);
-    })
+    .then(function(collection) { expect(collection.length).to.eql(1); })
     .done(function() { done(); }, done);
   });
 

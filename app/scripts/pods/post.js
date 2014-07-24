@@ -26,7 +26,16 @@ module.exports = function(App) {
         newPost.save()
         .then(function() {
           this.set('isEditing', false);
-          // this.transitionTo('/post/');
+          this.transitionToRoute('/profile');
+        }.bind(this));
+      },
+      deletePost: function() {
+        var post = this.get('model');
+        post.deleteRecord();
+        post.save()
+        .then(function() {
+          console.log('going to profile');
+          this.transitionToRoute('/profile');
         }.bind(this));
       }
     }
