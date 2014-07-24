@@ -52,7 +52,7 @@ describe('actions on post', function() {
       visit('/post/12');
     });
     it('will have one single post', function() {
-      expect(currentRouteName()).to.eql('post');
+      expect(currentRouteName()).to.eql('post.index');
       expect(find('ul.message:first li').text()).to.eql('I\'m really excited about using this new Swap service!');
       expect(find('button.edit.post:first').text()).to.eql('Edit');
       expect(find('button.edit.post')).to.exist;
@@ -86,7 +86,7 @@ describe('actions on post', function() {
       andThen(function() {
         click('ul.message li:first a');
         andThen(function() {
-          expect(currentRouteName()).to.eql('post');
+          expect(currentRouteName()).to.eql('post.index');
           expect(find('button.edit.post')).to.exist;
           click('button.edit.post');
           fillIn('textarea.edit.post', 'HELLO!');
