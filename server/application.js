@@ -207,6 +207,7 @@ api.put('/posts/:id', function(req, res) {
 
 api.put('/comments/:id', function(req, res) {
   var user = req.auth.db.user;
+  //TODO: Check is the user can edit
   if (!user) { throw new Error('You do not have the authority to do that!'); }
   var comment = req.body.comment.message;
   var id = req.params.id;
@@ -228,22 +229,36 @@ api.put('/comments/:id', function(req, res) {
   }).done();
 });
 
-api.delete('/posts/:id', function(req, res){
+api.delete('/posts/:id', function(req, res) {
+  //TODO: Check if user can delete
   var user = req.auth.db.user;
+  if (!user) { throw new Error('You do not have the authority to do that!'); }
   var id = req.params.id;
   Post.where({ id: id })
   .fetch({ withRelated: 'user' })
   .then(function(model) {
     model.destroy()
-    .then(function(model) {
-      var sendUser = user.toJSON();
-      var deletePost = model.toJSON();
-      renameProperties(deletePost);
-      delete sendUser.passwordDigest;
+    .then(function() {
       res.json({ posts: [{}] });
     });  
   }).done();
 });
+
+api.delete('/comments/:id', function(req, res) {
+  //TODO: Check if user can delete
+  var user = req.auth.db.user;
+  if (!user) { throw new Error('You do not have the authority to do that!'); }
+  var id = req.params.id;
+  Comment.where( { id: id })
+  .fetch({ withRelated: ['post', 'user'] })
+  .then(function(model) {
+    model.destroy()
+    .then(function() {
+      res.json({ posts: [{}] });
+    });
+  }).done();
+});
+
 // application routes
 app.use('/api', api);
 

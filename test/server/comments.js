@@ -5,12 +5,13 @@ var bluebird = require('bluebird'), Promise = bluebird;
 var app = require('../../server/application');
 var models = require('../../server/models');
 var port = 383273;
-
+var Comment = models.Comment;
 var fixtureHelpers = require('./helpers/fixtures'),
     createUser = fixtureHelpers.createUser,
     createUsers = fixtureHelpers.createUsers,
     createPosts = fixtureHelpers.createPosts,
     createToken = fixtureHelpers.createToken,
+    createComment = fixtureHelpers.createComment,
     createComments = fixtureHelpers.createComments,
     requestFixture = fixtureHelpers.requestFixture;
 
@@ -136,5 +137,28 @@ describe('server', function() {
     })
     .done(function(){ done(); },done);
   });
-
+  
+  it('will delete comment', function(done) {
+    var fixture = __fixture('comment/commentDELETE');
+    Promise.bind({})
+    .then(function() { return createUser(fixture.data.users[0]); })
+    .then(function(user) { 
+      this.user = user;
+      return createToken(user, { value: tokenValue }); 
+    })
+    .then(function() { return createPosts(this.user, fixture.data.posts); })
+    .tap(function(post) { return createComment(this.user, post, fixture.data.comments[0]); })
+    .tap(function(post) { return createComment(this.user, post, fixture.data.comments[1]); })
+    .then(function() { 
+      return requestFixture(fixture); })
+    .spread(function(response, body) {
+      var json = JSON.parse(body);
+      expect(json).to.eql(fixture.response.json);
+    })
+    .then(function() { return Comment.fetchAll(); })
+    .then(function(collection) {
+      expect(collection.length).to.eql(1);
+    })
+    .done(function(){ done(); },done);
+  });
 });
