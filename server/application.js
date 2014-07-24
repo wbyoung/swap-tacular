@@ -100,9 +100,37 @@ api.get('/posts/:id', function(req, res){
   }).done();
 });
 
+api.get('/comments', function(req, res) {
+  var query = Comment;
+  if (req.query.user) { query = Comment.where({ userID: req.query.user }); }
+  if (req.query.post) { query = Comment.where({ postID: req.query.post }); }
+
+  query.query('orderBy', 'id', 'asce')
+  .fetchAll({ withRelated: ['post', 'user'] })
+  .then(function(collection) {
+    var posts = [], users = [], comments = [];
+    collection.toJSON().map(function(model) {
+      var user = model.user;
+      var post = model.post;
+      renameProperties(model.post);
+      renameProperties(model);
+      user = _.pick(user, 'id', 'username');
+      post = _.pick(post, 'id', 'message');
+      posts.push(post);
+      users.push(user);
+      comments.push(model);
+    });
+
+    res.json({ comments: comments, 
+      posts: _.uniq(posts, function(post) { return post.id; }), 
+      users: _.uniq(users, function(user) { return user.id; }) 
+    });
+  }).done();
+});
+
 api.get('/comments/:id', function(req, res) {
   Comment.where({ id: req.params.id})
-  .fetch( {withRelated: ['post', 'user']})
+  .fetch({ withRelated: ['post', 'user'] })
   .then(function(model) {
     var comment = model.toJSON();
     var post = comment.post;
