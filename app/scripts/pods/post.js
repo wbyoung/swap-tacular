@@ -26,7 +26,7 @@ module.exports = function(App) {
         newPost.save()
         .then(function() {
           this.set('isEditing', false);
-          this.transitionToRoute('/profile');
+          // this.transitionToRoute('/profile');
         }.bind(this));
       },
       deletePost: function() {
@@ -34,7 +34,6 @@ module.exports = function(App) {
         post.deleteRecord();
         post.save()
         .then(function() {
-          console.log('going to profile');
           this.transitionToRoute('/profile');
         }.bind(this));
       }

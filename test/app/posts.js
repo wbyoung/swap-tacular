@@ -25,6 +25,7 @@ describe('actions on post', function() {
     });
     it('is on the profile page', function() {
       expect(currentRouteName()).to.eql('profile');
+      //TODO: Finish this test..
     });
   });
 
