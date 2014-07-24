@@ -109,6 +109,32 @@ describe('server', function() {
       expect(json).to.eql(fixture.response.json);
     })
     .done(function(){ done(); },done);
-
   });
+  
+  it('will edit comment', function(done) {
+    var fixture = __fixture('comment/commentPUT');
+
+    Promise.bind({})
+    .then(function() { return createUser(fixture.response.json.users[0]); })
+    .then(function(user) { 
+      this.user = user;
+      return createToken(user, { value: tokenValue }); 
+    })
+    .then(function() { return createPosts(this.user, fixture.response.json.posts); })
+    .then(function(post) { return createComments(this.user, post, fixture.response.json.comments); })
+    .then(function() { return requestFixture(fixture); })
+    .spread(function(response, body) {
+      var json = JSON.parse(body);
+      expect(fixture.response.json.comments[0].createdAt).to.match(dateRegex);
+      expect(fixture.response.json.comments[0].updatedAt).to.match(dateRegex);
+      //TODO: refactoring
+      // can't match generated data, so just copy from fixture
+      fixture.response.json.comments[0].id = json.comments[0].id;
+      fixture.response.json.comments[0].createdAt = json.comments[0].createdAt;
+      fixture.response.json.comments[0].updatedAt = json.comments[0].updatedAt;
+      expect(json).to.eql(fixture.response.json);
+    })
+    .done(function(){ done(); },done);
+  });
+
 });

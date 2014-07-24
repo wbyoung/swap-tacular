@@ -205,6 +205,29 @@ api.put('/posts/:id', function(req, res) {
   });
 });
 
+api.put('/comments/:id', function(req, res) {
+  var user = req.auth.db.user;
+  if (!user) { throw new Error('You do not have the authority to do that!'); }
+  var comment = req.body.comment.message;
+  var id = req.params.id;
+  Comment.where({ id: id })
+  .fetch({ withRelated: ['post', 'user'] })
+  .then(function(model) {
+    return model.save({ message: comment }, { method: 'update' }, { patch: true }); 
+  })
+  .then(function(model) {
+    var newComment = model.toJSON();
+    var post = newComment.post;
+    var user = newComment.user;
+    renameProperties(post);
+    renameProperties(newComment);
+    //Man, we need to refactor or rethink api response
+    user = _.pick(user, 'id', 'username');
+    post = _.pick(post, 'id', 'message');
+    res.json({ comments: [newComment], posts: [post], users: [user] });
+  }).done();
+});
+
 
 api.delete('/posts/:id', function(req, res){
   var user = req.auth.db.user;
