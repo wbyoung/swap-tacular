@@ -11,6 +11,7 @@
     "json": {
       "posts": [{
         "id": 12,
+        "location": null,
         "message": "I'm really excited about using this new Swap service!",
         "user": 1,
         "createdAt": "2014-07-14T17:35:31.654Z",
