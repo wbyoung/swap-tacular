@@ -39,7 +39,8 @@
     "currentRouteName": true,
     "currentPath": true,
     "currentURL": true,
-    "applicationContainer": true
+    "applicationContainer": true,
+    "__sendFakeRequest": true
   },
   "expr": true
 }
