@@ -166,7 +166,7 @@ api.post('/posts', function(req, res) {
     var sendUser = user.toJSON();
     delete sendUser.passwordDigest;
     res.json({ posts: [newPost], users: [sendUser] });
-  });
+  }).done();
 });
 
 api.post('/comments', function(req, res) {
@@ -184,7 +184,7 @@ api.post('/comments', function(req, res) {
     var sendUser = user.toJSON();
     delete sendUser.passwordDigest;
     res.json({ comments: [newComment], posts: [post], users: [sendUser] });
-  });
+  }).done();
 });
 
 api.put('/posts/:id', function(req, res) {
@@ -202,7 +202,7 @@ api.put('/posts/:id', function(req, res) {
       delete sendUser.passwordDigest;
       res.json({ posts: [newPost], users: [sendUser] });
     });  
-  });
+  }).done();
 });
 
 api.put('/comments/:id', function(req, res) {
@@ -228,7 +228,6 @@ api.put('/comments/:id', function(req, res) {
   }).done();
 });
 
-
 api.delete('/posts/:id', function(req, res){
   var user = req.auth.db.user;
   var id = req.params.id;
@@ -243,7 +242,7 @@ api.delete('/posts/:id', function(req, res){
       delete sendUser.passwordDigest;
       res.json({ posts: [{}] });
     });  
-  });
+  }).done();
 });
 // application routes
 app.use('/api', api);
