@@ -45,6 +45,13 @@ window.__fixture = function(name) {
   return JSON.parse(fixture);
 };
 
+window.__sendFakeRequest = function(fakeServer, fixtureURL) {
+  var fixture = __fixture(fixtureURL);
+  fakeServer.respondWith(fixture.request.method, fixture.request.url,
+      [200, { 'Content-Type': 'application/json' },
+       JSON.stringify(fixture.response.json)]);
+};
+
 // terrible hack from https://github.com/ariya/phantomjs/issues/10522
 // this is required to fix bind on phantomjs
 if (!Function.prototype.bind) {
@@ -54,8 +61,8 @@ if (!Function.prototype.bind) {
       throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
     }
 
-    var aArgs = Array.prototype.slice.call(arguments, 1), 
-        fToBind = this, 
+    var aArgs = Array.prototype.slice.call(arguments, 1),
+        fToBind = this,
         fNOP = function () {},
         fBound = function () {
           return fToBind.apply(this instanceof fNOP && oThis
