@@ -22,10 +22,10 @@ We will need...
     * Code climate
     * David DM
 
-* ##### Work on User Accounts. Making sure they can be created and logged into. 
+* ##### Work on User Accounts. Making sure they can be created and logged into.
 
   * Account creation
-  * User Log-in 
+  * User Log-in
 
 
 ### Wednesday
@@ -60,7 +60,7 @@ Continue Catch-Up and create plan for Week 2. Discuss TODO features.
 
 
 ## Week 2
-By the end of this week we plan on having users and posts work on a very basic level. This is our minimal viable product. 
+By the end of this week we plan on having users and posts work on a very basic level. This is our minimal viable product.
 
   * TEST THE FRONT END BETTER!
   * Put content up
@@ -122,7 +122,7 @@ By the end of this week we plan on having users and posts work on a very basic l
 
 ## TODO features:
 
-  + Deleting account 
+  + Deleting account
   + Edit profile / Gravatar setup
   + Change password
   + Upload pictures with post / AWS?
@@ -132,4 +132,4 @@ By the end of this week we plan on having users and posts work on a very basic l
   + Editable Front End
   + Motion Captcha
   + Google authentification
-  
+
