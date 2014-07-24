@@ -33,8 +33,22 @@ describe('shows user\'s own post on profile page', function() {
       expect(currentRouteName()).to.eql('post');
       it('has an edit button', function() {
         expect(find('ul.message:first li').text()).to.eql('This should be first');
-        expect(find('button.edit.post:first').text()).to.eql('Edit');
         expect(find('button.edit.post')).to.exist;
+        expect(find('button.edit.post:first').text()).to.eql('Edit');
+      });
+    });
+  });
+  it.only('deletes the post', function() {
+    click('ul.message:first li a');
+    andThen(function() {
+      expect(find('ul.message:first li').text()).to.eql('This should be first');
+      expect(currentRouteName()).to.eql('post');
+      it('has an delete button', function() {
+        expect(find('button.delete.post:first').text()).to.eql('Delete');
+      });
+      click('button.delete.post:first');
+      andThen(function() {
+        expect(find('ul.message:first li').text()).to.eql('{}');
       });
     });
   });
