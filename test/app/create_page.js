@@ -27,7 +27,10 @@ describe('create page', function() {
     expect(find('button.create.post').length).to.eql(1);
     expect(find('button.create.post').text()).to.eql('Add');
   });
-  it('will have an textarea box', function() {
+  it('will have an textarea box for the post', function() {
     expect(find('textarea.message.post').length).to.eql(1);
+  });
+  it('will have an input box for location', function() {
+    expect(find('input.address.post').length).to.eql(1);
   });
 });
