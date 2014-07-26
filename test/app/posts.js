@@ -49,7 +49,7 @@ describe('actions on post', function() {
   describe('shows post page by sending single query request', function() {
     beforeEach(function() {
       __sendFakeRequest(this.server, 'post/postGET');
-      visit('/post/12');
+      visit('/post/50');
     });
     it('will have one single post', function() {
       expect(currentRouteName()).to.eql('post.index');
