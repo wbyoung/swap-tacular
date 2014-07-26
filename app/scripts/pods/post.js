@@ -57,7 +57,7 @@ module.exports = function(App) {
         };
         console.log(create);
         var comment = this.store.createRecord('comment', create);
-        comment.set('post', this.currentModel);
+        // comment.set('post', this.currentModel);
         // this.currentModel.get('comments').add(comment);
         this.controllerFor('post').set('inputComment', '');
         comment.save();

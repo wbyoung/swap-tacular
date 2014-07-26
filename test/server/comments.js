@@ -91,12 +91,12 @@ describe('server', function() {
     var fixture = __fixture('comment/commentPOST');
 
     Promise.bind({})
-    .then(function() { return createUser(fixture.response.json.users[0]); })
+    .then(function() { return createUser(fixture.response.data.users[0]); })
     .then(function(user) { 
       this.user = user;
       return createToken(user, { value: tokenValue }); 
     })
-    .then(function() { return createPosts(this.user, fixture.response.json.posts); })
+    .then(function() { return createPosts(this.user, fixture.response.data.posts); })
     .then(function() { return requestFixture(fixture); })
     .spread(function(response, body) {
       var json = JSON.parse(body);
@@ -107,8 +107,6 @@ describe('server', function() {
       fixture.response.json.comments[0].id = json.comments[0].id;
       fixture.response.json.comments[0].createdAt = json.comments[0].createdAt;
       fixture.response.json.comments[0].updatedAt = json.comments[0].updatedAt;
-      console.log(json);
-      console.log(fixture.response.json);
       expect(json).to.eql(fixture.response.json);
     })
     .done(function(){ done(); },done);

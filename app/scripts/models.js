@@ -9,15 +9,15 @@ module.exports = function(App) {
   App.User = Model.extend({
     username: attr('string'),
     password: attr('string'),
-    posts: hasMany('post'),
-    comments: hasMany('comment')
+    posts: hasMany('post', { async: true }),
+    comments: hasMany('comment', { async: true })
   });
 
   App.Post = Model.extend({
   	message: attr('string'),
   	createdAt: attr('date'),
   	user: belongsTo('user'),
-    comments: hasMany('comment')
+    comments: hasMany('comment', { async: true })
   });
 
   App.Comment = Model.extend({

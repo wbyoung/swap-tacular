@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "url": "/api/posts/12",
+    "url": "/api/posts/50",
     "headers": {
     },
     "json": null
@@ -10,14 +10,31 @@
     "status": 200,
     "json": {
       "posts": [{
-        "id": 12,
+        "id": 50,
         "message": "I'm really excited about using this new Swap service!",
-        "user": 1,
+        "user": 11,
+        "comments": [32, 25],
         "createdAt": "2014-07-14T17:35:31.654Z",
         "updatedAt": "2014-07-14T17:35:31.654Z"
       }],
+      "comments": [{
+        "id": 32,
+        "message": "Comment 1",
+        "user": 11,
+        "post": 50,
+        "createdAt": "2014-07-14T17:35:31.654Z",
+        "updatedAt": "2014-07-14T17:35:31.654Z"
+        },
+        {
+          "id": 25,
+          "message": "Comment 2",
+          "user": 11,
+          "post": 50,
+          "createdAt": "2014-07-14T17:35:31.654Z",
+          "updatedAt": "2014-07-14T17:35:31.654Z"
+        }],
       "users": [
-        { "id":1, "username": "Ariel"}
+        { "id":11, "username": "Ariel"}
       ]
     }
   }

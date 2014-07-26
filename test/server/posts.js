@@ -14,6 +14,7 @@ var fixtureHelpers = require('./helpers/fixtures'),
     createToken = fixtureHelpers.createToken,
     createPost = fixtureHelpers.createPost,
     createPosts = fixtureHelpers.createPosts,
+    createComment = fixtureHelpers.createComment,
     requestFixture = fixtureHelpers.requestFixture;
 
 var dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
@@ -24,6 +25,9 @@ describe('Posts', function() {
   after(function(done) { this.server.close(done); });
   afterEach(function(done) {
     Promise.resolve() // start promise sequence
+    .then(function() {
+      return models._bookshelf.knex('comments').del();
+    })
     .then(function() {
       return models._bookshelf.knex('posts').del();
     })
@@ -75,9 +79,14 @@ describe('Posts', function() {
   it('gets single post', function(done) {
     var fixture = __fixture('post/postGET');
 
-    Promise.resolve() // start promise sequence
+    Promise.bind({}) // start promise sequence
     .then(function() { return createUsers(fixture.response.json.users); })
-    .then(function(users) { return createPosts(users, fixture.response.json.posts); })
+    .then(function(user) { 
+      this.user = user;
+      return createPosts(user, fixture.response.json.posts); 
+    })
+    .tap(function(post) { return createComment(this.user, post, fixture.response.json.comments[0]); })
+    .tap(function(post) { return createComment(this.user, post, fixture.response.json.comments[1]); })
     .then(function() { return requestFixture(fixture); })
     .spread(function(response, body){
       var json = JSON.parse(body);
@@ -86,6 +95,11 @@ describe('Posts', function() {
       //TODO refactoring
       fixture.response.json.posts[0].createdAt = json.posts[0].createdAt;
       fixture.response.json.posts[0].updatedAt = json.posts[0].updatedAt;
+      fixture.response.json.comments.forEach(function(comment, idx) {
+        comment.createdAt = json.comments[idx].createdAt;
+        comment.updatedAt = json.comments[idx].updatedAt;
+      });
+
       expect(json).to.eql(fixture.response.json);
     }).done(function() { done(); }, done);
   });

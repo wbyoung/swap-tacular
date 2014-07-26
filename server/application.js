@@ -87,16 +87,22 @@ api.get('/posts', function(req, res) {
 
 api.get('/posts/:id', function(req, res) {
   Post.where({ id: req.params.id})
-  .fetch({ withRelated: 'user' })
+  .fetch( {withRelated: ['user', 'comments'] })
+  // .fetch({ withRelated: ['user', 'comments'] })
   .then(function(model) {
     var user = [];
     var newPost = [];
     var post = model.toJSON();
+    var comments = post.comments;
     delete post.user.passwordDigest;
     user.push(post.user);
+    post.comments.forEach(function(comments) {
+      renameProperties(comments);
+    });
     renameProperties(post);
+    post.comments = _.pluck(post.comments, 'id');
     newPost.push(post);
-    res.json({ posts: newPost, users: user });
+    res.json({ posts: newPost, comments: comments, users: user });
   }).done();
 });
 
@@ -183,7 +189,7 @@ api.post('/comments', function(req, res) {
     renameProperties(newComment);
     var sendUser = user.toJSON();
     delete sendUser.passwordDigest;
-    res.json({ comments: [newComment], posts: [post], users: [sendUser] });
+    res.json({ comments: [newComment] });
   }).done();
 });
 

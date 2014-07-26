@@ -57,10 +57,12 @@ var createPost = exports.createPost = function(user, attrs) {
 };
 
 var createComment = exports.createComment = function(user, post, attrs) {
+  var us = _.isArray(user) ? user[0] : user;
+  var pst = _.isArray(post) ? post[0] : post;
   var create = {
     message: attrs.message,
-    userID: user.id,
-    postID: post.id
+    userID: us.id,
+    postID: pst.id
   };
   return Comment.forge(create).save({ id: attrs.id }, { method: 'insert' });
 };

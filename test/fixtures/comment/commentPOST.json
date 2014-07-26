@@ -8,6 +8,7 @@
     "json": {
       "comment": {
         "message": "HELLOoooow WORLD!",
+        "user": 1,
         "post": 1
       }
     }
@@ -15,6 +16,16 @@
   "response": {
     "status": 200,
     "json": {
+      "comments": [{
+        "id": 12,
+        "message": "HELLOoooow WORLD!",
+        "user": 1,
+        "post": 1,
+        "createdAt": "2014-07-14T17:35:31.654Z",
+        "updatedAt": "2014-07-14T17:35:31.654Z"
+      }]
+    },
+    "data": {
       "comments": [{
         "id": 12,
         "message": "HELLOoooow WORLD!",
