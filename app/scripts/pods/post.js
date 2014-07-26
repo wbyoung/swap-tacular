@@ -1,8 +1,11 @@
 'use strict';
 
 module.exports = function(App) {
-
   App.PostController = Ember.ObjectController.extend({
+    // needs: 'comment',
+    getComment: function() {
+      return this.get('model').get('comments');
+    },
     isEditing: false,
     messageHTML: function() {
       var text = this.get('message');
@@ -48,18 +51,13 @@ module.exports = function(App) {
     }, 
     actions: {
       commentPost: function() {
-        var self = this;
+        // var self = this;
         var message = this.controllerFor('post').get('inputComment');
         var create = {
           message: message,
-          userID: this.get('session').get('id'),
-          postID: this.currentModel.get('id'),
         };
-        console.log(create);
         var comment = this.store.createRecord('comment', create);
-        // comment.set('post', this.currentModel);
-        // this.currentModel.get('comments').add(comment);
-        this.controllerFor('post').set('inputComment', '');
+        comment.set('post', this.currentModel);
         comment.save();
       }
     }
