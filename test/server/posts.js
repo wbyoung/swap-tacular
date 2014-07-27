@@ -58,7 +58,7 @@ describe('Posts', function() {
     .done(function() { done(); }, done);
   });
 
-  it.only('will get posts', function(done) {
+  it('will get posts', function(done) {
     var fixture = __fixture('post/postsGET');
 
     Promise.bind({}) // start promise sequence
@@ -131,7 +131,9 @@ describe('Posts', function() {
       json.posts.forEach(function(post, index) {
         post.createdAt = fixture.response.json.posts[index].createdAt;
         post.updatedAt = fixture.response.json.posts[index].updatedAt;
+        delete post.comments;
       });
+      delete json.comments;
 
       expect(json).to.eql(fixture.response.json);
     })
