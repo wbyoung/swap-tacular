@@ -51,7 +51,7 @@ describe('actions on post', function() {
       __sendFakeRequest(this.server, 'post/postGET');
       visit('/post/50');
     });
-    it('will have one single post', function() {
+    it.skip('will have one single post', function() {
       expect(currentRouteName()).to.eql('post.index');
       expect(find('ul.message:first li').text()).to.eql('I\'m really excited about using this new Swap service!');
       expect(find('button.edit.post:first').text()).to.eql('Edit');

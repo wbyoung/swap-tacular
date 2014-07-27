@@ -45,8 +45,7 @@ module.exports = function(App) {
       return this.store.find('post', params.postId);
     }, 
     afterModel: function() {
-      console.log('loading comments');
-      console.log(this.currentModel);
+
     },
     actions: {
       commentPost: function() {

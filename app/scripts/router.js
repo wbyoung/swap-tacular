@@ -9,7 +9,6 @@ module.exports = function(App) {
     this.resource('post', {path: '/post/:postId'}, function() {
       this.resource('comments');
     });
-    this.resource('comment');
     this.route('create');
   });
 };
