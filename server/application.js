@@ -239,12 +239,17 @@ api.delete('/posts/:id', function(req, res) {
   if (!user) { throw new Error('You do not have the authority to do that!'); }
   var id = req.params.id;
   Post.where({ id: id })
-  .fetch({ withRelated: 'user' })
+  .fetch({ withRelated: ['user', 'comments'] })
   .then(function(model) {
-    model.destroy()
+    model.related('comments').mapThen(function(comment) {
+      return comment.destroy();
+    }).then(function() {
+      return model.destroy()
     .then(function() {
       res.json({});
-    });  
+    }); 
+  });
+ 
   }).done();
 });
 
