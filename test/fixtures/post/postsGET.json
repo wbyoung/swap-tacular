@@ -13,9 +13,26 @@
         "id": 12,
         "message": "I'm really excited about using this new Swap service!",
         "user": 1,
+        "comments": [4, 5],
         "createdAt": "2014-07-14T17:35:31.654Z",
         "updatedAt": "2014-07-14T17:35:31.654Z"
       }],
+      "comments": [{
+        "id": 4,
+        "message": "Comment 4",
+        "user": 1,
+        "post": 12,
+        "createdAt": "2014-07-14T17:35:31.654Z",
+        "updatedAt": "2014-07-14T17:35:31.654Z"
+        },
+        {
+          "id": 5,
+          "message": "Comment 5",
+          "user": 1,
+          "post": 12,
+          "createdAt": "2014-07-14T17:35:31.654Z",
+          "updatedAt": "2014-07-14T17:35:31.654Z"
+        }],
       "users": [
         { "id":1, "username": "Ariel"}
       ]

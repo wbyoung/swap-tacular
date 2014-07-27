@@ -58,12 +58,17 @@ describe('Posts', function() {
     .done(function() { done(); }, done);
   });
 
-  it('will get posts', function(done) {
+  it.only('will get posts', function(done) {
     var fixture = __fixture('post/postsGET');
 
-    Promise.resolve() // start promise sequence
+    Promise.bind({}) // start promise sequence
     .then(function() { return createUsers(fixture.response.json.users); })
-    .then(function(users) { return createPosts(users, fixture.response.json.posts); })
+    .then(function(users) { 
+      this.user = users;
+      return createPosts(users, fixture.response.json.posts); 
+    })
+    .tap(function(post) { return createComment(this.user, post, fixture.response.json.comments[0]); })
+    .tap(function(post) { return createComment(this.user, post, fixture.response.json.comments[1]); })
     .then(function() { return requestFixture(fixture); })
     .spread(function(response, body){
       var json = JSON.parse(body);
@@ -72,6 +77,10 @@ describe('Posts', function() {
       //TODO refactoring
       fixture.response.json.posts[0].createdAt = json.posts[0].createdAt;
       fixture.response.json.posts[0].updatedAt = json.posts[0].updatedAt;
+      fixture.response.json.comments.forEach(function(comment, idx) {
+        comment.createdAt = json.comments[idx].createdAt;
+        comment.updatedAt = json.comments[idx].updatedAt;
+      });
       expect(json).to.eql(fixture.response.json);
     }).done(function() { done(); }, done);
   });

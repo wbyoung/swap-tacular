@@ -72,16 +72,22 @@ api.get('/posts', function(req, res) {
   if (req.query.user) {
     query = Post.where({ userID: req.query.user});
   }
-  query.fetchAll({ withRelated: 'user' })
+  query.fetchAll({ withRelated: ['user', 'comments'] })
   .then(function(collection) {
     var users = [];
+    var comments;
     var posts = collection.toJSON().map(function(model) {
+      model.comments.forEach(function(cmt) {
+        renameProperties(cmt);
+      });
+      comments = model.comments;
       delete model.user.passwordDigest;
       users.push(model.user);
       renameProperties(model);
+      model.comments = _.pluck(model.comments, 'id');
       return model;
     });
-    res.json({ posts: posts, users: _.uniq(users, function(user) { return user.id; }) });
+    res.json({ posts: posts, comments: comments, users: _.uniq(users, function(user) { return user.id; }) });
   }).done();
 });
 
