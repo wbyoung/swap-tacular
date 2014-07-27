@@ -74,13 +74,14 @@ api.get('/posts', function(req, res) {
   }
   query.fetchAll({ withRelated: ['user', 'comments'] })
   .then(function(collection) {
+    // console.log(collection.toJSON());
     var users = [];
-    var comments;
+    var comments = [];
     var posts = collection.toJSON().map(function(model) {
       model.comments.forEach(function(cmt) {
         renameProperties(cmt);
+        comments.push(cmt);
       });
-      comments = model.comments;
       delete model.user.passwordDigest;
       users.push(model.user);
       renameProperties(model);
