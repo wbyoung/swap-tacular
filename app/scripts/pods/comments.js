@@ -12,5 +12,13 @@ module.exports = function(App) {
     }
   });
 
+  App.CommentsController = Ember.ArrayController.extend({
+
+  });
+
+  App.CommentsIndexRoute = Ember.Route.extend({
+
+  });
+
 
 };
