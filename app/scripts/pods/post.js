@@ -2,7 +2,6 @@
 
 module.exports = function(App) {
   App.PostController = Ember.ObjectController.extend({
-    // needs: 'comment',
     isEditing: false,
     messageHTML: function() {
       var text = this.get('message');
@@ -42,10 +41,13 @@ module.exports = function(App) {
   });
 
   App.PostRoute = Ember.Route.extend({
-    needs: ['post'],
     model: function(params) {
       return this.store.find('post', params.postId);
     }, 
+    afterModel: function() {
+      console.log('loading comments');
+      console.log(this.currentModel);
+    },
     actions: {
       commentPost: function() {
         // var self = this;

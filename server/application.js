@@ -109,8 +109,6 @@ api.get('/comments', function(req, res) {
   var query = Comment;
   if (req.query.user) { query = Comment.where({ userID: req.query.user }); }
   if (req.query.post) { query = Comment.where({ postID: req.query.post }); }
-
-  console.log(req.query);
   query.query('orderBy', 'id', 'asce')
   .fetchAll({ withRelated: ['post', 'user'] })
   .then(function(collection) {
