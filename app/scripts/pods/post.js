@@ -3,9 +3,6 @@
 module.exports = function(App) {
   App.PostController = Ember.ObjectController.extend({
     // needs: 'comment',
-    getComment: function() {
-      return this.get('model').get('comments');
-    },
     isEditing: false,
     messageHTML: function() {
       var text = this.get('message');

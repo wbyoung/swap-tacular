@@ -88,7 +88,6 @@ api.get('/posts', function(req, res) {
 api.get('/posts/:id', function(req, res) {
   Post.where({ id: req.params.id})
   .fetch( {withRelated: ['user', 'comments'] })
-  // .fetch({ withRelated: ['user', 'comments'] })
   .then(function(model) {
     var user = [];
     var newPost = [];
@@ -111,6 +110,7 @@ api.get('/comments', function(req, res) {
   if (req.query.user) { query = Comment.where({ userID: req.query.user }); }
   if (req.query.post) { query = Comment.where({ postID: req.query.post }); }
 
+  console.log(req.query);
   query.query('orderBy', 'id', 'asce')
   .fetchAll({ withRelated: ['post', 'user'] })
   .then(function(collection) {
