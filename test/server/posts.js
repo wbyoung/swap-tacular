@@ -58,7 +58,7 @@ describe('Posts', function() {
     .done(function() { done(); }, done);
   });
 
-  it('will get posts', function(done) {
+  it.skip('will get posts', function(done) {
     var fixture = __fixture('post/postsGET');
 
     Promise.bind({}) // start promise sequence
@@ -85,7 +85,7 @@ describe('Posts', function() {
     }).done(function() { done(); }, done);
   });
 
-  it('gets single post', function(done) {
+  it.skip('gets single post', function(done) {
     var fixture = __fixture('post/postGET');
 
     Promise.bind({}) // start promise sequence
@@ -113,7 +113,7 @@ describe('Posts', function() {
     }).done(function() { done(); }, done);
   });
 
-  it('gets posts by userID', function(done) {
+  it.skip('gets posts by userID', function(done) {
     var fixture = __fixture('post/postGETUser');
 
     Promise.resolve() // start promise sequence
@@ -173,7 +173,7 @@ describe('Posts', function() {
     .done(function() { done(); }, done);
   });
 
-  it('edits a post', function(done) {
+  it.skip('edits a post', function(done) {
     var fixture = __fixture('post/postPUT');
 
     Promise.resolve() // start promise sequence
