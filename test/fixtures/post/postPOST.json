@@ -7,6 +7,7 @@
     },
     "json": {
       "post": {
+        "location": "1771 NW Pettygrove, Portland, OR",
         "message": "HELLO WORLD!"
       }
     }
@@ -16,6 +17,7 @@
     "json": {
       "posts": [{
         "id": 1,
+        "location": "1771 NW Pettygrove, Portland, OR",
         "message": "HELLO WORLD!",
         "user": 34,
         "createdAt": "2014-07-15T17:35:31.654Z",

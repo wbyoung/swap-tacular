@@ -169,6 +169,7 @@ describe('Posts', function() {
     .then(function(collection) {
       expect(collection.length).to.eql(1);
       expect(collection.at(0).get('message')).to.eql(fixture.request.json.post.message);
+      expect(collection.at(0).get('location')).to.eql(fixture.request.json.post.location);
     })
     .done(function() { done(); }, done);
   });

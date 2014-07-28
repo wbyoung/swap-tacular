@@ -34,11 +34,11 @@ var renameProperties = function(object) {
     if (object[currentName]) {
       object[newName] = object[currentName];
       delete object[currentName];
-    }  
+    }
   };
   var properties = [
-    ['created_at', 'createdAt'], 
-    ['updated_at', 'updatedAt'], 
+    ['created_at', 'createdAt'],
+    ['updated_at', 'updatedAt'],
     ['userID', 'user'],
     ['postID', 'post']];
   properties.forEach(function(pair) {
@@ -132,9 +132,9 @@ api.get('/comments', function(req, res) {
       comments.push(model);
     });
 
-    res.json({ comments: comments, 
-      posts: _.uniq(posts, function(post) { return post.id; }), 
-      users: _.uniq(users, function(user) { return user.id; }) 
+    res.json({ comments: comments,
+      posts: _.uniq(posts, function(post) { return post.id; }),
+      users: _.uniq(users, function(user) { return user.id; })
     });
   }).done();
 });
@@ -148,7 +148,7 @@ api.get('/comments/:id', function(req, res) {
     var user = comment.user;
     renameProperties(post);
     renameProperties(comment);
-    //Man, we need to refactor or rethink api response
+    //We need to refactor or rethink api response
     user = _.pick(user, 'id', 'username');
     post = _.pick(post, 'id', 'message');
     res.json({ comments: [comment], posts: [post], users: [user] });
@@ -164,18 +164,20 @@ api.delete('/sessions/current', admit.invalidate, function(req, res) {
   res.json({ status: 'ok' });
 });
 
-api.post('/posts', function(req, res) {
-  var user = req.auth.db.user;
-  var post = req.body.post.message;
-  var create = {
-    message: post,
+api.post('/posts', function(req, res){
+  var user = req.auth.db.user; //admit-one stuff sets user to a user that is authorized,
+  var message = req.body.post.message; //sets post to be the message part of the request
+  var location = req.body.post.location;
+  var create = { //sets create to be a post
+    location: location,
+    message: message,
     userID: user.get('id')
   };
-  Post.forge(create).save().then(function(post) {
+  Post.forge(create).save().then(function(post) { //make the post on the server using fordge
     var newPost = post.toJSON();
-    renameProperties(newPost);
+    renameProperties(newPost); //bookshelf-ember case preferences
     var sendUser = user.toJSON();
-    delete sendUser.passwordDigest;
+    delete sendUser.passwordDigest; //never move passwords around ever!
     res.json({ posts: [newPost], users: [sendUser] });
   }).done();
 });
@@ -212,7 +214,7 @@ api.put('/posts/:id', function(req, res) {
       renameProperties(newPost);
       delete sendUser.passwordDigest;
       res.json({ posts: [newPost], users: [sendUser] });
-    });  
+    });
   }).done();
 });
 
@@ -225,7 +227,7 @@ api.put('/comments/:id', function(req, res) {
   Comment.where({ id: id })
   .fetch({ withRelated: ['post', 'user'] })
   .then(function(model) {
-    return model.save({ message: comment }, { method: 'update' }, { patch: true }); 
+    return model.save({ message: comment }, { method: 'update' }, { patch: true });
   })
   .then(function(model) {
     var newComment = model.toJSON();
@@ -254,9 +256,9 @@ api.delete('/posts/:id', function(req, res) {
       return model.destroy()
     .then(function() {
       res.json({});
-    }); 
+    });
   });
- 
+
   }).done();
 });
 
