@@ -16,9 +16,4 @@ module.exports = function(App) {
 
   });
 
-  App.CommentsIndexRoute = Ember.Route.extend({
-
-  });
-
-
 };
