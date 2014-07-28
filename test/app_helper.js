@@ -58,12 +58,12 @@ window.google.maps = {};
 window.google.maps.MapTypeId = {
   RAODMAP: 'raoadmap'
 };
-google.mocks = {};
-google.mocks.marker = {};
-google.mocks.marker.setMap = sinon.stub();
+google.stubs = {};
+google.stubs.marker = {};
+google.stubs.marker.setMap = sinon.stub();
 window.google.maps.LatLng = sinon.stub();
 window.google.maps.Map = sinon.stub();
-window.google.maps.Marker = sinon.stub().returns(google.mocks.marker);
+window.google.maps.Marker = sinon.stub().returns(google.stubs.marker);
 
 
 // terrible hack from https://github.com/ariya/phantomjs/issues/10522
