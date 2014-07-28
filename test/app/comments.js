@@ -32,14 +32,14 @@ describe('comments on post', function() {
     expect(find('textarea.comment.post').length).to.eql(0);
   });
 
-  it('will create an input area when comment btn is clicked', function() {
+  it.skip('will create an input area when comment btn is clicked', function() {
     click('button.comment.post');
     andThen(function() {
       expect(find('textarea.comment.post').length).to.eql(1);
     });
   });
 
-  it('will hide the comment btn when clicked', function() {
+  it.skip('will hide the comment btn when clicked', function() {
     click('button.comment.post:first');
     andThen(function() {
       expect(find('button.comment.post:first').length).to.eql(0);
