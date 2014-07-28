@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 app.use(methodOverride());
 
 
-var renameProperties = function(object){
+var renameProperties = function(object) {
   var renameProperty = function(object, currentName, newName) {
     if (object[currentName]) {
       object[newName] = object[currentName];
@@ -41,7 +41,7 @@ var renameProperties = function(object){
     ['updated_at', 'updatedAt'], 
     ['userID', 'user'],
     ['postID', 'post']];
-  properties.forEach(function(pair){
+  properties.forEach(function(pair) {
     renameProperty(object, pair[0], pair[1]);
   });
 };
@@ -67,36 +67,48 @@ api.post('/sessions', admit.authenticate, function(req, res) {
   res.json({ session: req.auth.user });
 });
 
-api.get('/posts', function(req, res){
+api.get('/posts', function(req, res) {
   var query = Post;
   if (req.query.user) {
     query = Post.where({ userID: req.query.user});
   }
-  query.fetchAll({ withRelated: 'user' })
+  query.fetchAll({ withRelated: ['user', 'comments'] })
   .then(function(collection) {
+    // console.log(collection.toJSON());
     var users = [];
+    var comments = [];
     var posts = collection.toJSON().map(function(model) {
+      model.comments.forEach(function(cmt) {
+        renameProperties(cmt);
+        comments.push(cmt);
+      });
       delete model.user.passwordDigest;
       users.push(model.user);
       renameProperties(model);
+      model.comments = _.pluck(model.comments, 'id');
       return model;
     });
-    res.json({ posts: posts, users: _.uniq(users, function(user) { return user.id; }) });
+    res.json({ posts: posts, comments: comments, users: _.uniq(users, function(user) { return user.id; }) });
   }).done();
 });
 
-api.get('/posts/:id', function(req, res){
+api.get('/posts/:id', function(req, res) {
   Post.where({ id: req.params.id})
-  .fetch({ withRelated: 'user' })
+  .fetch( {withRelated: ['user', 'comments'] })
   .then(function(model) {
     var user = [];
     var newPost = [];
     var post = model.toJSON();
+    var comments = post.comments;
     delete post.user.passwordDigest;
     user.push(post.user);
+    post.comments.forEach(function(comments) {
+      renameProperties(comments);
+    });
     renameProperties(post);
+    post.comments = _.pluck(post.comments, 'id');
     newPost.push(post);
-    res.json({ posts: newPost, users: user });
+    res.json({ posts: newPost, comments: comments, users: user });
   }).done();
 });
 
@@ -104,7 +116,6 @@ api.get('/comments', function(req, res) {
   var query = Comment;
   if (req.query.user) { query = Comment.where({ userID: req.query.user }); }
   if (req.query.post) { query = Comment.where({ postID: req.query.post }); }
-
   query.query('orderBy', 'id', 'asce')
   .fetchAll({ withRelated: ['post', 'user'] })
   .then(function(collection) {
@@ -153,7 +164,7 @@ api.delete('/sessions/current', admit.invalidate, function(req, res) {
   res.json({ status: 'ok' });
 });
 
-api.post('/posts', function(req, res){
+api.post('/posts', function(req, res) {
   var user = req.auth.db.user;
   var post = req.body.post.message;
   var create = {
@@ -166,10 +177,28 @@ api.post('/posts', function(req, res){
     var sendUser = user.toJSON();
     delete sendUser.passwordDigest;
     res.json({ posts: [newPost], users: [sendUser] });
-  });
+  }).done();
 });
 
-api.put('/posts/:id', function(req, res){
+api.post('/comments', function(req, res) {
+  var user = req.auth.db.user;
+  var post = req.body.comment.post;
+  var comment = req.body.comment.message;
+  var create = {
+    message: comment,
+    userID: user.get('id'),
+    postID: post
+  };
+  Comment.forge(create).save().then(function(comment) {
+    var newComment = comment.toJSON();
+    renameProperties(newComment);
+    var sendUser = user.toJSON();
+    delete sendUser.passwordDigest;
+    res.json({ comments: [newComment] });
+  }).done();
+});
+
+api.put('/posts/:id', function(req, res) {
   var user = req.auth.db.user;
   var post = req.body.post.message;
   var id = req.params.id;
@@ -184,26 +213,68 @@ api.put('/posts/:id', function(req, res){
       delete sendUser.passwordDigest;
       res.json({ posts: [newPost], users: [sendUser] });
     });  
-  });
+  }).done();
 });
 
-
-api.delete('/posts/:id', function(req, res){
+api.put('/comments/:id', function(req, res) {
   var user = req.auth.db.user;
+  //TODO: Check is the user can edit
+  if (!user) { throw new Error('You do not have the authority to do that!'); }
+  var comment = req.body.comment.message;
+  var id = req.params.id;
+  Comment.where({ id: id })
+  .fetch({ withRelated: ['post', 'user'] })
+  .then(function(model) {
+    return model.save({ message: comment }, { method: 'update' }, { patch: true }); 
+  })
+  .then(function(model) {
+    var newComment = model.toJSON();
+    var post = newComment.post;
+    var user = newComment.user;
+    renameProperties(post);
+    renameProperties(newComment);
+    //Man, we need to refactor or rethink api response
+    user = _.pick(user, 'id', 'username');
+    post = _.pick(post, 'id', 'message');
+    res.json({ comments: [newComment], posts: [post], users: [user] });
+  }).done();
+});
+
+api.delete('/posts/:id', function(req, res) {
+  //TODO: Check if user can delete
+  var user = req.auth.db.user;
+  if (!user) { throw new Error('You do not have the authority to do that!'); }
   var id = req.params.id;
   Post.where({ id: id })
-  .fetch({ withRelated: 'user' })
+  .fetch({ withRelated: ['comments'] })
+  .then(function(model) {
+    model.related('comments').mapThen(function(comment) {
+      return comment.destroy();
+    }).then(function() {
+      return model.destroy()
+    .then(function() {
+      res.json({});
+    }); 
+  });
+ 
+  }).done();
+});
+
+api.delete('/comments/:id', function(req, res) {
+  //TODO: Check if user can delete
+  var user = req.auth.db.user;
+  if (!user) { throw new Error('You do not have the authority to do that!'); }
+  var id = req.params.id;
+  Comment.where( { id: id })
+  .fetch({ withRelated: ['post', 'user'] })
   .then(function(model) {
     model.destroy()
-    .then(function(model) {
-      var sendUser = user.toJSON();
-      var deletePost = model.toJSON();
-      renameProperties(deletePost);
-      delete sendUser.passwordDigest;
-      res.json({ posts: [{}] });
-    });  
-  });
+    .then(function() {
+      res.json({});
+    });
+  }).done();
 });
+
 // application routes
 app.use('/api', api);
 
