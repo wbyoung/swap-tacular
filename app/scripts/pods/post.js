@@ -1,7 +1,6 @@
 'use strict';
 
 module.exports = function(App) {
-
   App.PostController = Ember.ObjectController.extend({
     isEditing: false,
     messageHTML: function() {
@@ -14,6 +13,7 @@ module.exports = function(App) {
     actions: {
       showComment: function() {
         this.set('isCommenting', true);
+        this.transitionToRoute('comments');
       },
       showEdit: function() {
         this.set('isEditing', true);
@@ -26,7 +26,15 @@ module.exports = function(App) {
         newPost.save()
         .then(function() {
           this.set('isEditing', false);
-          // this.transitionTo('/post/');
+          // this.transitionToRoute('/profile');
+        }.bind(this));
+      },
+      deletePost: function() {
+        var post = this.get('model');
+        post.deleteRecord();
+        post.save()
+        .then(function() {
+          this.transitionToRoute('/profile');
         }.bind(this));
       }
     }
@@ -35,6 +43,27 @@ module.exports = function(App) {
   App.PostRoute = Ember.Route.extend({
     model: function(params) {
       return this.store.find('post', params.postId);
+    }, 
+    afterModel: function() {
+
+    },
+    actions: {
+      commentPost: function() {
+        this.controllerFor('post').set('isCommenting', false);
+        var message = this.controllerFor('post').get('inputComment');
+        // var pID = this.currentModel.get('id');
+        var create = {
+          message: message,
+        };
+        var comment = this.store.createRecord('comment', create);
+        comment.set('post', this.currentModel);
+        this.controllerFor('post').set('inputComment', '');
+        comment.save()
+        .then(function() {
+          this.transitionTo('/');
+          // this.transitionTo('/post/' + pID);
+        }.bind(this));
+      }
     }
   });
 

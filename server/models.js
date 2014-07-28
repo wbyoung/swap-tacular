@@ -15,10 +15,10 @@ User = bookshelf.Model.extend({
     return this.hasMany(Token);
   },
   posts: function() {
-    return this.hasMany(Post, 'posts.id');
+    return this.hasMany(Post);
   },
   comments: function() {
-    return this.hasMany(Comment, 'comments.id').through(Post, 'postID');
+    return this.hasMany(Comment, 'id').through(Post, 'postID');
   },
   tableName: 'users'
 });
@@ -43,7 +43,7 @@ Post = bookshelf.Model.extend({
     return this.belongsTo(User, 'userID');
   },
   comments: function() {
-    return this.hasMany(Comment, 'comments.id');
+    return this.hasMany(Comment, 'postID');
   },
   hasTimestamps: true,
   tableName: 'posts'

@@ -30,11 +30,26 @@ describe('shows user\'s own post on profile page', function() {
   it('can click on link to one post', function() {
     click('ul.message:first li a');
     andThen(function() {
-      expect(currentRouteName()).to.eql('post');
+      expect(currentRouteName()).to.eql('post.index');
       it('has an edit button', function() {
         expect(find('ul.message:first li').text()).to.eql('This should be first');
-        expect(find('button.edit.post:first').text()).to.eql('Edit');
         expect(find('button.edit.post')).to.exist;
+        expect(find('button.edit.post:first').text()).to.eql('Edit');
+      });
+    });
+  });
+  it('deletes the post', function() {
+    __sendFakeRequest(this.server, 'post/postDELETE');
+    click('ul.message:first li a');
+    andThen(function() {
+      expect(find('ul.message:first li').text()).to.eql('This should be first');
+      expect(currentRouteName()).to.eql('post.index');
+      it('has an delete button', function() {
+        expect(find('button.delete.post:first').text()).to.eql('Delete');
+      });
+      click('button.delete.post:first');
+      andThen(function() {
+        //TODO: Expectations and changing fixture data?
       });
     });
   });

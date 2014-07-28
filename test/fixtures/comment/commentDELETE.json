@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "DELETE",
-    "url": "/api/posts/14",
+    "url": "/api/comments/6",
     "headers": {
       "Authorization": "Token 9208fbba48fd4fbe9e16f4d5fa7ca4aa"
     },
@@ -17,18 +17,27 @@
       "username": "Ariel"
     }],
     "posts": [{
-      "id": 1,
+      "id": 13,
       "message": "HELLO WORLD!",
       "user": 34,
       "createdAt": "2014-07-15T17:35:31.654Z",
       "updatedAt": "2014-07-15T17:35:31.654Z"
+    }],
+    "comments": [{
+      "id": 6,
+      "message": "HELLO DELETE THIS!",
+      "user": 34,
+      "post": 13,
+      "createdAt": "2014-07-14T17:35:31.654Z",
+      "updatedAt": "2014-07-14T17:35:31.654Z"
     },
     {
-      "id": 14,
-      "message": "GOODBYE WORLD!",
+      "id": 12,
+      "message": "HELLO Do not delete!",
       "user": 34,
-      "createdAt": "2014-07-15T17:35:31.654Z",
-      "updatedAt": "2014-07-15T17:35:31.654Z"
+      "post": 13,
+      "createdAt": "2014-07-14T17:35:31.654Z",
+      "updatedAt": "2014-07-14T17:35:31.654Z"
     }]
   }
 }
