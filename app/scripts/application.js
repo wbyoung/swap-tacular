@@ -13,11 +13,8 @@ require('./pods/logout.js')(App);
 require('./pods/post.js')(App);
 require('./pods/profile.js')(App);
 require('./pods/signup.js')(App);
-<<<<<<< HEAD
 require('./pods/map.js')(App);
-=======
 require('./pods/comments.js')(App);
->>>>>>> tian
 
 App.ApplicationAdapter = DS.RESTAdapter.extend({
   namespace: 'api'

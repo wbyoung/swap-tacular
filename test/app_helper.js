@@ -52,6 +52,20 @@ window.__sendFakeRequest = function(fakeServer, fixtureURL) {
        JSON.stringify(fixture.response.json)]);
 };
 
+// TODO: figure out how to make this reset when the app is reset
+var google = window.google = {};
+window.google.maps = {};
+window.google.maps.MapTypeId = {
+  RAODMAP: 'raoadmap'
+};
+google.mocks = {};
+google.mocks.marker = {};
+google.mocks.marker.setMap = sinon.stub();
+window.google.maps.LatLng = sinon.stub();
+window.google.maps.Map = sinon.stub();
+window.google.maps.Marker = sinon.stub().returns(google.mocks.marker);
+
+
 // terrible hack from https://github.com/ariya/phantomjs/issues/10522
 // this is required to fix bind on phantomjs
 if (!Function.prototype.bind) {

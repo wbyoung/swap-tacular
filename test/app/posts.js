@@ -125,4 +125,7 @@ describe('it will show a map', function () {
   it.skip('will show a 500x500 map', function () {
     expect(find('.map')).to.exist;
   });
+  it.skip('will call the proper google APIs', function() {
+    expect(google.maps.LatLng.callCount).to.eql(1);
+  });
 });
