@@ -22,10 +22,10 @@ We will need...
     * Code climate
     * David DM
 
-* ##### Work on User Accounts. Making sure they can be created and logged into. 
+* ##### Work on User Accounts. Making sure they can be created and logged into.
 
   * Account creation
-  * User Log-in 
+  * User Log-in
 
 
 ### Wednesday
@@ -60,7 +60,7 @@ Continue Catch-Up and create plan for Week 2. Discuss TODO features.
 
 
 ## Week 2
-By the end of this week we plan on having users and posts work on a very basic level. This is our minimal viable product. 
+By the end of this week we plan on having users and posts work on a very basic level. This is our minimal viable product.
 
   * TEST THE FRONT END BETTER!
   * Put content up
@@ -110,26 +110,39 @@ By the end of this week we plan on having users and posts work on a very basic l
 
 ## Week 3
 
-  * TBD
+  * Pretend that the TODO doesn't exsist for a week, so don't update it at all. (See, 100% part of the plan.)
 
 ## Week 4
 
-  * TBD
+  * Ariel
+    * Back end of google maps api
+  * Grant
+    * Front end of google maps api
+    * Gravitar
+    * Profile 'stuff'?
+  * Tian
+    * Comments
+    * Picture uploading, amazon web service
 
 ## What is the minimul viable product?
 
-  * TBD
+  * Has users
+  * Users can make posts
+  * Posts can have location
+  * Locations are visible on a map
+  * Users can delete their posts
+  * Users can make comments on posts
 
 ## TODO features:
 
-  + Deleting account 
-  + Edit profile / Gravatar setup
+  + Deleting account - Posible for project deadline
+  + Edit profile / Gravatar setup - Posible for project deadline -Grant has claimed
   + Change password
-  + Upload pictures with post / AWS?
-  + User ratings
-  + Geolocation - using google mapping
-  + User messaging
-  + Editable Front End
-  + Motion Captcha
+  + Upload pictures with post / AWS? -Tian has claimed
+  + User ratings - Unrealistic for project deadline
+  + Geolocation - using google mapping -Grant and Ariel have claimed
+  + User messaging - Unrealistic for project deadline
+  + Editable Front End - Unrealistic for project deadline
+  + Motion Captcha - Unrealistic for project deadline
   + Google authentification
-  
+

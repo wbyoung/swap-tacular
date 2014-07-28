@@ -11,6 +11,7 @@
     "json": {
       "posts": [{
         "id": 13,
+        "location": null,
         "message": "This should be second",
         "user": 2,
         "createdAt": "2014-07-13T17:35:31.654Z",
@@ -18,6 +19,7 @@
       },
       {
         "id": 12,
+        "location": null,
         "message": "This should be last",
         "user": 2,
         "createdAt": "2014-07-10T17:35:31.654Z",
@@ -25,6 +27,7 @@
       },
       {
         "id": 14,
+        "location": null,
         "message": "This should be first",
         "user": 2,
         "createdAt": "2014-07-14T17:35:31.654Z",

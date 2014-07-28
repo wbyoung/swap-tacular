@@ -102,3 +102,27 @@ describe('actions on post', function() {
     });
   });
 });
+describe('it will show a map', function () {
+    beforeEach(function() {
+    this.server = sinon.fakeServer.create();
+    this.server.autoRespond = true;
+
+    var container = applicationContainer();
+    var session = container.lookup('auth-session:main');
+    session.set('content', {
+      id: 2,
+      username: 'fake-username',
+      token: 'fake-token'
+    });
+  });
+  afterEach(function() {
+    this.server.restore();
+    App.reset();
+  });
+  beforeEach(function() {
+    visit('/post/:postId');
+  });
+  it.skip('will show a 500x500 map', function () {
+    expect(find('.map')).to.exist;
+  });
+});

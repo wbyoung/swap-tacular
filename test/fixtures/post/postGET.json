@@ -11,6 +11,7 @@
     "json": {
       "posts": [{
         "id": 50,
+        "location": null,
         "message": "I'm really excited about using this new Swap service!",
         "user": 11,
         "comments": [32, 25],
