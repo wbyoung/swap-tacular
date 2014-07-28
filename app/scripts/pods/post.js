@@ -19,7 +19,7 @@ module.exports = function(App) {
         this.set('isEditing', true);
       },
       editPost: function() {
-        var newPost = this.get('model'); 
+        var newPost = this.get('model');
         var newMessage = this.get('messageHTML').toString();
         newPost.get('message');
         newPost.set('message', newMessage);
