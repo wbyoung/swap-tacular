@@ -166,7 +166,7 @@ api.post('/posts', function(req, res){
     var newPost = post.toJSON();
     renameProperties(newPost); //bookshelf-ember case preferences
     var sendUser = user.toJSON();
-    delete sendUser.passwordDigest; //never more passwords around ever!
+    delete sendUser.passwordDigest; //never move passwords around ever!
     res.json({ posts: [newPost], users: [sendUser] });
   });
 });
