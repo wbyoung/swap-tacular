@@ -49,10 +49,9 @@ module.exports = function(App) {
     },
     actions: {
       commentPost: function() {
-        // var self = this;
         this.controllerFor('post').set('isCommenting', false);
         var message = this.controllerFor('post').get('inputComment');
-        var pID = this.currentModel.get('id');
+        // var pID = this.currentModel.get('id');
         var create = {
           message: message,
         };
@@ -61,7 +60,8 @@ module.exports = function(App) {
         this.controllerFor('post').set('inputComment', '');
         comment.save()
         .then(function() {
-          this.transitionTo('/post/' + pID);
+          this.transitionTo('/');
+          // this.transitionTo('/post/' + pID);
         }.bind(this));
       }
     }
