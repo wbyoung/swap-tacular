@@ -52,6 +52,23 @@ window.__sendFakeRequest = function(fakeServer, fixtureURL) {
        JSON.stringify(fixture.response.json)]);
 };
 
+Ember.Application.initializer({
+  name: 'google-stubs',
+  initialize: function(container, application) {
+    var google = window.google = {};
+    window.google.maps = {};
+    window.google.maps.MapTypeId = {
+      RAODMAP: 'raoadmap'
+    };
+    google.stubs = {};
+    google.stubs.marker = {};
+    google.stubs.marker.setMap = sinon.stub();
+    window.google.maps.LatLng = sinon.stub();
+    window.google.maps.Map = sinon.stub();
+    window.google.maps.Marker = sinon.stub().returns(google.stubs.marker);
+  }
+});
+
 // terrible hack from https://github.com/ariya/phantomjs/issues/10522
 // this is required to fix bind on phantomjs
 if (!Function.prototype.bind) {

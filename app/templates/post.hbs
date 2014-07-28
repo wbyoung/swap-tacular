@@ -31,6 +31,8 @@
       {{outlet}}
       {{!-- Discuss semantic Markup with Whit --}}
       <br/>
-      <div class="map"></div>
+      {{#view App.MapView contentBinding="this"}}
+      <div id="map-canvas"/>
+      {{/view}}
   </div>
 </div>
