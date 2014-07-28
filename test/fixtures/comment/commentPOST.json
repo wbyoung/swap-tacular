@@ -1,0 +1,45 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/api/comments",
+    "headers": {
+      "Authorization": "Token 9208fbba48fd4fbe9e16f4d5fa7ca4aa"
+    },
+    "json": {
+      "comment": {
+        "message": "HELLOoooow WORLD!",
+        "user": 1,
+        "post": 1
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "json": {
+      "comments": [{
+        "id": 12,
+        "message": "HELLOoooow WORLD!",
+        "user": 1,
+        "post": 1,
+        "createdAt": "2014-07-14T17:35:31.654Z",
+        "updatedAt": "2014-07-14T17:35:31.654Z"
+      }]
+    },
+    "data": {
+      "comments": [{
+        "id": 12,
+        "message": "HELLOoooow WORLD!",
+        "user": 1,
+        "post": 1,
+        "createdAt": "2014-07-14T17:35:31.654Z",
+        "updatedAt": "2014-07-14T17:35:31.654Z"
+      }],
+      "posts": [
+        { "id": 1, "message": "This is Swap-tacular!" }
+      ],
+      "users": [
+        { "id": 1, "username": "Ariel"}
+      ]
+    }
+  }
+}
