@@ -5,21 +5,30 @@
       <h3 class="user">{{user.username}}</h3>      
       <h6 class="timestamp">{{createdAt}}</h6>
       <ul class="message">
-        <li>{{messageHTML}}</li>
+        <li>{{message}}</li>
       </ul>
-      <button class="delete post">Delete</button>
+      <h3>Comments</h3>
+      {{#each comments}}
+      <ul class="comments">
+      <li>{{message}}</li>
+      </ul>
+      {{/each}}
+
+      <button class="delete post" {{action "deletePost"}}>Delete</button>
       {{#if isCommenting}}
-        <button class="comment done">Done</button>
-        <textarea rows="3" cols="50"class="comment post"></textarea>
+        <button class="comment done" {{action "commentPost"}}>Done</button>
+        {{textarea class="comment post" value=inputComment placeholder="Comment me?"}}
       {{else}}
         <button class="comment post" {{action "showComment"}}>Comment</button>
       {{/if}}
       {{#if isEditing}}
         <button class="edit done" {{action "editPost"}}>Done</button>
-        {{textarea class="edit post" value=messageHTML placeholder="Edit me?"}}
+        {{textarea class="edit post" value=message placeholder="Edit me?"}}
       {{else}}
         <button class="edit post" {{action "showEdit"}}>Edit</button>
       {{/if}}
+
+      {{outlet}}
       {{!-- Discuss semantic Markup with Whit --}}
       <br/>
       <div class="map"></div>
