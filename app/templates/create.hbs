@@ -1,3 +1,25 @@
 {{textarea rows="4" cols="50" type="text" class="message post" value=inputPost placeholder="insert text for your post"}}
 <input type="text" class="address post" placeholder="insert your address">
 <button class="btn btn-lg btn-primary btn-block create post" {{action "post"}}>Add</button>
+{{#view App.MapView}}{{/view}}
+<hr>
+
+<p>Nr of records selected = {{selectedMarkerCounter}}
+<button {{action 'removeSelectedMarkers'}}>Remove selected markers</button>
+</p>
+
+<table class="table striped">
+  <tr>
+    <th>Selected</td>
+    <th>Latitude</td>
+    <th>Longitude</td>
+  </tr>
+
+  {{#each controller itemController="marker"}}
+    <tr {{bindAttr class="selected:warning"}}>
+      <td>{{view Ember.Checkbox checkedBinding="selected"}}</td>
+      <td>{{lat}}</td>
+      <td>{{lng}}</td>
+    </tr>
+  {{/each}}
+</table>
