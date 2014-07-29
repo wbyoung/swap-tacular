@@ -64,11 +64,11 @@ App.MapView = Ember.View.extend({
 
 
 App.CreateController = Ember.ArrayController.extend({
-  content: [],
+  markers: [],
   
   // We add the markr to the ArrayControllers content.
   addMarker: function (marker) {
-    this.content.pushObject(marker);
+    this.markers.pushObject(marker);
   },
 
   // When clicking on a marker, we toggle the selected state.  
@@ -98,7 +98,7 @@ App.CreateController = Ember.ArrayController.extend({
 
         for (var i = toBeRemoved.length -1; i >= 0; i--) {
           toBeRemoved[i].googleMarker.setMap(null);
-          this.content.removeObject(toBeRemoved[i]);
+          this.markers.removeObject(toBeRemoved[i]);
         }
 
     }
@@ -106,15 +106,15 @@ App.CreateController = Ember.ArrayController.extend({
 
   highLightSelectedMarkers: function() {
 
-    $.each(this.content, function (i, m) {
+    $.each(this.markers, function (i, m) {
         m.set("selected",false);
     });
 
-    if (this.content.length>0) {
-      this.content[this.content.length-1].set("selected",true);
+    if (this.markers.length>0) {
+      this.markers[this.markers.length-1].set("selected",true);
     }
 
-  }.observes('content.@each')
+  }.observes('markers.@each')
 });
 
 // we need to have an item-controller in place.... the selected property is stored on this controller 
@@ -122,9 +122,9 @@ App.CreateController = Ember.ArrayController.extend({
 App.MarkerController = Ember.ObjectController.extend({
     markerIcon: function() {
         if (this.get("selected")) {
-          this.content.googleMarker.setIcon("http://maps.google.com/mapfiles/ms/icons/green-dot.png");
+          this.markers.googleMarker.setIcon("http://maps.google.com/mapfiles/ms/icons/green-dot.png");
         } else {
-          this.content.googleMarker.setIcon("http://maps.google.com/mapfiles/ms/icons/red-dot.png");
+          this.markers.googleMarker.setIcon("http://maps.google.com/mapfiles/ms/icons/red-dot.png");
         }
     }.observes("selected")
 });
