@@ -74,7 +74,7 @@ Ember.Application.initializer({
     google.maps.Map = sinon.stub();
     google.maps.Marker = sinon.stub().returns(google.stubs.marker);
     google.maps.event = {};
-    google.maps.event.addListener = sinon.stub();// TODO: call add listener like so .callsArgWithAsync(2, google.stubs.event);
+    google.maps.event.addListener = sinon.stub().callsArgWithAsync(2, google.stubs.event);
   }
 });
 

@@ -50,10 +50,14 @@ App.MapView = Ember.View.extend({
       that.get("markers").pushObject(marker);
 
       // Instruct the controller that the marker was added.
-      controller.addMarker(markerObject);
+      if (controller.addMarker) {
+        controller.addMarker(markerObject);
+      }
 
       google.maps.event.addListener(marker, 'click', function() {
-        controller.markerClick(markerObject);
+        if (controller.markerClick) {
+          controller.markerClick(markerObject);
+        }
       });
 
       marker.setMap(that.get("map"));
