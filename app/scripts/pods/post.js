@@ -8,7 +8,7 @@ module.exports = function(App) {
       text = Ember.Handlebars.Utils.escapeExpression(text);
       text = text.replace(/(\r\n|\n|\r)/gm, '<br>');
       return new Ember.Handlebars.SafeString(text);
-    }.property('message'),
+    }.property('message').readOnly(),
 
     actions: {
       showComment: function() {
@@ -20,9 +20,6 @@ module.exports = function(App) {
       },
       editPost: function() {
         var newPost = this.get('model');
-        var newMessage = this.get('messageHTML').toString();
-        newPost.get('message');
-        newPost.set('message', newMessage);
         newPost.save()
         .then(function() {
           this.set('isEditing', false);
