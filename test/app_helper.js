@@ -56,16 +56,16 @@ Ember.Application.initializer({
   name: 'google-stubs',
   initialize: function(container, application) {
     var google = window.google = {};
-    window.google.maps = {};
-    window.google.maps.MapTypeId = {
+    google.maps = {};
+    google.maps.MapTypeId = {
       RAODMAP: 'raoadmap'
     };
     google.stubs = {};
     google.stubs.marker = {};
     google.stubs.marker.setMap = sinon.stub();
-    window.google.maps.LatLng = sinon.stub();
-    window.google.maps.Map = sinon.stub();
-    window.google.maps.Marker = sinon.stub().returns(google.stubs.marker);
+    google.maps.LatLng = sinon.stub();
+    google.maps.Map = sinon.stub();
+    google.maps.Marker = sinon.stub().returns(google.stubs.marker);
   }
 });
 
