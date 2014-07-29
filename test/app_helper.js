@@ -58,14 +58,23 @@ Ember.Application.initializer({
     var google = window.google = {};
     google.maps = {};
     google.maps.MapTypeId = {
-      RAODMAP: 'raoadmap'
+      ROADMAP: 'roadmap'
+    };
+    google.maps.Animation = {
+      DROP: 'drop'
     };
     google.stubs = {};
     google.stubs.marker = {};
     google.stubs.marker.setMap = sinon.stub();
+    google.stubs.event = {};
+    google.stubs.event.latLng = {};
+    google.stubs.event.latLng.lat = sinon.stub().returns(45.5328930);
+    google.stubs.event.latLng.lng = sinon.stub().returns(-122.6892520);
     google.maps.LatLng = sinon.stub();
     google.maps.Map = sinon.stub();
     google.maps.Marker = sinon.stub().returns(google.stubs.marker);
+    google.maps.event = {};
+    google.maps.event.addListener = sinon.stub();// TODO: call add listener like so .callsArgWithAsync(2, google.stubs.event);
   }
 });
 
